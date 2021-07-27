@@ -178,7 +178,7 @@
 <row name="last_name" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
-<row name="creadted_at" null="1" autoincrement="0">
+<row name="created_at" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
 <default>NULL</default></row>
 <row name="updated_at" null="1" autoincrement="0">
