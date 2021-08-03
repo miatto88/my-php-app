@@ -1,4 +1,4 @@
-#お手軽LAMP環境構築
+#LAMP環境構築
 PHP + Nginx + MySQL
 
 #ファイル置き場
