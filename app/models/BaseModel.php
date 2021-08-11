@@ -1,7 +1,7 @@
 <?php
 
 class BaseModel {
-    public function dbconnect() {
+    public static function dbconnect() {    // 変更 stasticなメソッドに
         try {
             $dbh = new PDO("host=my-php-app_mysql_1;mysql:dbname=common;charset=utf8", "root", "miatto");
             return $dbh;

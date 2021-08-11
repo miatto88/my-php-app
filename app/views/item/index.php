@@ -1,9 +1,8 @@
 <?php
 require_once("../../models/item.php");
 
-
-$sqldata = new Item();
-$items = $sqldata->findAll();
+$dbh = Item::setDbh();
+$items = Item::findAll();
 ?>
 
 <!DOCTYPE html>
