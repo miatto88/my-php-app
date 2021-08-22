@@ -1,8 +1,9 @@
 <?php
 require_once("../../models/item.php");
+require_once("../../controllers/ItemController.php");
 
-$dbh = Item::setDbh();
-$items = Item::findAll();
+// $dbh = Item::setDbh();  // 変更 setDbh()はわかりにくいので削除
+
 ?>
 
 <!DOCTYPE html>
@@ -27,12 +28,12 @@ $items = Item::findAll();
     <div class="wrapper">
         <section class="main">
             <?php $i = 0 ?>
-            <?php while ($i < count($items)): ?>
+            <?php while ($i < count(ItemController::index())): ?>
             <div class="item_name">
-                <a href="#"><?php echo $items[$i]["name"]; ?></a>
+                <a href="#"><?php echo ItemController::index()[$i]["name"]; ?></a>
             </div>
             <div class="item_property">
-                <span>在庫：<?php echo $items[$i]["stock"]; ?></span>
+                <span>在庫：<?php echo ItemController::index()[$i]["stock"]; ?></span>
             </div>
             <div class="button">
                 <form method="post">
