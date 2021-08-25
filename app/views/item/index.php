@@ -2,7 +2,7 @@
 require_once("../../models/item.php");
 require_once("../../controllers/ItemController.php");
 
-// $dbh = Item::setDbh();  // 変更 setDbh()はわかりにくいので削除
+$items = ItemController::index();
 
 ?>
 
@@ -27,13 +27,12 @@ require_once("../../controllers/ItemController.php");
     </header>
     <div class="wrapper">
         <section class="main">
-            <?php $i = 0 ?>
-            <?php while ($i < count(ItemController::index())): ?>
+            <?php foreach($items as $item): ?>
             <div class="item_name">
-                <a href="#"><?php echo ItemController::index()[$i]["name"]; ?></a>
+                <a href="#"><?php echo $item["name"]; ?></a>
             </div>
             <div class="item_property">
-                <span>在庫：<?php echo ItemController::index()[$i]["stock"]; ?></span>
+                <span>在庫：<?php echo $item["stock"]; ?></span>
             </div>
             <div class="button">
                 <form method="post">
@@ -42,8 +41,7 @@ require_once("../../controllers/ItemController.php");
                 </form>
             </div>
             <hr>
-            <?php $i++ ?>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </section>
         <section class="side">
             <span class="side_menu active"><a href="index.php">製品一覧</a></span>
