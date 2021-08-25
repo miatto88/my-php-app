@@ -2,7 +2,7 @@
 require_once("../../models/item.php");
 require_once("../../controllers/ItemController.php");
 
-$items = ItemController::index();
+$items = ItemController::index(); // 変更 変数に格納
 
 ?>
 
@@ -27,7 +27,7 @@ $items = ItemController::index();
     </header>
     <div class="wrapper">
         <section class="main">
-            <?php foreach($items as $item): ?>
+            <?php foreach($items as $item): ?><!-- 変更 foreachに -->
             <div class="item_name">
                 <a href="#"><?php echo $item["name"]; ?></a>
             </div>
