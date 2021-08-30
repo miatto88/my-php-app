@@ -34,7 +34,7 @@ $items = ItemController::index();
             <div class="item_property">
                 <span>在庫：<?php echo $item["stock"]; ?></span>
             </div>
-            <div class="button">
+            <div class="button"><!-- 変更 formタグからaタグへ -->
                 <a href="in_count.php?id=<?php echo $item["id"] ?>">入庫</a>
                 <a href="out_count.php?id=<?php echo $item["id"] ?>">出庫</a>
             </div>
