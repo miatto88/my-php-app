@@ -11,6 +11,7 @@ class ItemController {
     public static function detail() {
         $item_id = $_GET["id"];
         $item = Item::findById($item_id);
+        Item::isExistById($item);
 
         return $item;
     }

@@ -21,6 +21,15 @@ class Item Extends BaseModel {
 
         return $item;
     }
+
+    public static function isExistById($item) {
+        if ($item["id"] === null || $item["id"] === false) {
+            header("Location: ../error/404.php");
+            exit();
+        }
+
+        return $item;
+    }
 }
 
 ?>
