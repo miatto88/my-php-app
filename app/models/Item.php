@@ -24,11 +24,10 @@ class Item Extends BaseModel {
 
     public static function isExistById($item) { // 変更 id存在チェックを追加
         if ($item["id"] === null || $item["id"] === false) {
-            header("Location: ../error/404.php");
-            exit();
+            return false; // 変更 falseを返すのみ
         }
 
-        return $item;
+        return true;
     }
 }
 
