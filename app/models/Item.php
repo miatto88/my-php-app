@@ -22,9 +22,9 @@ class Item Extends BaseModel {
         return $item;
     }
 
-    public static function isExistById($item) { // 変更 id存在チェックを追加
+    public static function isExistById($item) {
         if ($item["id"] === null || $item["id"] === false) {
-            return false; // 変更 falseを返すのみ
+            return false;
         }
 
         return true;

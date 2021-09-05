@@ -2,7 +2,7 @@
 require_once("../../models/item.php");
 require_once("../../controllers/ItemController.php");
 
-$item = ItemController::detail();
+ItemController::request();
 
 ?>
 
@@ -27,22 +27,15 @@ $item = ItemController::detail();
     </header>
     <div class="wrapper">
         <section class="main">
-            <div class="detail">
-                <div>
-                    <?php echo "製品名　　　　：　　" . $item["name"]; ?>
-                </div>
-                <div>
-                    <?php echo "価格　　　　　：　　" . $item["price"]; ?>
-                </div>
-                <div>
-                    <?php echo "在庫　　　　　：　　" . $item["stock"]; ?>
-                </div>
-                <div>
-                    <?php echo "登録日　　　　：　　" . $item["created_at"]; ?>
-                </div>
-                <div>
-                    <?php echo "最終更新日　　：　　" . $item["updated_at"]; ?>
-                </div>
+            <div>
+                <form action="" method="POST">
+                    <p>製品名：　<input type="text" name="name"></p>
+                    <p>価格　：　<input type="number" name="price"></p>
+                    <p>在庫　：　<input type="number" name="stock"></p>
+                    <p><input type="hidden" name="created_at" value="<?php echo date("Y-m-d H:i:s") ?>"></p>
+                    <p><input type="hidden" name="updated_at" value="<?php echo date("Y-m-d H:i:s") ?>"></p>
+                    <p><input type="submit" value="登録する"></p>
+                </form>
             </div>
         </section>
         <?php readfile("../layout/sidemenu.php") ?>
