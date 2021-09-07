@@ -2,7 +2,12 @@
 require_once("../../models/item.php");
 require_once("../../controllers/ItemController.php");
 
-ItemController::request();
+// 変更 POSTが送信された時は store() を呼び出し、POST以外の時は new() を呼び出す処理を追加
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    ItemController::new();
+} else {
+    ItemController::store();
+}
 
 ?>
 

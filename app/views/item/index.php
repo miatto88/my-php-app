@@ -28,7 +28,7 @@ $items = ItemController::index();
     <div class="wrapper">
         <section class="main">
             <div class="btns">
-                <a href="new.php" >新規登録</a><!-- 変更 new.phpへのリンク追加 -->
+                <a href="new.php" >製品登録</a><!-- 変更 new.phpへのリンク追加 -->
             </div>
             <hr>
             <?php foreach($items as $item): ?>

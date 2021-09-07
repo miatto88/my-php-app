@@ -28,6 +28,9 @@ class ItemController {
     }
 
     public static function new() { // 変更 メソッド追加
+        if ($_SERVER["REQUEST_METHOD"] === "GET") {
+            return $_GET;
+        }
         return true;
     }
 
@@ -48,16 +51,6 @@ class ItemController {
         exit();
     }
 
-    public static function request() { // 変更 メソッド追加
-        // POSTが送信された時は store() を呼び出し、POST以外の時は new() を呼び出すメソッド
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            SELF::new();
-            return;
-        } else {
-            SELF::store($_POST);
-            // return $_POST;
-        }
-    }
 }
 
 ?>
