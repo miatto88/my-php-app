@@ -31,7 +31,7 @@ class ItemController {
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             return $_GET;
         }
-        
+
         return true;
     }
 
@@ -49,7 +49,7 @@ class ItemController {
         ]);
 
         header("Location: index.php");
-        return $_POST;
+        return;
     }
 
 }
