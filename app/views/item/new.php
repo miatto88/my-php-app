@@ -4,11 +4,11 @@ require_once("../../controllers/ItemController.php");
 require_once("../../validations/Itemvalidation.php");
 
 
-// 変更 POST以外が送信された時は new() を呼び出す処理
+// POST以外が送信された時は new() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     $get = ItemController::new();
 
-    // validationがNGでリダイレクトされた時のメッセージ
+    // validationがNGでリダイレクトされた時のメッセージ(仮)
     if (!empty($get)) {
         $error = "入力に不正があった為、登録に失敗しました。";
     } else {
@@ -16,20 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     }
 }
 
-// 変更 POSTが送信された時は store() を呼び出す処理
+// POSTが送信された時は store() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $check = ItemValidation::check();
-    
-    // validationがNGだった場合にはリダイレクト
-    if ($check === false) {
-        header("Location: new.php?name=" . $get["name"] . "&price=" . $get["price"] . "&stock=" . $get["stock"]);
-        return;
-    }
-
     ItemController::store();
 }
 
-// 変更 GETが空の時のvalue値を空白に設定する
+// GETが空の時のvalue値を空白に設定する
 if (empty($get["name"])) {
     $get["name"] = "";
 }
