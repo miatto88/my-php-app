@@ -1,1 +1,0 @@
-<p style="font-size: 24px; font-weight: bold;">404 not found</p>
