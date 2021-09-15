@@ -50,21 +50,20 @@ class ItemController {
 
         $data = $validation->getData();
 
-        $store = $dbh->prepare(
-            "INSERT INTO items SET name=?, price=?, stock=?, created_at=?, updated_at=?");
-        $store->execute([
-            $data["name"],
-            $data["price"],
-            $data["stock"],
-            $data["created_at"],
-            $data["updated_at"]
-        ]);
+        // 変更 テーブルデータをItemクラスをインスタンス化して取得
+        $item = new Item;
+        $item->setName($data["name"]);
+        $item->setPrice($data["price"]);
+        $item->setStock($data["stock"]);
+        $item->setCreatedAt($data["created_at"]);
+        $item->setUpdatedAt($data["updated_at"]);
 
+        // 変更 データベースにインサート
+        $item->save();
         
         header("Location: index.php");
         return;
     }
-
 }
 
 ?>
