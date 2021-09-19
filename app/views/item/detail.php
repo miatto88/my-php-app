@@ -27,6 +27,10 @@ $item = ItemController::detail();
     </header>
     <div class="wrapper">
         <section class="main">
+            <div class="btns">
+                <a href="edit.php?id=<?php echo $item["id"] ?>" >製品編集</a><!-- 変更 編集画面へのリンク追加 -->
+            </div>
+            <hr>
             <div class="detail">
                 <div>
                     <?php echo "製品名　　　　：　　" . $item["name"]; ?>

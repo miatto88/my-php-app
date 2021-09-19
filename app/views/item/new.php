@@ -55,6 +55,7 @@ if (empty($get["stock"])) {
     </header>
     <div class="wrapper">
         <section class="main">
+            <div>[製品登録]</div>
             <div>
                 <form action="" method="POST">
                     <p>製品名：　<input type="text" name="name" value="<?php echo $get['name'] ?>"></p>

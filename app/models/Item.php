@@ -2,8 +2,8 @@
 require_once("BaseModel.php");
 
 class Item Extends BaseModel {
-    // 変更 itemテーブル要素をもたせる
     private $data = [
+        "id", // 変更 idを追加
         "name",
         "price",
         "stock",
@@ -12,6 +12,40 @@ class Item Extends BaseModel {
     ];
     
     public $dbh;
+
+    // 変更 idのセッターとゲッターを追加
+    public function setId($id) {
+        $this->data["id"] = $id;
+    }
+
+    public function getId() {
+        return $this->data["id"];
+    }
+
+    // 変更 セッターとゲッターの並び順、createdとupdated削除
+    public function setName($name) {
+        $this->data["name"] = $name;
+    }
+
+    public function getName() {
+        return $this->data["name"];
+    }
+    
+    public function setPrice($price) {
+        $this->data["price"] = $price;
+    }
+
+    public function getPrice() {
+        return $this->data["price"];
+    }
+    
+    public function setStock($stock) {
+        $this->data["stock"] = $stock;
+    }
+    
+    public function getStock() {
+        return $this->data["stock"];
+    }
 
     public static function findAll() {
         $dbh = SELF::dbconnect();
@@ -39,59 +73,31 @@ class Item Extends BaseModel {
         return true;
     }
 
-
-    // 変更 セッターとゲッターの追加
-    public function setName($name) {
-        $this->data["name"] = $name;
-    }
-
-    public function setPrice($price) {
-        $this->data["price"] = $price;
-    }
-
-    public function setStock($stock) {
-        $this->data["stock"] = $stock;
-    }
-    public function setCreatedAt($createdAt) {
-        $this->data["created_at"] = $createdAt;
-    }
-
-    public function setUpdatedAt($updatedAt) {
-        $this->data["updated_at"] = $updatedAt;
-    }
-
-    public function getName() {
-        return $this->data["name"];
-    }
-    
-    public function getPrice() {
-        return $this->data["price"];
-    }
-    
-    public function getStock() {
-        return $this->data["stock"];
-    }
-
-    public function getCreatedAt() {
-        return $this->data["created_at"];
-    }
-
-    public function getUpdatedAt() {
-        return $this->data["updated_at"];
-    }
-
-    // 変更 インサート処理用メソッドの追加
     public function save() {
         $dbh = SELF::dbconnect();
-        
+
         $store = $dbh->prepare(
             "INSERT INTO items SET name=?, price=?, stock=?, created_at=?, updated_at=?");
         $store->execute([
             $this->getName(),
             $this->getPrice(),
             $this->getStock(),
-            $this->getCreatedAt(),
-            $this->getUpdatedAt()
+            date("Y-m-d H:i:s"), // 変更 createdはここで取得
+            date("Y-m-d H:i:s") // 変更 updatedはここで取得
+        ]);
+    }
+
+    public function update() {
+        $dbh = SELF::dbconnect();
+
+        $store = $dbh->prepare(
+            "UPDATE items SET name=?, price=?, stock=?, updated_at=? WHERE id=?");
+        $store->execute([
+            $this->getName(),
+            $this->getPrice(),
+            $this->getStock(),
+            date("Y-m-d H:i:s"),
+            $this->getId()
         ]);
     }
 }
