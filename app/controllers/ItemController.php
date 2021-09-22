@@ -61,31 +61,30 @@ class ItemController {
         return;
     }
 
-    // 変更 editメソッドを追加
+    // 変更 editメソッドを修正
     public static function edit() {
-        if ($_SERVER["REQUEST_METHOD"] === "GET") {
-            $item_id = $_GET["id"];
+        $item_id = $_GET["id"];
 
-            if (!$item_id) {
-                header("Location: ../error/404.php");
-                exit();
-            }
-            
-            $item = Item::findById($item_id);
-
-            $is_exist = Item::isExistById($item);
-            if ($is_exist === false) {
-                header("Location: ../error/404.php");
-                exit();
-            };
-
-            return $item;
+        if (!$item_id) {
+            header("Location: ../error/404.php");
+            exit();
         }
+        
+        $item = Item::findById($item_id);
+        if (!$item) {
+            header("Location: ../error/404.php");
+            exit();
+        };
 
-        return true;
+        // 入力された値と、マスターにある値を両方渡したい
+        $item =[
+            "input" => $_GET,
+            "master" => $item
+        ];
+
+        return $item;
     }
 
-    // 変更 updateメソッドを追加
     public static function update() {
         $dbh = Item::dbconnect();
 
@@ -94,7 +93,10 @@ class ItemController {
     
         // validationがNGだった場合にはリダイレクト
         if ($validation->check() === false) {
-            header("Location: edit.php?id=" . $_GET["id"] . "&error=1");
+            session_start();
+            $_SESSION["error"] = "入力に不正があった為、登録に失敗しました。";
+
+            header("Location: edit.php?id=" . $_GET["id"] . "&name="  . $_POST["name"] . "&price=" . $_POST["price"] . "&stock=" . $_POST["stock"]);
             return;
         }
 

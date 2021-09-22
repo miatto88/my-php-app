@@ -3,22 +3,27 @@ require_once("../../models/item.php");
 require_once("../../controllers/ItemController.php");
 require_once("../../validations/Itemvalidation.php");
 
-// POST以外が送信された時は edit() を呼び出す処理
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $item = ItemController::edit();
-
-    // validationがNGでリダイレクトされた時のメッセージ
-    if ($_GET["error"] === "1") {
-        $error = "入力に不正があった為、登録に失敗しました。";
-    } else {
-        $error = "";
-    }
-}
-
 // POSTが送信された時は update() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     ItemController::update();
 }
+
+// POST以外が送信された時は edit() を呼び出す処理
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    $item = ItemController::edit();
+
+    // 変更 バリデーションエラー時にセッションを取得する処理を追加
+    session_start();
+    if (isset($_SESSION["error"])) {
+        $error = $_SESSION["error"];
+    
+        unset($_SESSION["error"]);
+        session_destroy();
+    }
+}
+
+// 編集しようとしている製品の現在の情報を呼び出すする処理
+// $item = ItemController::detail();
 
 // GETが空の時のvalue値を空白に設定する
 // if (empty($$item["name"])) {
@@ -57,13 +62,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div>[製品編集]</div>
             <div>
                 <form action="" method="POST">
-                    <p>製品名：　<input type="text" name="name" value="<?php echo $item['name'] ?>"></p>
-                    <p>価格　：　<input type="number" name="price" value="<?php echo $item['price'] ?>"></p>
-                    <p>在庫　：　<input type="number" name="stock" value="<?php echo $item['stock'] ?>"></p>
+                    <p>製品名：　<input type="text" name="name" value="<?php echo $item["input"]['name'] ?>"></p>
+                    <p>価格　：　<input type="number" name="price" value="<?php echo $item["input"]['price'] ?>"></p>
+                    <p>在庫　：　<input type="number" name="stock" value="<?php echo $item["input"]['stock'] ?>"></p>
                     <p><input type="submit" value="更新する"></p>
                 </form>
             </div>
-            <div><p><?php echo $error ?></p></div>
+            <div>
+                <p><?php echo $error ?></p>
+            </div>
+            <hr>
+            <div>
+                <div>
+                    <p>[製品情報]</p>
+                </div>
+                <div>
+                    <?php echo "製品名　　　　：　　" . $item["master"]["name"]; ?>
+                </div>
+                <div>
+                    <?php echo "価格　　　　　：　　" . $item["master"]["price"]; ?>
+                </div>
+                <div>
+                    <?php echo "在庫　　　　　：　　" . $item["master"]["stock"]; ?>
+                </div>
+                <div>
+                    <?php echo "登録日　　　　：　　" . $item["master"]["created_at"]; ?>
+                </div>
+                <div>
+                    <?php echo "最終更新日　　：　　" . $item["master"]["updated_at"]; ?>
+                </div>
+            </div>
         </section>
         <?php readfile("../layout/sidemenu.php") ?>
     </div>
