@@ -44,6 +44,9 @@ class ItemController {
     
         // validationがNGだった場合にはリダイレクト
         if ($validation->check() === false) {
+            session_start();
+            $_SESSION["errors"] = $validation->getErrorMessages();
+
             header("Location: new.php?name=" . $_POST["name"] . "&price=" . $_POST["price"] . "&stock=" . $_POST["stock"]);
             return;
         }
@@ -55,13 +58,21 @@ class ItemController {
         $item->setPrice($data["price"]);
         $item->setStock($data["stock"]);
 
-        $item->save();
+        $save = $item->save();
+
+        // 変更 DB登録に失敗した場合の処理
+        if ($save !== true) {
+            session_start();
+            $_SESSION["errors"]["database"] = "データ登録に失敗しました";
+
+            header("Location: new.php");
+            return;
+        }
         
         header("Location: index.php");
         return;
     }
 
-    // 変更 editメソッドを修正
     public static function edit() {
         $item_id = $_GET["id"];
 
@@ -94,7 +105,7 @@ class ItemController {
         // validationがNGだった場合にはリダイレクト
         if ($validation->check() === false) {
             session_start();
-            $_SESSION["error"] = "入力に不正があった為、登録に失敗しました。";
+            $_SESSION["errors"] = $validation->getErrorMessages();
 
             header("Location: edit.php?id=" . $_GET["id"] . "&name="  . $_POST["name"] . "&price=" . $_POST["price"] . "&stock=" . $_POST["stock"]);
             return;
@@ -108,7 +119,16 @@ class ItemController {
         $item->setPrice($data["price"]);
         $item->setStock($data["stock"]);
 
-        $item->update();
+        $update = $item->update();
+
+        // 変更 DB更新に失敗した場合の処理
+        if ($update !== true) {
+            session_start();
+            $_SESSION["errors"]["database"] = "データ更新に失敗しました";
+
+            header("Location: edit.php?id=" . $_GET["id"]);
+            return;
+        }
         
         header("Location: index.php");
         return;

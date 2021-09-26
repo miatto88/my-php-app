@@ -11,15 +11,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // POST以外が送信された時は edit() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     $item = ItemController::edit();
+    $errors = [];
 
     // 変更 バリデーションエラー時にセッションを取得する処理を追加
     session_start();
-    if (isset($_SESSION["error"])) {
-        $error = $_SESSION["error"];
+    if (isset($_SESSION["errors"])) {
+        $errors = $_SESSION["errors"];
     
-        unset($_SESSION["error"]);
-        session_destroy();
+        unset($_SESSION["errors"]);
     }
+    session_destroy();
 }
 
 // 編集しようとしている製品の現在の情報を呼び出すする処理
@@ -63,13 +64,15 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             <div>
                 <form action="" method="POST">
                     <p>製品名：　<input type="text" name="name" value="<?php echo $item["input"]['name'] ?>"></p>
-                    <p>価格　：　<input type="number" name="price" value="<?php echo $item["input"]['price'] ?>"></p>
-                    <p>在庫　：　<input type="number" name="stock" value="<?php echo $item["input"]['stock'] ?>"></p>
+                    <p>価格　：　<input type="number" min="0" name="price" value="<?php echo $item["input"]['price'] ?>"></p>
+                    <p>在庫　：　<input type="number" min="0" name="stock" value="<?php echo $item["input"]['stock'] ?>"></p>
                     <p><input type="submit" value="更新する"></p>
                 </form>
             </div>
             <div>
-                <p><?php echo $error ?></p>
+                <?php foreach ($errors as $error): ?>
+                    <p><?php echo $error; ?></p>
+                <?php endforeach ?>
             </div>
             <hr>
             <div>

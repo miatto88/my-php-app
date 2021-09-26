@@ -3,7 +3,7 @@ require_once("BaseModel.php");
 
 class Item Extends BaseModel {
     private $data = [
-        "id", // 変更 idを追加
+        "id",
         "name",
         "price",
         "stock",
@@ -13,7 +13,6 @@ class Item Extends BaseModel {
     
     public $dbh;
 
-    // 変更 idのセッターとゲッターを追加
     public function setId($id) {
         $this->data["id"] = $id;
     }
@@ -22,7 +21,6 @@ class Item Extends BaseModel {
         return $this->data["id"];
     }
 
-    // 変更 セッターとゲッターの並び順、createdとupdated削除
     public function setName($name) {
         $this->data["name"] = $name;
     }
@@ -73,32 +71,52 @@ class Item Extends BaseModel {
         return true;
     }
 
-    public function save() {
-        $dbh = SELF::dbconnect();
+    public function save() { // 変更 try-catch追加
+        try {
+            $dbh = SELF::dbconnect();
+    
+            $store = $dbh->prepare(
+                "INSERT INTO items SET name=?, price=?, stock=?, created_at=?, updated_at=?");
+            $result = $store->execute([
+                $this->getName(),
+                $this->getPrice(),
+                $this->getStock(),
+                date("Y-m-d H:i:s"),
+                date("Y-m-d H:i:s")
+            ]);
 
-        $store = $dbh->prepare(
-            "INSERT INTO items SET name=?, price=?, stock=?, created_at=?, updated_at=?");
-        $store->execute([
-            $this->getName(),
-            $this->getPrice(),
-            $this->getStock(),
-            date("Y-m-d H:i:s"), // 変更 createdはここで取得
-            date("Y-m-d H:i:s") // 変更 updatedはここで取得
-        ]);
+            return $result;
+        } catch (PDOException $e) {
+            echo "DB登録エラー: " . $e->getMessage();
+        }
     }
 
-    public function update() {
-        $dbh = SELF::dbconnect();
+    public function update() { // 変更 try-catch追加
+        try {
+            $dbh = SELF::dbconnect();
+    
+            $dbh->beginTransaction(); // トランザクション 開始
 
-        $store = $dbh->prepare(
-            "UPDATE items SET name=?, price=?, stock=?, updated_at=? WHERE id=?");
-        $store->execute([
-            $this->getName(),
-            $this->getPrice(),
-            $this->getStock(),
-            date("Y-m-d H:i:s"),
-            $this->getId()
-        ]);
+            $store = $dbh->prepare(
+                "UPDATE items SET name=?, price=?, stock=?, updated_at=? WHERE id=?");
+            $result = $store->execute([
+                $this->getName(),
+                $this->getPrice(),
+                $this->getStock(),
+                date("Y-m-d H:i:s"),
+                $this->getId()
+            ]);
+
+            if ($result) {
+                $dbh->commit(); // トランザクション コミット
+            }
+
+            return $result;
+        } catch (PDOException $e) {
+            echo "DB更新エラー: " . $e->getMessage(); // トランザクション ロールバック
+
+            $dbh->rollBack();
+        }
     }
 }
 

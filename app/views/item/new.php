@@ -7,13 +7,20 @@ require_once("../../validations/Itemvalidation.php");
 // POST以外が送信された時は new() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     $get = ItemController::new();
+    $errors = [];
 
     // validationがNGでリダイレクトされた時のメッセージ(仮)
     if (!empty($get)) {
-        $error = "入力に不正があった為、登録に失敗しました。";
-    } else {
-        $error = "";
+        $errors[] = "入力に不正があった為、登録に失敗しました。";
     }
+
+    session_start();
+    if (isset($_SESSION["errors"])) {
+        $errors = $_SESSION["errors"];
+    
+        unset($_SESSION["errors"]);
+    }
+    session_destroy();
 }
 
 // POSTが送信された時は store() を呼び出す処理
@@ -59,14 +66,18 @@ if (empty($get["stock"])) {
             <div>
                 <form action="" method="POST">
                     <p>製品名：　<input type="text" name="name" value="<?php echo $get['name'] ?>"></p>
-                    <p>価格　：　<input type="number" name="price" value="<?php echo $get['price'] ?>"></p>
-                    <p>在庫　：　<input type="number" name="stock" value="<?php echo $get['stock'] ?>"></p>
+                    <p>価格　：　<input type="number" min="0" name="price" value="<?php echo $get['price'] ?>"></p>
+                    <p>在庫　：　<input type="number" min="0" name="stock" value="<?php echo $get['stock'] ?>"></p>
                     <p><input type="hidden" name="created_at" value="<?php echo date("Y-m-d H:i:s") ?>"></p>
                     <p><input type="hidden" name="updated_at" value="<?php echo date("Y-m-d H:i:s") ?>"></p>
                     <p><input type="submit" value="登録する"></p>
                 </form>
             </div>
-            <div><p><?php echo $error ?></p></div>
+            <div>
+                <?php foreach ($errors as $error): ?>
+                    <p><?php echo $error; ?></p>
+                <?php endforeach ?>
+            </div>
         </section>
         <?php readfile("../layout/sidemenu.php") ?>
     </div>
