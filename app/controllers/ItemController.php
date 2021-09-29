@@ -60,7 +60,6 @@ class ItemController {
 
         $save = $item->save();
 
-        // 変更 DB登録に失敗した場合の処理
         if ($save !== true) {
             session_start();
             $_SESSION["errors"]["database"] = "データ登録に失敗しました";
@@ -121,7 +120,6 @@ class ItemController {
 
         $update = $item->update();
 
-        // 変更 DB更新に失敗した場合の処理
         if ($update !== true) {
             session_start();
             $_SESSION["errors"]["database"] = "データ更新に失敗しました";
@@ -132,6 +130,10 @@ class ItemController {
         
         header("Location: index.php");
         return;
+    }
+
+    public function delete() {
+
     }
 }
 
