@@ -71,7 +71,7 @@ class Item Extends BaseModel {
         return true;
     }
 
-    public function save() { // 変更 try-catch追加
+    public function save() {
         try {
             $dbh = SELF::dbconnect();
     
@@ -91,7 +91,7 @@ class Item Extends BaseModel {
         }
     }
 
-    public function update() { // 変更 try-catch追加
+    public function update() {
         try {
             $dbh = SELF::dbconnect();
     
@@ -109,6 +109,10 @@ class Item Extends BaseModel {
 
             if ($result) {
                 $dbh->commit(); // トランザクション コミット
+            }
+
+            if (!$result) {
+                $dbh->rollBack(); // 変更 トランザクション ロールバック
             }
 
             return $result;
