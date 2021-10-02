@@ -41,11 +41,16 @@ $items = ItemController::index();
             <div class="button">
                 <a href="in_count.php?id=<?php echo $item["id"] ?>">入庫</a>
                 <a href="out_count.php?id=<?php echo $item["id"] ?>">出庫</a>
+                <button data-btn-type="ajax" value="<?php echo $item["id"] ?>">削除</button>
             </div>
             <hr>
             <?php endforeach; ?>
+            <p>
+        </p>
         </section>
         <?php readfile("../layout/sidemenu.php") ?>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="api.js"></script>
 </body>
 </html>

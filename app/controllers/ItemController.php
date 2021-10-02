@@ -132,8 +132,15 @@ class ItemController {
         return;
     }
 
-    public function delete() {
+    public static function delete($id) {
+        $item = new Item;
+        $item->setId($id);
+        $id = $item->getId();
 
+        $item->delete($id);
+
+        header("Location: ../item/index.php");
+        return;
     }
 }
 

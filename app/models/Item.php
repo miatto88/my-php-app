@@ -122,6 +122,17 @@ class Item Extends BaseModel {
             $dbh->rollBack();
         }
     }
+
+    public function delete($id) {
+        $dbh = SELF::dbconnect();
+
+        $stmt = $dbh->prepare(
+            "DELETE FROM items WHERE id=?"
+        );
+        $result = $stmt->execute([$id]);
+
+        return $result;
+    }
 }
 
 ?>
