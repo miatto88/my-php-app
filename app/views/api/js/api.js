@@ -22,6 +22,7 @@ $(function() {
 
         .fail(function (jqXHR, textStatus, errorThrown) {
             console.log("ajax通信：失敗");
+            $(".messages").html("削除に失敗しました。");
             
             console.log("jqXHR       : " + jqXHR.status); // HTTPステータス取得
             console.log("textStatus  : " + textStatus); // タイムアウト、パースエラー
