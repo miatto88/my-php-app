@@ -30,20 +30,23 @@ $items = ItemController::index();
             <div class="btns">
                 <a href="new.php" >製品登録</a><!-- 変更 new.phpへのリンク追加 -->
             </div>
+            <span class="messages"></span>
             <hr>
             <?php foreach($items as $item): ?>
-            <div class="item_name">
-                <a href="detail.php?id=<?php echo $item["id"] ?>" ><?php echo $item["name"]; ?></a>
+            <div class="item_data" id=<?php echo "item_id_" . $item["id"] ?>>
+                <div class="item_name">
+                    <a href="detail.php?id=<?php echo $item["id"] ?>" ><?php echo $item["name"]; ?></a>
+                </div>
+                <div class="item_property">
+                    <span>在庫：<?php echo $item["stock"]; ?></span>
+                </div>
+                <div class="button">
+                    <a href="in_count.php?id=<?php echo $item["id"] ?>">入庫</a>
+                    <a href="out_count.php?id=<?php echo $item["id"] ?>">出庫</a>
+                    <button data-btn-type="ajax" value="<?php echo $item["id"] ?>">削除</button>
+                </div>
+                <hr>
             </div>
-            <div class="item_property">
-                <span>在庫：<?php echo $item["stock"]; ?></span>
-            </div>
-            <div class="button">
-                <a href="in_count.php?id=<?php echo $item["id"] ?>">入庫</a>
-                <a href="out_count.php?id=<?php echo $item["id"] ?>">出庫</a>
-                <button data-btn-type="ajax" value="<?php echo $item["id"] ?>">削除</button>
-            </div>
-            <hr>
             <?php endforeach; ?>
             <p>
         </p>
@@ -51,6 +54,6 @@ $items = ItemController::index();
         <?php readfile("../layout/sidemenu.php") ?>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="api.js"></script>
+    <script type="text/javascript" src="../api/js/api.js"></script>
 </body>
 </html>

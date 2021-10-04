@@ -119,6 +119,11 @@ p.error {
     color: black;
 }
 
+.btns {
+    display: inline-block;
+    width: 120px;
+}
+
 .item_name {
     display: inline-block;
     width: 120px;

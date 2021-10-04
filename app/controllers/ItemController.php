@@ -133,14 +133,22 @@ class ItemController {
     }
 
     public static function delete($id) {
+        // 変更 idの存在チェックを追加
+        $item_id = Item::findById($id);
+
+        $is_exist = Item::isExistById($item_id);
+        if ($is_exist === false) {
+            header("Location: ../error/404.php");
+            exit();
+        };
+
         $item = new Item;
         $item->setId($id);
         $id = $item->getId();
 
         $item->delete($id);
 
-        header("Location: ../item/index.php");
-        return;
+        exit();
     }
 }
 

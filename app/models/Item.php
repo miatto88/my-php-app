@@ -124,14 +124,31 @@ class Item Extends BaseModel {
     }
 
     public function delete($id) {
-        $dbh = SELF::dbconnect();
+        // 変更 try-catchとトランザクションの追加
+        try {
+            $dbh = SELF::dbconnect();
 
-        $stmt = $dbh->prepare(
-            "DELETE FROM items WHERE id=?"
-        );
-        $result = $stmt->execute([$id]);
+            $dbh->beginTransaction(); // トランザクション 開始
+    
+            $stmt = $dbh->prepare(
+                "DELETE FROM items WHERE id=?"
+            );
+            $result = $stmt->execute([$id]);
 
-        return $result;
+            if ($result) {
+                $dbh->commit(); // トランザクション コミット
+            }
+
+            if(!$result) {
+                $dbh->rollBack(); // トランザクション ロールバック
+            }
+    
+            return $result;
+        } catch (PDOException $e) {
+            echo "DB削除エラー: " . $e->getMessage(); // トランザクション ロールバック
+
+            $dbh->rollBack();
+        }
     }
 }
 
