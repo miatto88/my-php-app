@@ -132,24 +132,26 @@ class ItemController {
         return;
     }
 
-    public static function delete($id) {
-        // 変更 idの存在チェックを追加
-        $item_id = Item::findById($id);
+    // 変更 delete機能は api/ItemController へ移行
 
-        $is_exist = Item::isExistById($item_id);
-        if ($is_exist === false) {
-            header("Location: ../error/404.php");
-            exit();
-        };
+    // public static function delete($id) {
+    //     // 変更 idの存在チェックを追加
+    //     $item_id = Item::findById($id);
 
-        $item = new Item;
-        $item->setId($id);
-        $id = $item->getId();
+    //     $is_exist = Item::isExistById($item_id);
+    //     if ($is_exist === false) {
+    //         header("Location: ../error/404.php");
+    //         exit();
+    //     };
 
-        $item->delete($id);
+    //     $item = new Item;
+    //     $item->setId($id);
+    //     $id = $item->getId();
 
-        exit();
-    }
+    //     $item->delete($id);
+
+    //     exit();
+    // }
 }
 
 ?>

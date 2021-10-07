@@ -1,5 +1,5 @@
 <?php
-require_once("../../controllers/ItemController.php");
+require_once("../../controllers/api/ItemController.php");
 
 header("Content-type: application/json; charset=UTF-8");
 
@@ -11,20 +11,28 @@ try {
         throw new Exception("idを受け取れませんでした。");
     }
 
-    ItemController::delete($id);
-    header("Location: ../item/index.php");
-        return;
+    $result = ItemController::delete($id);
 
-    $result = [
-        "result" => "OK",
-        "deleted_id" => "$id"
-    ];
+    if ($result) {
+        $response = [
+            "result" => "OK",
+            "deleted_id" => $id
+        ];
+    }
+    
+    if (!$result) {
+        $response = [
+            "result" => "NG",
+            "message" => "Delete_Failed"
+        ];
+    }
 } catch (Exception $e) {
-    $result = [
-        "result" => "NG",
+    $response = [
+        "result" => "Error",
         "message" => $e->getMessage()
     ];
 }
 
-return json_encode($result);
+echo json_encode($response);
+exit();
 ?>

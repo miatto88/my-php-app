@@ -28,7 +28,7 @@ $items = ItemController::index();
     <div class="wrapper">
         <section class="main">
             <div class="btns">
-                <a href="new.php" >製品登録</a><!-- 変更 new.phpへのリンク追加 -->
+                <a href="new.php" >製品登録</a>
             </div>
             <span class="messages"></span>
             <hr>
@@ -54,6 +54,6 @@ $items = ItemController::index();
         <?php readfile("../layout/sidemenu.php") ?>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="../api/js/api.js"></script>
+    <script type="text/javascript" src="../../js/api.js"></script>
 </body>
 </html>

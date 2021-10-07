@@ -10,19 +10,22 @@ $(function() {
         $.ajax({
             url: "../api/delete.php",
             type: "post",
-            dataType: "text",
+            dataType: "json",
             data: send_data,
         })
 
-        .done(function (response) {
+        .done(function(response) {
             console.log("ajax通信：成功");
-            // 変更 成功時、対象のDOM要素を削除
-            $("#item_id_" + send_data["id"]).remove();
+            console.log(response);
+            // 成功時、対象のDOM要素を削除
+            if (response.result === "OK") {
+                $("#item_id_" + send_data["id"]).remove();
+            }
         })
 
-        .fail(function (jqXHR, textStatus, errorThrown) {
+        .fail(function(jqXHR, textStatus, errorThrown) {
             console.log("ajax通信：失敗");
-            $(".messages").html("削除に失敗しました。");
+            $(".messages").html("通信に失敗しました");
             
             console.log("jqXHR       : " + jqXHR.status); // HTTPステータス取得
             console.log("textStatus  : " + textStatus); // タイムアウト、パースエラー
