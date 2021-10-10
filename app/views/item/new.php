@@ -2,6 +2,9 @@
 require_once("../../models/item.php");
 require_once("../../controllers/ItemController.php");
 require_once("../../validations/Itemvalidation.php");
+require_once("../../controllers/AuthController.php");
+
+AuthController::sessionCheck();
 
 
 // POST以外が送信された時は new() を呼び出す処理
@@ -20,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     
         unset($_SESSION["errors"]);
     }
-    session_destroy();
+    // session_destroy();
 }
 
 // POSTが送信された時は store() を呼び出す処理
@@ -56,8 +59,8 @@ if (empty($get["stock"])) {
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： "; ?></span>
-            <span><a href="#">ログアウト</a></span>
+            <span><?php echo "ログイン名： " . $_SESSION["name"]; ?></span>
+            <span><a href="../auth/login.php">ログアウト</a></span>
         </div>
     </header>
     <div class="wrapper">

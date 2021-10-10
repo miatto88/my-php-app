@@ -43,9 +43,11 @@ h1.login-title {
 }
 
 .login-form > div{
+    display: flex;
+    width: 200px;
     margin-top: 16px;
-    margin-bottom: 12px;
     text-align: center;
+    justify-content: space-between;
 }
 
 p.error {

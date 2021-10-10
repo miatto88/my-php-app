@@ -1,6 +1,9 @@
 <?php
 require_once("../../models/item.php");
 require_once("../../controllers/ItemController.php");
+require_once("../../controllers/AuthController.php");
+
+AuthController::sessionCheck();
 
 $items = ItemController::index();
 
@@ -21,8 +24,8 @@ $items = ItemController::index();
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： "; ?></span>
-            <span><a href="#">ログアウト</a></span>
+            <span><?php echo "ログイン名： " . $_SESSION["name"]; ?></span>
+            <span><a href="../auth/login.php">ログアウト</a></span>
         </div>
     </header>
     <div class="wrapper">
