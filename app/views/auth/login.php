@@ -2,25 +2,24 @@
 require_once("../../controllers/AuthController.php");
 require_once("../../validations/Authvalidation.php");
 
-session_start();
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $member = AuthController::auth();
 
-    if ($member) {
-        $_SESSION["member"] = [
-            $_SESSION["id"] = $member["id"],
-            $_SESSION["name"] = $member["last_name"] . $member["first_name"]
-        ];
-        $_SESSION["time"] = time();
+    // 変更 auth()メソッドないに移行
+    // if ($member) {
+    //     $_SESSION["member"] = [
+    //         $_SESSION["id"] = $member["id"],
+    //         $_SESSION["name"] = $member["last_name"] . $member["first_name"]
+    //     ];
+    //     $_SESSION["time"] = time();
 
-        header("Location: ../item/index.php");
-        return;
-    }
+    //     header("Location: ../item/index.php");
+    //     return;
+    // }
 }
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $get = AuthController::get();
+    $get = AuthController::index();
 
     if (isset($_SESSION["errors"])) {
         $errors = $_SESSION["errors"];

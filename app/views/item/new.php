@@ -4,7 +4,8 @@ require_once("../../controllers/ItemController.php");
 require_once("../../validations/Itemvalidation.php");
 require_once("../../controllers/AuthController.php");
 
-AuthController::sessionCheck();
+// AuthController::sessionCheck();
+new ItemController; // セッションチェックを起動したい
 
 
 // POST以外が送信された時は new() を呼び出す処理

@@ -1,8 +1,9 @@
 <?php
+require_once("BaseController.php");
 require_once("../../models/item.php");
 require_once("../../validations/Itemvalidation.php");
 
-class ItemController {
+class ItemController Extends BaseController {
     public static function index() {
         $items = Item::findAll();
 
@@ -131,27 +132,6 @@ class ItemController {
         header("Location: index.php");
         return;
     }
-
-    // 変更 delete機能は api/ItemController へ移行
-
-    // public static function delete($id) {
-    //     // 変更 idの存在チェックを追加
-    //     $item_id = Item::findById($id);
-
-    //     $is_exist = Item::isExistById($item_id);
-    //     if ($is_exist === false) {
-    //         header("Location: ../error/404.php");
-    //         exit();
-    //     };
-
-    //     $item = new Item;
-    //     $item->setId($id);
-    //     $id = $item->getId();
-
-    //     $item->delete($id);
-
-    //     exit();
-    // }
 }
 
 ?>

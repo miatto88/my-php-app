@@ -1,8 +1,9 @@
 <?php
+require_once("BaseController.php");
 require_once("../../models/auth.php");
 
-Class AuthController {
-    public static function get() {
+Class AuthController Extends BaseController {
+    public static function index() {
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             return $_GET;
         }
@@ -23,32 +24,46 @@ Class AuthController {
 
         $data = $validation->getData();
         $member = Auth::findMember($data["last_name"], $data["first_name"], $data["password"]);
+        
+        // $memberを取得できたらセッションに保存する処理
+        if ($member) {
+            session_start();
+            $_SESSION["member"] = [
+                $_SESSION["id"] = $member["id"],
+                $_SESSION["name"] = $member["last_name"] . $member["first_name"]
+            ];
+            // $_SESSION["time"] = time();
+    
+            header("Location: ../item/index.php");
+            return;
+        }
+        
         return $member;
     }
 
-    // セッション切れに関わる処理
-    public static function sessionCheck() {
-        session_start();
+    // 変更 BaseControllerのコンストラクタに移行
+    // public function __cunstruct() {
+    //     session_start();
 
-        // タイムアウトの処理は不要
-        // if ($_SESSION["time"] + 3600 < time()) {
-        //     $_SESSION = [];
-        //     session_destroy();
+    //     // タイムアウトの処理は不要
+    //     // if ($_SESSION["time"] + 3600 < time()) {
+    //     //     $_SESSION = [];
+    //     //     session_destroy();
 
-        //     header("Location: ../auth/login.php");
-        //     return;
-        // }
+    //     //     header("Location: ../auth/login.php");
+    //     //     return;
+    //     // }
 
-        // $_SESSION["time"] = time();
+    //     // $_SESSION["time"] = time();
 
-        if (empty($_SESSION["member"])) {
-            $_SESSION = [];
-            session_destroy();
+    //     if (empty($_SESSION["member"])) {
+    //         $_SESSION = [];
+    //         session_destroy();
 
-            header("Location: ../auth/login.php");
-            return;
-        }
-    }
+    //         header("Location: ../auth/login.php");
+    //         return;
+    //     }
+    // }
 }
 
 
