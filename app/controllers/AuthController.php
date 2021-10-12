@@ -30,15 +30,16 @@ Class AuthController {
     public static function sessionCheck() {
         session_start();
 
-        if ($_SESSION["time"] + 3600 < time()) {
-            $_SESSION = [];
-            session_destroy();
+        // タイムアウトの処理は不要
+        // if ($_SESSION["time"] + 3600 < time()) {
+        //     $_SESSION = [];
+        //     session_destroy();
 
-            header("Location: ../auth/login.php");
-            return;
-        }
+        //     header("Location: ../auth/login.php");
+        //     return;
+        // }
 
-        $_SESSION["time"] = time();
+        // $_SESSION["time"] = time();
 
         if (empty($_SESSION["member"])) {
             $_SESSION = [];
