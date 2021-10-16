@@ -4,11 +4,11 @@ require_once("../../controllers/ItemController.php");
 require_once("../../validations/Itemvalidation.php");
 require_once("../../controllers/AuthController.php");
 
-new ItemController;
+$controller = new ItemController;
 
 // POST以外が送信された時は new() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $get = ItemController::new();
+    $get = $controller->new();
     $errors = [];
 
     // validationがNGでリダイレクトされた時のメッセージ(仮)
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 // POSTが送信された時は store() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    ItemController::store();
+    $controller->store();
 }
 
 // GETが空の時のvalue値を空白に設定する

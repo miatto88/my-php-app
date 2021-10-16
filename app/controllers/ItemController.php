@@ -4,13 +4,13 @@ require_once("../../models/item.php");
 require_once("../../validations/Itemvalidation.php");
 
 class ItemController Extends BaseController {
-    public static function index() {
+    public function index() { // 変更 非staticなメソッドに
         $items = Item::findAll();
 
         return $items;
     }
 
-    public static function detail() {
+    public function detail() { // 変更 非staticなメソッドに
         $item_id = $_GET["id"];
 
         if (!$item_id) {
@@ -29,7 +29,7 @@ class ItemController Extends BaseController {
         return $item;
     }
 
-    public static function new() {
+    public function new() { // 変更 非staticなメソッドに
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             return $_GET;
         }
@@ -37,7 +37,7 @@ class ItemController Extends BaseController {
         return true;
     }
 
-    public static function store() {
+    public function store() { // 変更 非staticなメソッドに
         $dbh = Item::dbconnect();
 
         $validation = new ItemValidation;
@@ -73,7 +73,7 @@ class ItemController Extends BaseController {
         return;
     }
 
-    public static function edit() {
+    public function edit() { // 変更 非staticなメソッドに
         $item_id = $_GET["id"];
 
         if (!$item_id) {
@@ -96,7 +96,7 @@ class ItemController Extends BaseController {
         return $item;
     }
 
-    public static function update() {
+    public function update() { // 変更 非staticなメソッドに
         $dbh = Item::dbconnect();
 
         $validation = new ItemValidation;

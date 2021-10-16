@@ -4,16 +4,16 @@ require_once("../../controllers/ItemController.php");
 require_once("../../validations/Itemvalidation.php");
 require_once("../../controllers/AuthController.php");
 
-new ItemController;
+$controller = new ItemController;
 
 // POSTが送信された時は update() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    ItemController::update();
+    $controller->update();
 }
 
 // POST以外が送信された時は edit() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $item = ItemController::edit();
+    $item = $controller->edit();
     $errors = [];
 
     // バリデーションエラー時にセッションを取得する処理を追加

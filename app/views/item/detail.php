@@ -3,9 +3,9 @@ require_once("../../models/item.php");
 require_once("../../controllers/ItemController.php");
 require_once("../../controllers/AuthController.php");
 
-new ItemController;
+$controller = new ItemController;
 
-$item = ItemController::detail();
+$item = $controller->detail();
 
 ?>
 
