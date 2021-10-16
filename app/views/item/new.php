@@ -4,9 +4,7 @@ require_once("../../controllers/ItemController.php");
 require_once("../../validations/Itemvalidation.php");
 require_once("../../controllers/AuthController.php");
 
-// AuthController::sessionCheck();
-new ItemController; // セッションチェックを起動したい
-
+new ItemController;
 
 // POST以外が送信された時は new() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -24,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     
         unset($_SESSION["errors"]);
     }
-    // session_destroy();
 }
 
 // POSTが送信された時は store() を呼び出す処理

@@ -4,8 +4,7 @@ require_once("../../controllers/ItemController.php");
 require_once("../../validations/Itemvalidation.php");
 require_once("../../controllers/AuthController.php");
 
-// AuthController::sessionCheck();
-new ItemController; // セッションチェックを起動したい
+new ItemController;
 
 // POSTが送信された時は update() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -17,29 +16,14 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     $item = ItemController::edit();
     $errors = [];
 
-    // 変更 バリデーションエラー時にセッションを取得する処理を追加
+    // バリデーションエラー時にセッションを取得する処理を追加
     session_start();
     if (isset($_SESSION["errors"])) {
         $errors = $_SESSION["errors"];
     
         unset($_SESSION["errors"]);
     }
-    // session_destroy();
 }
-
-// 編集しようとしている製品の現在の情報を呼び出すする処理
-// $item = ItemController::detail();
-
-// GETが空の時のvalue値を空白に設定する
-// if (empty($$item["name"])) {
-//     $$item["name"] = "";
-// }
-// if (empty($$item["price"])) {
-//     $$item["price"] = "";
-// }
-// if (empty($$item["stock"])) {
-//     $$item["stock"] = "";
-// }
 
 ?>
 

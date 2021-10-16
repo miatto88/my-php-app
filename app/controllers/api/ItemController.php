@@ -1,10 +1,9 @@
 <?php
 require_once("../../models/item.php");
-// require_once("../../validations/Itemvalidation.php");
 
 class ItemController {
     public static function delete($id) {
-        // idの存在チェックを追加
+        // idの存在チェック
         $item_id = Item::findById($id);
 
         $is_exist = Item::isExistById($item_id);

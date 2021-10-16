@@ -4,18 +4,6 @@ require_once("../../validations/Authvalidation.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $member = AuthController::auth();
-
-    // 変更 auth()メソッドないに移行
-    // if ($member) {
-    //     $_SESSION["member"] = [
-    //         $_SESSION["id"] = $member["id"],
-    //         $_SESSION["name"] = $member["last_name"] . $member["first_name"]
-    //     ];
-    //     $_SESSION["time"] = time();
-
-    //     header("Location: ../item/index.php");
-    //     return;
-    // }
 }
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {

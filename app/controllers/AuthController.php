@@ -32,38 +32,13 @@ Class AuthController Extends BaseController {
                 $_SESSION["id"] = $member["id"],
                 $_SESSION["name"] = $member["last_name"] . $member["first_name"]
             ];
-            // $_SESSION["time"] = time();
-    
+
             header("Location: ../item/index.php");
             return;
         }
         
         return $member;
     }
-
-    // 変更 BaseControllerのコンストラクタに移行
-    // public function __cunstruct() {
-    //     session_start();
-
-    //     // タイムアウトの処理は不要
-    //     // if ($_SESSION["time"] + 3600 < time()) {
-    //     //     $_SESSION = [];
-    //     //     session_destroy();
-
-    //     //     header("Location: ../auth/login.php");
-    //     //     return;
-    //     // }
-
-    //     // $_SESSION["time"] = time();
-
-    //     if (empty($_SESSION["member"])) {
-    //         $_SESSION = [];
-    //         session_destroy();
-
-    //         header("Location: ../auth/login.php");
-    //         return;
-    //     }
-    // }
 }
 
 

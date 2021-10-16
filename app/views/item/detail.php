@@ -3,8 +3,7 @@ require_once("../../models/item.php");
 require_once("../../controllers/ItemController.php");
 require_once("../../controllers/AuthController.php");
 
-// AuthController::sessionCheck();
-new ItemController; // セッションチェックを起動したい
+new ItemController;
 
 $item = ItemController::detail();
 

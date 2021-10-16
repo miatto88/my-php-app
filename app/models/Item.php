@@ -112,7 +112,7 @@ class Item Extends BaseModel {
             }
 
             if (!$result) {
-                $dbh->rollBack(); // 変更 トランザクション ロールバック
+                $dbh->rollBack(); // トランザクション ロールバック
             }
 
             return $result;
@@ -124,7 +124,6 @@ class Item Extends BaseModel {
     }
 
     public function delete($id) {
-        // 変更 try-catchとトランザクションの追加
         try {
             $dbh = SELF::dbconnect();
 
