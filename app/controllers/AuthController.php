@@ -39,6 +39,16 @@ Class AuthController Extends BaseController {
         
         return $member;
     }
+
+    public static function logout() {
+        session_start();
+        
+        $_SESSION = [];
+        session_destroy();
+
+        header("Location: ../auth/login.php");
+        return;
+    }
 }
 
 

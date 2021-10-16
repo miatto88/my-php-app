@@ -25,7 +25,7 @@ $item = $controller->detail();
         <h1>在庫管理システム</h1>
         <div class="header-info">
             <span><?php echo "ログイン名： " . $_SESSION["name"]; ?></span>
-            <span><a href="../auth/login.php">ログアウト</a></span>
+            <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
     <div class="wrapper">
