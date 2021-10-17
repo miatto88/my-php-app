@@ -9,6 +9,7 @@ zip \
 unzip \
 vim
 
+# install mailhog
 WORKDIR /usr/local/bin
 RUN curl -sSL https://github.com/evertiro/mhsendmail/releases/download/v0.2.0-M1/mhsendmail_linux_arm64 -o mhsendmail \
    && chmod +x mhsendmail
