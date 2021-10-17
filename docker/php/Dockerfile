@@ -9,6 +9,10 @@ zip \
 unzip \
 vim
 
+WORKDIR /usr/local/bin
+RUN curl -sSL https://github.com/evertiro/mhsendmail/releases/download/v0.2.0-M1/mhsendmail_linux_arm64 -o mhsendmail \
+   && chmod +x mhsendmail
+
 RUN apt-get update \
     && apt-get install -y libpq-dev \
     && docker-php-ext-install pdo_mysql pdo_pgsql mysqli 
