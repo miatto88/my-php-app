@@ -1,10 +1,19 @@
 <?php
-require_once("../../models/member.php");
+require_once("../../models/item.php");
+require_once("../../controllers/ItemController.php");
+require_once("../../validations/Itemvalidation.php");
 require_once("../../controllers/AuthController.php");
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $member = AuthController::store();
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+    AuthController::sendMail();
 
+    // if (isset($_SESSION["errors"])) {
+    //     $errors = $_SESSION["errors"];
+    
+    //     unset($_SESSION["errors"]);
+    // } else {
+    //     $errors = [];
+    // }
 }
 
 
@@ -27,18 +36,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <h1 class="login-title">在庫管理システム</h1>
     <!-- </header> -->
     <div class="login-wrapper">
-        <form class="login-form" action="" method="post">
-            <div>
-            姓：<input type="text" name="last_name">
-            </div>
-            <div>
-            名：<input type="text" name="first_name">
-            </div>
-            <div>
-            パスワード：<input type="password" name="password" size="10">
-            </div>
+        <form class="login-form" action="" method="get">
+            <p>メールアドレスを入力してください</p>            
+            <input type="text" name="mail_address" size="30" placeholder="xxx@xxxx.xx">
             <div class="form-group">
-                <input class="btn btn-outline-primary my-1" type="submit" class="form-control" value="登録">
+                <input class="btn btn-outline-primary my-1" type="submit" class="form-control" value="送信">
             </div>
         </form>
     </div>

@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             </div>
             <div class="form-group">
                 <input class="btn btn-outline-primary my-1" type="submit" class="form-control" value="ログイン">
-                <a class="btn btn-outline-secondary my-1" class="form-control" href="../member/new.php" value="新規登録">新規登録</a>
+                <a class="btn btn-outline-secondary my-1" class="form-control" href="../member/mail_form.php" value="新規登録">新規登録</a>
             </div>
             <p>
                 <?php foreach ($errors as $error): ?>
