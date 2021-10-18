@@ -2,9 +2,13 @@
 require_once("BaseController.php");
 require_once("../../models/auth.php");
 require_once("../../models/member.php");
+require_once("../../validations/Mailvalidation.php");
+require_once("../../validations/Registvalidation.php");
 
 Class AuthController Extends BaseController {
     public static function index() {
+        session_start();
+
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             return $_GET;
         }
@@ -52,36 +56,66 @@ Class AuthController Extends BaseController {
     }
 
     public static function sendMail() {
-        mb_send_mail(
-            $_GET["mail_address"],
+        $validation = new MailValidation;
+        $validation->setData($_POST);
+    
+        // validationがNGだった場合にはリダイレクト
+        if ($validation->check() === false) {
+            session_start();
+            $_SESSION["errors"] = $validation->getErrorMessages();
+
+            header("Location: mail_form.php?mail_address=" . $_POST["mail_address"]);
+            return;
+        }
+
+        $data = $validation->getData();
+
+        // トークンの発行
+
+        // トークンのセッションへの格納
+
+        $sendResult = mb_send_mail(
+            $data["mail_address"],
             "【在庫確認システム】ユーザー登録確認メール",
             "※ユーザー登録はまだ完了していません" . PHP_EOL .
             "下記のURLをクリックし、ユーザー情報の入力を続けてください" . PHP_EOL .
             "http://127.0.0.1:8000/views/member/new.php"
         );
+
+        if ($sendResult !== true) { // 動作未検証
+            session_start();
+            $_SESSION["errors"] = "メール送信に失敗しました";
+
+            header("Location: mail_form.php?error");
+            return;
+        }
+        
+        header("Location: mail_form.php");
+        return;
+
     }
 
-    public function store() { // 変更 非staticなメソッドに
+    public function store() {
         $dbh = Member::dbconnect();
 
-        // $validation = new MemberValidation;
-        // $validation->setData($_POST);
+        $validation = new RegistValidation;
+        $validation->setData($_POST);
     
-        // // validationがNGだった場合にはリダイレクト
-        // if ($validation->check() === false) {
-        //     session_start();
-        //     $_SESSION["errors"] = $validation->getErrorMessages();
+        // validationがNGだった場合にはリダイレクト
+        if ($validation->check() === false) {
+            session_start();
+            $_SESSION["errors"] = $validation->getErrorMessages();
 
-        //     header("Location: new.php?name=" . $_POST["name"] . "&price=" . $_POST["price"] . "&stock=" . $_POST["stock"]);
-        //     return;
-        // }
+            header("Location: new.php?last_name=" . $_POST["last_name"] . "&first_name=" . $_POST["first_name"] . "&password=" . $_POST["password"]);
+            return;
+        }
 
-        // $data = $_POST;
+        $data = $validation->getData();
 
         $member = new Member;
-        $member->setLastName($_POST["last_name"]);
-        $member->setFirstName($_POST["first_name"]);
-        $member->setPassword($_POST["password"]);
+        $member->setLastName($data["last_name"]);
+        $member->setFirstName($data["first_name"]);
+        $member->setPassword($data["password"]);
 
         $save = $member->save();
 

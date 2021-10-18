@@ -4,18 +4,21 @@ require_once("../../controllers/ItemController.php");
 require_once("../../validations/Itemvalidation.php");
 require_once("../../controllers/AuthController.php");
 
-if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    AuthController::sendMail();
-
-    // if (isset($_SESSION["errors"])) {
-    //     $errors = $_SESSION["errors"];
-    
-    //     unset($_SESSION["errors"]);
-    // } else {
-    //     $errors = [];
-    // }
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $member = AuthController::sendMail();
 }
 
+if ($_SERVER["REQUEST_METHOD"]  !== "POST") {
+    $get = AuthController::index();
+
+    if (isset($_SESSION["errors"])) {
+        $errors = $_SESSION["errors"];
+    
+        unset($_SESSION["errors"]);
+    } else {
+        $errors = [];
+    }
+}
 
 ?>
 
@@ -36,12 +39,17 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         <h1 class="login-title">在庫管理システム</h1>
     <!-- </header> -->
     <div class="login-wrapper">
-        <form class="login-form" action="" method="get">
+        <form class="login-form" action="" method="post">
             <p>メールアドレスを入力してください</p>            
             <input type="text" name="mail_address" size="30" placeholder="xxx@xxxx.xx">
             <div class="form-group">
                 <input class="btn btn-outline-primary my-1" type="submit" class="form-control" value="送信">
             </div>
+            <p>
+                <?php foreach ($errors as $error): ?>
+                    <p><?php echo $error; ?></p>
+                <?php endforeach; ?>
+            </p>
         </form>
     </div>
 </body>
