@@ -55,9 +55,9 @@ Class AuthController Extends BaseController {
         return;
     }
 
-    public static function sendMail() {
+    public function sendMail($token) {
         $validation = new MailValidation;
-        $validation->setData($_POST);
+        $validation->setData($_POST["mail_address"]);
     
         // validationがNGだった場合にはリダイレクト
         if ($validation->check() === false) {
@@ -68,30 +68,48 @@ Class AuthController Extends BaseController {
             return;
         }
 
-        $data = $validation->getData();
-
-        // トークンの発行
-
-        // トークンのセッションへの格納
+        $mail_address = $validation->getData();
 
         $sendResult = mb_send_mail(
-            $data["mail_address"],
+            $mail_address,
             "【在庫確認システム】ユーザー登録確認メール",
             "※ユーザー登録はまだ完了していません" . PHP_EOL .
             "下記のURLをクリックし、ユーザー情報の入力を続けてください" . PHP_EOL .
-            "http://127.0.0.1:8000/views/member/new.php"
+            "http://127.0.0.1:8000/views/member/new.php?token=" . $token
         );
 
-        if ($sendResult !== true) { // 動作未検証
+        if ($sendResult !== true) {
             session_start();
-            $_SESSION["errors"] = "メール送信に失敗しました";
+            $_SESSION["errors"][0] = "メール送信に失敗しました";
 
-            header("Location: mail_form.php?error");
+            header("Location: mail_form.php?mail_failed");
             return;
         }
         
-        header("Location: mail_form.php");
+        header("Location: success.php");
         return;
+
+    }
+
+    public function createToken() {
+        $token = rand(0, 100) . uniqid();
+        
+        $dbh = Member::dbconnect();
+        
+        $pre_member = new Member;
+        $pre_member->setToken($token);
+
+        $save = $pre_member->saveToken();
+
+        if ($save !== true) {
+            session_start();
+            $_SESSION["errors"]["database"] = "データ登録に失敗しました";
+
+            header("Location: mail_form.php");
+            return;
+        }
+        
+        return $token;
 
     }
 

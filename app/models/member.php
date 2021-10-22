@@ -7,7 +7,8 @@ class Member Extends BaseModel {
         "last_name",
         "first_name",
         "password",
-        "role"
+        "role",
+        "token"
     ];
     
     public $dbh;
@@ -44,6 +45,14 @@ class Member Extends BaseModel {
         return $this->data["password"];
     }
 
+    public function setToken($token) {
+        $this->data["token"] = $token;
+    }
+    
+    public function getToken() {
+        return $this->data["token"];
+    }
+
     public static function findAll() {
         $dbh = SELF::dbconnect();
 
@@ -68,6 +77,28 @@ class Member Extends BaseModel {
         }
 
         return true;
+    }
+
+    public function saveToken() {
+        try {
+            $dbh = SELF::dbconnect();
+    
+            $store = $dbh->prepare(
+                "INSERT INTO members SET first_name=?, last_name=?, password=?, role=?, token=?, created_at=?, updated_at=?");
+            $result = $store->execute([
+                "pre_member",
+                "pre_member",
+                $this->getToken(),
+                "0",
+                $this->getToken(),
+                date("Y-m-d H:i:s"),
+                date("Y-m-d H:i:s")
+            ]);
+
+            return $result;
+        } catch (PDOException $e) {
+            echo "DB登録エラー: " . $e->getMessage();
+        }
     }
 
     public function save() {

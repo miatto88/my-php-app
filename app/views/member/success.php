@@ -4,24 +4,6 @@ require_once("../../controllers/ItemController.php");
 require_once("../../validations/Itemvalidation.php");
 require_once("../../controllers/AuthController.php");
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $pre_auth = new AuthController;
-    $token = $pre_auth->createToken();
-    
-    $send_mail = $pre_auth->sendMail($token);
-}
-
-if ($_SERVER["REQUEST_METHOD"]  !== "POST") {
-    $get = AuthController::index();
-
-    if (isset($_SESSION["errors"])) {
-        $errors = $_SESSION["errors"];
-    
-        unset($_SESSION["errors"]);
-    } else {
-        $errors = [];
-    }
-}
 
 ?>
 
@@ -43,16 +25,8 @@ if ($_SERVER["REQUEST_METHOD"]  !== "POST") {
     <!-- </header> -->
     <div class="login-wrapper">
         <form class="login-form" action="" method="post">
-            <p>メールアドレスを入力してください</p>            
-            <input type="text" name="mail_address" size="30" placeholder="xxx@xxxx.xx">
-            <div class="form-group">
-                <input class="btn btn-outline-primary my-1" type="submit" class="form-control" value="送信">
-            </div>
-            <p>
-                <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
-                <?php endforeach; ?>
-            </p>
+            <p>メールアドレスに本登録用のURLを送信しました</p>
+            <a href="../auth/login.php">ログイン画面へ戻る</a>
         </form>
     </div>
 </body>
