@@ -57,7 +57,7 @@ Class AuthController Extends BaseController {
 
     public function sendMail($token) {
         $validation = new MailValidation;
-        $validation->setData($_POST["mail_address"]);
+        $validation->setData($_POST);
     
         // validationがNGだった場合にはリダイレクト
         if ($validation->check() === false) {
@@ -68,10 +68,10 @@ Class AuthController Extends BaseController {
             return;
         }
 
-        $mail_address = $validation->getData();
+        $data = $validation->getData();
 
         $sendResult = mb_send_mail(
-            $mail_address,
+            $data["mail_address"],
             "【在庫確認システム】ユーザー登録確認メール",
             "※ユーザー登録はまだ完了していません" . PHP_EOL .
             "下記のURLをクリックし、ユーザー情報の入力を続けてください" . PHP_EOL .
