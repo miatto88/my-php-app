@@ -71,6 +71,15 @@ class Member Extends BaseModel {
         return $member;
     }
 
+    public static function findByToken($token) {
+        $dbh = SELF::dbconnect();
+
+        $member = $dbh->query("SELECT * FROM members WHERE members.token='" . $token . "'");
+        $member = $member->fetch();
+
+        return $member;
+    }
+
     public static function isExistById($member) {
         if ($member["id"] === null || $member["id"] === false) {
             return false;
@@ -101,26 +110,26 @@ class Member Extends BaseModel {
         }
     }
 
-    public function save() {
-        try {
-            $dbh = SELF::dbconnect();
+    // public function save() {
+    //     try {
+    //         $dbh = SELF::dbconnect();
     
-            $store = $dbh->prepare(
-                "INSERT INTO members SET last_name=?, first_name=?, password=?, role=?, created_at=?, updated_at=?");
-            $result = $store->execute([
-                $this->getFirstName(),
-                $this->getLastName(),
-                $this->getPassword(),
-                "0",
-                date("Y-m-d H:i:s"),
-                date("Y-m-d H:i:s")
-            ]);
+    //         $store = $dbh->prepare(
+    //             "INSERT INTO members SET last_name=?, first_name=?, password=?, role=?, created_at=?, updated_at=?");
+    //         $result = $store->execute([
+    //             $this->getFirstName(),
+    //             $this->getLastName(),
+    //             $this->getPassword(),
+    //             "0",
+    //             date("Y-m-d H:i:s"),
+    //             date("Y-m-d H:i:s")
+    //         ]);
 
-            return $result;
-        } catch (PDOException $e) {
-            echo "DB登録エラー: " . $e->getMessage();
-        }
-    }
+    //         return $result;
+    //     } catch (PDOException $e) {
+    //         echo "DB登録エラー: " . $e->getMessage();
+    //     }
+    // }
 
     public function update() {
         try {
@@ -154,32 +163,32 @@ class Member Extends BaseModel {
         }
     }
 
-    public function delete($id) {
-        try {
-            $dbh = SELF::dbconnect();
+    // public function delete($id) {
+    //     try {
+    //         $dbh = SELF::dbconnect();
 
-            $dbh->beginTransaction(); // トランザクション 開始
+    //         $dbh->beginTransaction(); // トランザクション 開始
     
-            $stmt = $dbh->prepare(
-                "DELETE FROM members WHERE id=?"
-            );
-            $result = $stmt->execute([$id]);
+    //         $stmt = $dbh->prepare(
+    //             "DELETE FROM members WHERE id=?"
+    //         );
+    //         $result = $stmt->execute([$id]);
 
-            if ($result) {
-                $dbh->commit(); // トランザクション コミット
-            }
+    //         if ($result) {
+    //             $dbh->commit(); // トランザクション コミット
+    //         }
 
-            if(!$result) {
-                $dbh->rollBack(); // トランザクション ロールバック
-            }
+    //         if(!$result) {
+    //             $dbh->rollBack(); // トランザクション ロールバック
+    //         }
     
-            return $result;
-        } catch (PDOException $e) {
-            echo "DB削除エラー: " . $e->getMessage(); // トランザクション ロールバック
+    //         return $result;
+    //     } catch (PDOException $e) {
+    //         echo "DB削除エラー: " . $e->getMessage(); // トランザクション ロールバック
 
-            $dbh->rollBack();
-        }
-    }
+    //         $dbh->rollBack();
+    //     }
+    // }
 }
 
 ?>

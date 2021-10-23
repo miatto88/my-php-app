@@ -1,9 +1,4 @@
 <?php
-require_once("../../models/item.php");
-require_once("../../controllers/ItemController.php");
-require_once("../../validations/Itemvalidation.php");
-require_once("../../controllers/AuthController.php");
-
 
 ?>
 
