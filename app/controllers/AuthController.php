@@ -92,15 +92,18 @@ Class AuthController Extends BaseController {
 
     }
 
-    public function createToken() {
-        $token = rand(0, 100) . uniqid();
-        
-        $dbh = Member::dbconnect();
-        
-        $pre_member = new Member;
-        $pre_member->setToken($token);
+    public function storeToken() {
+        try {
+            $dbh = Member::dbconnect();
+            
+            $pre_member = new Member;
+            $token = $pre_member->createToken();
+            $pre_member->setToken($token);
 
-        $save = $pre_member->saveToken();
+            $save = $pre_member->saveToken();
+        } catch (PDOException $e) {
+            echo "DB登録エラー: " . $e->getMessage();
+        }
 
         if ($save !== true) {
             session_start();
@@ -111,7 +114,12 @@ Class AuthController Extends BaseController {
         }
         
         return $token;
+    }
 
+    public function registPreMember() {
+        $token = $this->storeToken();
+        $this->sendmail($token);
+        return;
     }
 
     public function store() {

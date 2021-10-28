@@ -31,7 +31,7 @@ h1.login-title {
     width: 480px;
 }
 
-.login-form {
+.login-wrapper {
     display: flex;
     flex-direction:column;
     align-items: center;
@@ -41,6 +41,17 @@ h1.login-title {
     border: 2px solid rgba(82, 143, 255, 0.603);
     border-radius: 40px;
 }
+
+/* .login-form {
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    margin: auto;
+    padding: 20px 0px;
+    width: 400px;
+    border: 2px solid rgba(82, 143, 255, 0.603);
+    border-radius: 40px;
+} */
 
 .login-form > div{
     display: flex;

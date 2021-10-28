@@ -6,9 +6,7 @@ require_once("../../controllers/AuthController.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pre_auth = new AuthController;
-    $token = $pre_auth->createToken();
-    
-    $send_mail = $pre_auth->sendMail($token);
+    $regist = $pre_auth->registPreMember();
 }
 
 if ($_SERVER["REQUEST_METHOD"]  !== "POST") {

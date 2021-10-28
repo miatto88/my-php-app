@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     <!-- </header> -->
     <div class="login-wrapper">
         <form class="login-form" action="" method="post">
-            <div class="form-group row">
+            <div class="form-group">
                 <input type="text" name="last_name" maxlength="50" placeholder="姓" class="form-control col-sm-5" value="<?php echo $get["last_name"] ?>">
                 <input type="text" name="first_name" maxlength="50" placeholder="名" class="form-control col-sm-5" value="<?php echo $get["first_name"] ?>">
             </div>
@@ -49,12 +49,18 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
                 <input class="btn btn-outline-primary my-1" type="submit" class="form-control" value="ログイン">
                 <a class="btn btn-outline-secondary my-1" class="form-control" href="../member/mail_form.php" value="新規登録">新規登録</a>
             </div>
-            <p>
-                <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
-                <?php endforeach; ?>
+        </form>
+        </br>
+        <form class="login-form" action="../item/guest/index.php" method="post">
+            <p class="form-group">
+                <input class="btn btn-outline-success my-1" type="submit" class="form-control" value="ゲストログイン">
             </p>
         </form>
+        <p>
+            <?php foreach ($errors as $error): ?>
+                <p><?php echo $error; ?></p>
+            <?php endforeach; ?>
+        </p>
     </div>
 </body>
 </html>

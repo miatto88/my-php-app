@@ -88,6 +88,11 @@ class Member Extends BaseModel {
         return true;
     }
 
+    public function createToken() {
+        $token = rand(0, 100) . uniqid();
+        return $token;
+    }
+
     public function saveToken() {
         try {
             $dbh = SELF::dbconnect();
