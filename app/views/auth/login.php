@@ -3,7 +3,11 @@ require_once("../../controllers/AuthController.php");
 require_once("../../validations/Authvalidation.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $member = AuthController::auth();
+    if ($_POST["first_name"] === "member" && $_POST["last_name"] === "guest" && $_POST["password"] === "guestmember") {
+        $member = AuthController::guestLogin();
+    } else {
+        $member = AuthController::auth();
+    }
 }
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
@@ -51,8 +55,11 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             </div>
         </form>
         </br>
-        <form class="login-form" action="../item/guest/index.php" method="post">
+        <form class="login-form" action="" method="post">
             <p class="form-group">
+                <input type="hidden" name="last_name" maxlength="50" placeholder="姓" class="form-control col-sm-5" value="guest">
+                <input type="hidden" name="first_name" maxlength="50" placeholder="名" class="form-control col-sm-5" value="member">
+                <input type="hidden" name="password" maxlength="100" placeholder="パスワード" class="form-control form-control" value="guestmember">
                 <input class="btn btn-outline-success my-1" type="submit" class="form-control" value="ゲストログイン">
             </p>
         </form>

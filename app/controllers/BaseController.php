@@ -10,6 +10,11 @@ Class BaseController {
             header("Location: ../auth/login.php");
             return;
         }
+
+        if ($_SESSION["member"]["role"] === "2") {
+            $member = "guest";
+            return $member;
+        }
     }    
 }
 

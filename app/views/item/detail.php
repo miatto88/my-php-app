@@ -4,6 +4,13 @@ require_once("../../controllers/ItemController.php");
 require_once("../../controllers/AuthController.php");
 
 $controller = new ItemController;
+if ($_SESSION["role"] === "2") {
+    $hidden_a_tag = 'style="color:grey; pointer-events:none;"';
+    $disable_button = "disabled";
+    $readfile = "../layout/sidemenu_guest.php";
+} else {
+    $readfile = "../layout/sidemenu.php";
+}
 
 $item = $controller->detail();
 
@@ -31,7 +38,7 @@ $item = $controller->detail();
     <div class="wrapper">
         <section class="main">
             <div class="btns">
-                <a href="edit.php?id=<?php echo $item["id"] ?>" >製品編集</a>
+                <a href="edit.php?id=<?php echo $item["id"] ?>" <?php echo $hidden_a_tag; ?>>製品編集</a>
             </div>
             <hr>
             <div class="detail">
@@ -52,7 +59,7 @@ $item = $controller->detail();
                 </div>
             </div>
         </section>
-        <?php readfile("../layout/sidemenu.php") ?>
+        <?php readfile($readfile) ?>
     </div>
 </body>
 </html>

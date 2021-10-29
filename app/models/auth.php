@@ -6,6 +6,7 @@ class Auth Extends BaseModel {
         "id",
         "last_name",
         "first_name",
+        "role"
     ];
     
     public $dbh;

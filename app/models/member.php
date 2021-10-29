@@ -45,6 +45,14 @@ class Member Extends BaseModel {
         return $this->data["password"];
     }
 
+    public function setRole($role) {
+        $this->data["role"] = $role;
+    }
+    
+    public function getRole() {
+        return $this->data["role"];
+    }
+    
     public function setToken($token) {
         $this->data["token"] = $token;
     }
