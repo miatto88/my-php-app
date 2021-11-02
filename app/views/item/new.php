@@ -80,7 +80,7 @@ if (empty($get["stock"])) {
                 <?php endforeach ?>
             </div>
         </section>
-        <?php readfile("../layout/sidemenu.php") ?>
+        <?php include("../layout/sidemenu.php") ?>
     </div>
 </body>
 </html>

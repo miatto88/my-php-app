@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
                 </div>
             </div>
         </section>
-        <?php readfile("../layout/sidemenu.php") ?>
+        <?php include("../layout/sidemenu.php") ?>
     </div>
 </body>
 </html>

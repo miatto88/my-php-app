@@ -59,7 +59,7 @@ $item = $controller->detail();
                 </div>
             </div>
         </section>
-        <?php readfile($readfile) ?>
+        <?php include($readfile) ?>
     </div>
 </body>
 </html>
