@@ -57,7 +57,7 @@ if (empty($get["stock"])) {
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["name"]; ?></span>
+            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>

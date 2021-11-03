@@ -2,14 +2,13 @@
 require_once("../../models/item.php");
 require_once("../../controllers/ItemController.php");
 require_once("../../controllers/AuthController.php");
+// require_once("../../models/member.php");
 
 $controller = new ItemController;
-if ($_SESSION["role"] === "2") {
+
+if ($_SESSION["member"]["role"] === Member::ROLE_GUEST) { // ゲスト用のロールに定数を使用
     $hidden_a_tag = 'style="color:grey; pointer-events:none;"';
     $disable_button = "disabled";
-    $readfile = "../layout/sidemenu_guest.php";
-} else {
-    $readfile = "../layout/sidemenu.php";
 }
 
 $items = $controller->index();
@@ -31,7 +30,7 @@ $items = $controller->index();
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["name"]; ?></span>
+            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
@@ -61,7 +60,7 @@ $items = $controller->index();
             <p>
         </p>
         </section>
-        <?php include($readfile); ?>
+        <?php include("../layout/sidemenu.php"); ?>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="../../js/api.js"></script>

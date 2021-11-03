@@ -34,8 +34,8 @@ Class AuthController Extends BaseController {
         if ($member) {
             session_start();
             $_SESSION["member"] = [
-                $_SESSION["id"] = $member["id"],
-                $_SESSION["name"] = $member["last_name"] . " " . $member["first_name"]
+                "id" => $member["id"],
+                "name" => $member["last_name"] . " " . $member["first_name"]
             ];
 
             header("Location: ../item/index.php");
@@ -52,8 +52,8 @@ Class AuthController Extends BaseController {
         if ($member) {
             session_start();
             $_SESSION["member"] = [
-                $_SESSION["name"] = "guest",
-                $_SESSION["role"] = $member["role"]
+                "name" => "guest",
+                "role" => $member["role"]
             ];
 
             header("Location: ../item/index.php");

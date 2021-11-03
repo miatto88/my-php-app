@@ -11,7 +11,7 @@ Class BaseController {
             return;
         }
 
-        if ($_SESSION["member"]["role"] === "2") {
+        if ($_SESSION["member"]["role"] === Member::ROLE_GUEST) {
             $member = "guest";
             return $member;
         }

@@ -2,6 +2,8 @@
 require_once("BaseModel.php");
 
 class Member Extends BaseModel {
+    const ROLE_GUEST = "2";
+    
     private $data = [
         "id",
         "last_name",
@@ -10,7 +12,7 @@ class Member Extends BaseModel {
         "role",
         "token"
     ];
-    
+
     public $dbh;
 
     public function setId($id) {
