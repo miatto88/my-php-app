@@ -46,7 +46,7 @@ class Item Extends BaseModel {
     }
 
     public static function findAll() {
-        $dbh = SELF::dbconnect();
+        $dbh = self::dbconnect();
 
         $items = $dbh->query("SELECT * FROM items");
         $items = $items->fetchAll();
@@ -55,7 +55,7 @@ class Item Extends BaseModel {
     }
 
     public static function findById($item_id) {
-        $dbh = SELF::dbconnect();
+        $dbh = self::dbconnect();
 
         $item = $dbh->query("SELECT * FROM items WHERE items.id=$item_id");
         $item = $item->fetch();
@@ -73,7 +73,7 @@ class Item Extends BaseModel {
 
     public function save() {
         try {
-            $dbh = SELF::dbconnect();
+            $dbh = self::dbconnect();
     
             $store = $dbh->prepare(
                 "INSERT INTO items SET name=?, price=?, stock=?, created_at=?, updated_at=?");
@@ -91,9 +91,57 @@ class Item Extends BaseModel {
         }
     }
 
+    public function stockIn($item_id) {
+        $dbh = self::dbconnect();
+
+        $item = self::findById($item_id);
+        $stock = $item["stock"] + $_POST["quantity"];
+
+        return $stock;
+    }
+
+    public function stockOut($item_id) {
+        $dbh = self::dbconnect();
+
+        $item = self::findById($item_id);
+        $stock = $item["stock"] - $_POST["quantity"];
+
+        return $stock;
+    }
+    
+    public function stockUpdate($stock) {
+        try {
+            $dbh = self::dbconnect();
+
+            $dbh->beginTransaction(); // トランザクション 開始
+            
+            $store = $dbh->prepare(
+                "UPDATE items SET stock=?, updated_at=? WHERE id=?");
+            $result = $store->execute([
+                $stock,
+                date("Y-m-d H:i:s"),
+                $this->getId()
+            ]);
+
+            if ($result) {
+                $dbh->commit(); // トランザクション コミット
+            }
+
+            if (!$result) {
+                $dbh->rollBack(); // トランザクション ロールバック
+            }
+
+            return $result;
+        } catch (PDOException $e) {
+            echo "DB更新エラー: " . $e->getMessage(); // トランザクション ロールバック
+
+            $dbh->rollBack();
+        }
+    }
+
     public function update() {
         try {
-            $dbh = SELF::dbconnect();
+            $dbh = self::dbconnect();
     
             $dbh->beginTransaction(); // トランザクション 開始
 
@@ -125,7 +173,7 @@ class Item Extends BaseModel {
 
     public function delete($id) {
         try {
-            $dbh = SELF::dbconnect();
+            $dbh = self::dbconnect();
 
             $dbh->beginTransaction(); // トランザクション 開始
     
