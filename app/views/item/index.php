@@ -6,10 +6,11 @@ require_once("../../controllers/AuthController.php");
 
 $controller = new ItemController;
 
-if ($_SESSION["member"]["role"] === Member::ROLE_GUEST) { // ゲスト用のロールに定数を使用
-    $hidden_a_tag = 'style="color:grey; pointer-events:none;"';
-    $disable_button = "disabled";
-}
+// if ($_SESSION["member"]["role"] === Member::ROLE_GUEST) { // ゲスト用のロールに定数を使用
+//     $hidden_a_tag = 'style="color:grey; pointer-events:none;"';
+//     $disable_button = "disabled";
+// }
+$is_guest = AuthController::isGuest();
 
 $items = $controller->index();
 
@@ -37,7 +38,7 @@ $items = $controller->index();
     <div class="wrapper">
         <section class="main">
             <div class="btns">
-                <a href="new.php" <?php echo $hidden_a_tag; ?>>製品登録</a>
+                <a href="new.php" class="<?php if($is_guest): ?>guest<?php endif; ?>">製品登録</a>
             </div>
             <span class="messages"></span>
             <hr>
@@ -50,9 +51,9 @@ $items = $controller->index();
                     <span>在庫：<?php echo $item["stock"]; ?></span>
                 </div>
                 <div class="button">
-                    <a href="in_count.php?id=<?php echo $item["id"] ?>" <?php echo $hidden_a_tag; ?>>入庫</a>
-                    <a href="out_count.php?id=<?php echo $item["id"] ?>" <?php echo $hidden_a_tag; ?>>出庫</a>
-                    <button data-btn-type="ajax" value="<?php echo $item["id"] ?>" <?php echo $disable_button; ?>>削除</button>
+                    <a href="in_count.php?id=<?php echo $item["id"] ?>" class="<?php if($is_guest): ?>guest<?php endif; ?>">入庫</a>
+                    <a href="out_count.php?id=<?php echo $item["id"] ?>" class="<?php if($is_guest): ?>guest<?php endif; ?>">出庫</a>
+                    <button data-btn-type="ajax" value="<?php echo $item["id"] ?>" <?php if($is_guest): ?>disabled<?php endif; ?>>削除</button>
                 </div>
                 <hr>
             </div>

@@ -123,6 +123,11 @@ p.error {
     padding: 4px;
 }
 
+a.guest {
+    color: grey;
+    pointer-events: none;
+}
+
 .active {
     color: black;
     background-color: rgb(241, 241, 241);

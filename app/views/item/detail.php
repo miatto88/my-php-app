@@ -6,10 +6,10 @@ require_once("../../controllers/AuthController.php");
 
 $controller = new ItemController;
 
-if ($_SESSION["member"]["role"] === Member::ROLE_GUEST) { // ゲスト用のロールに定数を使用
-    $hidden_a_tag = 'style="color:grey; pointer-events:none;"';
-    $disable_button = "disabled";
-}
+// if ($_SESSION["member"]["role"] === Member::ROLE_GUEST) { // ゲスト用のロールに定数を使用
+//     $hidden_a_tag = 'style="color:grey; pointer-events:none;"';
+//     $disable_button = "disabled";
+// }
 
 $item = $controller->detail();
 
@@ -37,7 +37,7 @@ $item = $controller->detail();
     <div class="wrapper">
         <section class="main">
             <div class="btns">
-                <a href="edit.php?id=<?php echo $item["id"] ?>" <?php echo $hidden_a_tag; ?>>製品編集</a>
+                <a href="edit.php?id=<?php echo $item["id"] ?>" class="<?php if($_SESSION["member"]["role"] === Member::ROLE_GUEST): ?>guest<?php endif; ?>">製品編集</a>
             </div>
             <hr>
             <div class="detail">

@@ -63,6 +63,12 @@ Class AuthController Extends BaseController {
         return $member;
     }
 
+    public static function isGuest() {
+        if ($_SESSION["member"]["role"] === Member::ROLE_GUEST) { // ゲスト用のロールに定数を使用
+            return true;
+        }
+    }
+
     public static function logout() {
         session_start();
 
