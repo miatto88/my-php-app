@@ -1,7 +1,7 @@
 <?php
 require_once("BaseController.php");
-require_once("../../models/StockOutHistory.php");
-require_once("../../validations/StockOutHistoryvalidation.php");
+require_once(dirname(__FILE__)."../../models/StockOutHistory.php");
+require_once(dirname(__FILE__)."../../validations/StockOutHistoryvalidation.php");
 
 class StockOutHistoryController Extends BaseController {
     public function index() {
