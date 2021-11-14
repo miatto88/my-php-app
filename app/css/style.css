@@ -147,6 +147,37 @@ a.guest {
     width: 120px;
 }
 
+.serch_form > label {
+    color : rgb(5, 29, 238);
+    cursor : pointer;
+}
+
+.acd_menu {
+    display: none;
+}
+
+.acd_content {
+    height: 0;
+    opacity: 0;
+    transition: .1s;
+    visibility: hidden;
+}
+
+#acd_menu:checked + .acd_content {
+    height: 72px;
+    opacity: 1;
+    visibility: visible;
+}
+
+.serch_name {
+    padding-top: 10px;
+}
+
+.serch_stock {
+    margin-top: 10px;
+    width: 55px;
+}
+
 .item_property {
     display: inline-block;
     margin-right: 12px;

@@ -63,6 +63,26 @@ class Item Extends BaseModel {
         return $item;
     }
 
+    public static function findByName($item_name) {
+        $dbh = self::dbconnect();
+
+        $items = $dbh->prepare("SELECT * FROM items WHERE items.name like ?");
+        $items->execute(["%" . $item_name . "%"]);
+        $items = $items->fetchAll();
+
+        return $items;
+    }
+
+    public static function findByStock($min_stock, $max_stock) {
+        $dbh = self::dbconnect();
+
+        $items = $dbh->prepare("SELECT * FROM items WHERE items.stock BETWEEN ? AND ?");
+        $items->execute([$min_stock, $max_stock]);
+        $items = $items->fetchAll();
+
+        return $items;
+    }
+
     public static function isExistById($item) {
         if ($item["id"] === null || $item["id"] === false) {
             return false;

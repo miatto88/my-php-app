@@ -29,6 +29,40 @@ class ItemController Extends BaseController {
         return $item;
     }
 
+    public function serchName() {
+        $item_name = $_POST["item_name"];
+
+        if ($_POST["item_name"] == null) {
+            $items = false;
+        } else {
+            $items = Item::findByName($item_name);
+        }
+
+        if (!$items) {
+            session_start();
+            $_SESSION["serch"] = "検索条件に一致する製品がありません";
+            header("Location: index.php");
+            return;
+        }
+
+        return $items;
+    }
+
+    public function serchStock() {
+        $min_stock = $_POST["min_stock"];
+        $max_stock = $_POST["max_stock"];
+
+        $items = Item::findByStock($min_stock, $max_stock);
+        if (!$items) {
+            session_start();
+            $_SESSION["serch"] = "検索条件に一致する製品がありません";
+            header("Location: index.php");
+            return;
+        }
+
+        return $items;
+    }
+
     public function new() { // 変更 非staticなメソッドに
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             return $_GET;

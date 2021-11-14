@@ -6,13 +6,25 @@ require_once("../../controllers/AuthController.php");
 
 $controller = new ItemController;
 
-// if ($_SESSION["member"]["role"] === Member::ROLE_GUEST) { // ゲスト用のロールに定数を使用
-//     $hidden_a_tag = 'style="color:grey; pointer-events:none;"';
-//     $disable_button = "disabled";
-// }
 $is_guest = AuthController::isGuest();
 
-$items = $controller->index();
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["item_name"])) {
+        $items = $controller->serchName();
+    }
+    
+    if (isset($_POST["min_stock"]) && isset($_POST["max_stock"])) {
+        $items = $controller->serchStock();
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    $items = $controller->index();
+    
+    $serch = $_SESSION["serch"];
+    unset($_SESSION["serch"]);
+}
+
 
 ?>
 
@@ -41,6 +53,26 @@ $items = $controller->index();
                 <a href="new.php" class="<?php if($is_guest): ?>guest<?php endif; ?>">製品登録</a>
             </div>
             <span class="messages"></span>
+            <hr>
+            <div class="serch_form">
+                <label for="acd_menu">検索 ▽　</label>
+                <?php echo $serch ?>
+                <input type="checkbox" id="acd_menu" class="acd_menu">
+                <div class="acd_content">
+                    <form class="serch_form" action="" method="post">
+                        <div class="serch_name">
+                            製品名　　　　　<input type="text" name="item_name">
+                            <input type="submit" value="製品名で検索">
+                        </div>
+                    </form>
+                    <form class="serch_form" action="" method="post">
+                        <div>
+                            在庫数（範囲）　<input type="number" class="serch_stock" name="min_stock"> 〜 <input type="number" class="serch_stock" name="max_stock">
+                            <input type="submit" value="在庫数で検索">
+                        </div>
+                    </form>
+                </div>
+            </div>
             <hr>
             <?php foreach($items as $item): ?>
             <div class="item_data" id=<?php echo "item_id_" . $item["id"] ?>>
