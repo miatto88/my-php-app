@@ -1,6 +1,6 @@
 <?php
-require_once("../../controllers/AuthController.php");
-require_once("../../validations/Authvalidation.php");
+require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../validations/Authvalidation.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($_POST["first_name"] === "member" && $_POST["last_name"] === "guest" && $_POST["password"] === "guestmember") {

@@ -1,5 +1,5 @@
 <?php
-require_once("../../controllers/api/ItemController.php");
+require_once(dirname(__FILE__) . "/../../controllers/api/ItemController.php");
 
 header("Content-type: application/json; charset=UTF-8");
 

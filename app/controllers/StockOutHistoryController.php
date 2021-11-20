@@ -1,7 +1,7 @@
 <?php
-require_once("BaseController.php");
-require_once(dirname(__FILE__)."../../models/StockOutHistory.php");
-require_once(dirname(__FILE__)."../../validations/StockOutHistoryvalidation.php");
+require_once(dirname(__FILE__) . "/BaseController.php");
+require_once(dirname(__FILE__) . "/../models/StockOutHistory.php");
+require_once(dirname(__FILE__) . "/../validations/StockOutHistoryvalidation.php");
 
 class StockOutHistoryController Extends BaseController {
     public function index() {
@@ -14,7 +14,7 @@ class StockOutHistoryController Extends BaseController {
         $item_id = $_GET["id"];
 
         if (!$item_id) {
-            header("Location: ../error/404.php");
+            header("Location: out_count.php");
             exit();
         }
         

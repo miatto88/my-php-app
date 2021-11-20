@@ -1,8 +1,8 @@
 <?php
-require_once("../../models/item.php");
-require_once("../../controllers/ItemController.php");
-require_once("../../controllers/AuthController.php");
-// require_once("../../models/member.php");
+require_once(dirname(__FILE__) . "/../../models/item.php");
+require_once(dirname(__FILE__) . "/../../controllers/ItemController.php");
+require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+// require_once(dirname(__FILE__) . "/../../models/member.php");
 
 $controller = new ItemController;
 
@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             <p>
         </p>
         </section>
-        <?php include("../layout/sidemenu.php"); ?>
+        <?php include(dirname(__FILE__) . "/../layout/sidemenu.php"); ?>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="../../js/api.js"></script>

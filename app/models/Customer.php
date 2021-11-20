@@ -1,5 +1,5 @@
 <?php
-require_once("BaseModel.php");
+require_once(dirname(__FILE__) . "/BaseModel.php");
 
 class Customer Extends BaseModel {
     private $data = [

@@ -1,5 +1,5 @@
 <?php
-require_once("../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../controllers/AuthController.php");
 
 class MailValidation {
     private $data;

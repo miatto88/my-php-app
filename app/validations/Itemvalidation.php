@@ -1,5 +1,5 @@
 <?php
-require_once("../../controllers/ItemController.php");
+require_once(dirname(__FILE__) . "/../controllers/ItemController.php");
 
 class ItemValidation {
     private $data;

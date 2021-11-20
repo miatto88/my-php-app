@@ -1,9 +1,9 @@
 <?php
-require_once("BaseController.php");
-require_once("../../models/auth.php");
-require_once("../../models/member.php");
-require_once("../../validations/Mailvalidation.php");
-require_once("../../validations/Authvalidation.php");
+require_once(dirname(__FILE__) . "/BaseController.php");
+require_once(dirname(__FILE__) . "/../models/auth.php");
+require_once(dirname(__FILE__) . "/../models/member.php");
+require_once(dirname(__FILE__) . "/../validations/Mailvalidation.php");
+require_once(dirname(__FILE__) . "/../validations/Authvalidation.php");
 
 Class AuthController Extends BaseController {
     public static function index() {

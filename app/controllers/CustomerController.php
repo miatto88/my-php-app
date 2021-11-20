@@ -1,6 +1,6 @@
 <?php
-require_once("BaseController.php");
-require_once("../../models/Customer.php");
+require_once(dirname(__FILE__) . "/BaseController.php");
+require_once(dirname(__FILE__) . "/../models/Customer.php");
 
 class CustomerController Extends BaseController {
     public function index() { // 変更 非staticなメソッドに

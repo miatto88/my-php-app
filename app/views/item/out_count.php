@@ -1,9 +1,9 @@
 <?php
-require_once("../../models/StockOutHistory.php");
-require_once("../../controllers/StockOutHistoryController.php");
-require_once("../../controllers/ItemController.php");
-require_once("../../controllers/CustomerController.php");
-require_once("../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../models/StockOutHistory.php");
+require_once(dirname(__FILE__) . "/../../controllers/StockOutHistoryController.php");
+require_once(dirname(__FILE__) . "/../../controllers/ItemController.php");
+require_once(dirname(__FILE__) . "/../../controllers/CustomerController.php");
+require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
 
 $stock_out_controller = new StockOutHistoryController;
 
@@ -92,7 +92,7 @@ if (!empty($_GET["id"])) {
                 <?php endforeach ?>
             </div>
         </section>
-        <?php include("../layout/sidemenu.php") ?>
+        <?php include(dirname(__FILE__) . "/../layout/sidemenu.php") ?>
     </div>
 </body>
 </html>

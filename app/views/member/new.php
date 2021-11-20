@@ -1,6 +1,6 @@
 <?php
-require_once("../../models/member.php");
-require_once("../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../models/member.php");
+require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

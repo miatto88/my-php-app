@@ -1,5 +1,5 @@
 <?php
-require_once("../../models/item.php");
+require_once(dirname(__FILE__) . "/../../models/item.php");
 
 class ItemController {
     public static function delete($id) {

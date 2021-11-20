@@ -1,7 +1,7 @@
 <?php
-require_once("BaseController.php");
-require_once("../../models/item.php");
-require_once("../../validations/Itemvalidation.php");
+require_once(dirname(__FILE__) . "/BaseController.php");
+require_once(dirname(__FILE__) . "/../models/item.php");
+require_once(dirname(__FILE__) . "/../validations/Itemvalidation.php");
 
 class ItemController Extends BaseController {
     public function index() { // 変更 非staticなメソッドに

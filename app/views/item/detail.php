@@ -1,7 +1,7 @@
 <?php
-require_once("../../models/item.php");
-require_once("../../controllers/ItemController.php");
-require_once("../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../models/item.php");
+require_once(dirname(__FILE__) . "/../../controllers/ItemController.php");
+require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
 // require_once("../../models/member.php");
 
 $controller = new ItemController;
@@ -58,7 +58,7 @@ $item = $controller->detail();
                 </div>
             </div>
         </section>
-        <?php include("../layout/sidemenu.php"); ?>
+        <?php include(dirname(__FILE__) . "/../layout/sidemenu.php"); ?>
     </div>
 </body>
 </html>
