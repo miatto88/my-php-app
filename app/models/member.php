@@ -2,6 +2,8 @@
 require_once(dirname(__FILE__) . "/BaseModel.php");
 
 class Member Extends BaseModel {
+    const ROLE_USER = "0";
+    const ROLE_ADMIN = "1";
     const ROLE_GUEST = "2";
     
     private $data = [
@@ -12,6 +14,22 @@ class Member Extends BaseModel {
         "role",
         "token"
     ];
+
+    public static function showRole($member) {
+        if ($member["role"] === self::ROLE_USER) {
+            return "ユーザー";
+        }
+
+        if ($member["role"] === self::ROLE_ADMIN) {
+            return "管理者";
+        }
+
+        if ($member["role"] === self::ROLE_GUEST) {
+            return "ゲスト";
+        }
+
+        return "不明";
+    }
 
     public $dbh;
 

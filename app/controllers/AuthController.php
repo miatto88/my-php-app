@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . "/BaseController.php");
 require_once(dirname(__FILE__) . "/../models/auth.php");
-require_once(dirname(__FILE__) . "/../models/member.php");
+require_once(dirname(__FILE__) . "/../models/Member.php");
 require_once(dirname(__FILE__) . "/../validations/Mailvalidation.php");
 require_once(dirname(__FILE__) . "/../validations/Authvalidation.php");
 

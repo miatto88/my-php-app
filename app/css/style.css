@@ -147,6 +147,11 @@ a.guest {
     width: 120px;
 }
 
+.member_name {
+    display: inline-block;
+    width: 300px;
+}
+
 .serch_form > label {
     color : rgb(5, 29, 238);
     cursor : pointer;
@@ -186,6 +191,11 @@ a.guest {
 .item_property > span {
     display: inline-block;
     width: 100px;
+}
+
+.member_role {
+    display: inline-block;
+    width: 120px;
 }
 
 .button {
