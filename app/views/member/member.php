@@ -49,7 +49,7 @@ $members = $controller->index();
     <div class="wrapper">
         <section class="main">
             <div class="btns">
-                <a href="new.php" class="<?php if($is_guest): ?>guest<?php endif; ?>">社員登録</a>
+                <a href="mail_form.php" class="<?php if($is_guest): ?>guest<?php endif; ?>">社員登録</a>
             </div>
             <span class="messages"></span>
             <hr>

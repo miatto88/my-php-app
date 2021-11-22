@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__) . "/../../models/member.php");
+require_once(dirname(__FILE__) . "/../../models/Member.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
 
 
