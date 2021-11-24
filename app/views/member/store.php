@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     </header>
     <div class="wrapper">
         <section class="main">
-            <div>[社員編集]</div>
+            <div>[社員登録]</div>
             <div>
                 <form action="" method="POST">
                     <p>姓　　　　　：　<input type="text" name="last_name" value="<?php echo $member["input"]['last_name'] ?>"></p>
