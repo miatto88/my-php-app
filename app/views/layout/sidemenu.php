@@ -4,7 +4,7 @@
         <!-- <span class="side_menu"><a href="../item/items.php" style="color:grey; pointer-events:none;">製品マスタ</a></span> -->
         <span class="side_menu"><a href="../item/in_count.php" style="color:grey; pointer-events:none;">入庫処理</a></span>
         <span class="side_menu"><a href="../item/out_count.php" style="color:grey; pointer-events:none;">出庫処理</a></span>
-        <span class="side_menu"><a href="../member/member.php" style="color:grey; pointer-events:none;">社員一覧</a></span>
+        <span class="side_menu"><a href="../member/member.php">社員一覧</a></span>
         <span class="side_menu"><a href="customerlist.php" style="color:grey; pointer-events:none;">顧客一覧</a></span>
     </section>
 

@@ -35,7 +35,8 @@ Class AuthController Extends BaseController {
             session_start();
             $_SESSION["member"] = [
                 "id" => $member["id"],
-                "name" => $member["last_name"] . " " . $member["first_name"]
+                "name" => $member["last_name"] . " " . $member["first_name"],
+                "role" => $member["role"]
             ];
 
             header("Location: ../item/index.php");
@@ -67,6 +68,14 @@ Class AuthController Extends BaseController {
         if ($_SESSION["member"]["role"] === Member::ROLE_GUEST) { // ゲスト用のロールに定数を使用
             return true;
         }
+        return false;
+    }
+
+    public static function isAdmin() {
+        if ($_SESSION["member"]["role"] === Member::ROLE_ADMIN) { // 管理者用のロールに定数を使用
+            return true;
+        }
+        return false;
     }
 
     public static function logout() {

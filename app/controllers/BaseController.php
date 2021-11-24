@@ -15,6 +15,11 @@ Class BaseController {
             $member = "guest";
             return $member;
         }
+
+        if ($_SESSION["member"]["role"] === Member::ROLE_ADMIN) {
+            $member = "admin";
+            return $member;
+        }
     }    
 }
 

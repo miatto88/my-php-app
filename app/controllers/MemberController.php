@@ -82,16 +82,17 @@ class MemberController Extends BaseController {
             session_start();
             $_SESSION["errors"] = $validation->getErrorMessages();
 
-            header("Location: new.php?name=" . $_POST["name"] . "&price=" . $_POST["price"] . "&stock=" . $_POST["stock"]);
+            header("Location: store.php?last_name=" . $_POST["last_name"] . "&first_name=" . $_POST["first_name"]);
             return;
         }
 
         $data = $validation->getData();
 
         $member = new Member;
-        $member->setName($data["name"]);
-        $member->setPrice($data["price"]);
-        $member->setStock($data["stock"]);
+        $member->setLastName($data["last_name"]);
+        $member->setFirstName($data["first_name"]);
+        $member->setPassword($data["password"]);
+        $member->setRole($data["role"]);
 
         $save = $member->save();
 
@@ -99,11 +100,11 @@ class MemberController Extends BaseController {
             session_start();
             $_SESSION["errors"]["database"] = "データ登録に失敗しました";
 
-            header("Location: new.php");
+            header("Location: store.php");
             return;
         }
         
-        header("Location: index.php");
+        header("Location: ../member/member.php");
         return;
     }
 
@@ -141,7 +142,7 @@ class MemberController Extends BaseController {
             session_start();
             $_SESSION["errors"] = $validation->getErrorMessages();
 
-            header("Location: edit.php?id=" . $_GET["id"] . "&name="  . $_POST["name"] . "&price=" . $_POST["price"] . "&stock=" . $_POST["stock"]);
+            header("Location: edit.php?id=" . $_GET["id"] . "&last_name="  . $_POST["last_name"] . "&first_name=" . $_POST["first_name"]);
             return;
         }
 
@@ -149,9 +150,10 @@ class MemberController Extends BaseController {
 
         $member = new Member;
         $member->setId($_GET["id"]);
-        $member->setName($data["name"]);
-        $member->setPrice($data["price"]);
-        $member->setStock($data["stock"]);
+        $member->setLastName($data["last_name"]);
+        $member->setFirstName($data["first_name"]);
+        $member->setPassword($data["password"]);
+        $member->setRole($data["role"]);
 
         $update = $member->update();
 
@@ -163,7 +165,7 @@ class MemberController Extends BaseController {
             return;
         }
         
-        header("Location: index.php");
+        header("Location: ../member/member.php");
         return;
     }
 }

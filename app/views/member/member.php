@@ -5,24 +5,7 @@ require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
 
 $controller = new MemberController;
 
-$is_guest = AuthController::isGuest();
-
-// if ($_SERVER["REQUEST_METHOD"] === "POST") {
-//     if (isset($_POST["item_name"])) {
-//         $items = $controller->serchName();
-//     }
-    
-//     if (isset($_POST["min_stock"]) && isset($_POST["max_stock"])) {
-//         $items = $controller->serchStock();
-//     }
-// }
-
-// if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-//     $items = $controller->index();
-    
-//     $serch = $_SESSION["serch"];
-//     unset($_SESSION["serch"]);
-// }
+$is_admin = AuthController::isAdmin();
 
 $members = $controller->index();
 ?>
@@ -49,7 +32,7 @@ $members = $controller->index();
     <div class="wrapper">
         <section class="main">
             <div class="btns">
-                <a href="mail_form.php" class="<?php if($is_guest): ?>guest<?php endif; ?>">社員登録</a>
+                <a href="store.php" class="<?php if(!$is_admin): ?>not_admin<?php endif; ?>">社員登録</a>
             </div>
             <span class="messages"></span>
             <hr>

@@ -82,7 +82,7 @@ class Member Extends BaseModel {
     }
 
     public static function findAll() {
-        $dbh = SELF::dbconnect();
+        $dbh = self::dbconnect();
 
         $members = $dbh->query("SELECT * FROM members");
         $members = $members->fetchAll();
@@ -91,7 +91,7 @@ class Member Extends BaseModel {
     }
 
     public static function findById($member_id) {
-        $dbh = SELF::dbconnect();
+        $dbh = self::dbconnect();
 
         $member = $dbh->query("SELECT * FROM members WHERE members.id=$member_id");
         $member = $member->fetch();
@@ -100,7 +100,7 @@ class Member Extends BaseModel {
     }
 
     public static function findByToken($token) {
-        $dbh = SELF::dbconnect();
+        $dbh = self::dbconnect();
 
         $member = $dbh->query("SELECT * FROM members WHERE members.token='" . $token . "'");
         $member = $member->fetch();
@@ -123,7 +123,7 @@ class Member Extends BaseModel {
 
     public function saveToken() {
         try {
-            $dbh = SELF::dbconnect();
+            $dbh = self::dbconnect();
     
             $store = $dbh->prepare(
                 "INSERT INTO members SET first_name=?, last_name=?, password=?, role=?, token=?, created_at=?, updated_at=?");
@@ -143,39 +143,53 @@ class Member Extends BaseModel {
         }
     }
 
-    // public function save() {
-    //     try {
-    //         $dbh = SELF::dbconnect();
-    
-    //         $store = $dbh->prepare(
-    //             "INSERT INTO members SET last_name=?, first_name=?, password=?, role=?, created_at=?, updated_at=?");
-    //         $result = $store->execute([
-    //             $this->getFirstName(),
-    //             $this->getLastName(),
-    //             $this->getPassword(),
-    //             "0",
-    //             date("Y-m-d H:i:s"),
-    //             date("Y-m-d H:i:s")
-    //         ]);
+    public function save() {
+        try {
+            $dbh = self::dbconnect();
 
-    //         return $result;
-    //     } catch (PDOException $e) {
-    //         echo "DB登録エラー: " . $e->getMessage();
-    //     }
-    // }
+            $dbh->beginTransaction(); // トランザクション 開始
+    
+            $store = $dbh->prepare(
+                "INSERT INTO members SET first_name=?, last_name=?, password=?, role=?, token=?, created_at=?, updated_at=?");
+            $result = $store->execute([
+                $this->getFirstName(),
+                $this->getLastName(),
+                $this->getPassword(),
+                $this->getRole(),
+                "0",
+                date("Y-m-d H:i:s"),
+                date("Y-m-d H:i:s")
+            ]);
+
+            if ($result) {
+                $dbh->commit(); // トランザクション コミット
+            }
+
+            if (!$result) {
+                $dbh->rollBack(); // トランザクション ロールバック
+            }
+
+            return $result;
+        } catch (PDOException $e) {
+            echo "DB登録エラー: " . $e->getMessage();
+
+            $dbh->rollBack();
+        }
+    }
 
     public function update() {
         try {
-            $dbh = SELF::dbconnect();
+            $dbh = self::dbconnect();
     
             $dbh->beginTransaction(); // トランザクション 開始
 
             $store = $dbh->prepare(
-                "UPDATE members SET last_name=?, first_name=?, password=?, updated_at=? WHERE id=?");
+                "UPDATE members SET last_name=?, first_name=?, password=?, role=?, updated_at=? WHERE id=?");
             $result = $store->execute([
                 $this->getLastName(),
                 $this->getFirstName(),
                 $this->getPassword(),
+                $this->getRole(),
                 date("Y-m-d H:i:s"),
                 $this->getId()
             ]);

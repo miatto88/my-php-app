@@ -8,12 +8,12 @@ $controller = new MemberController;
 
 // POSTが送信された時は update() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $controller->update();
+    $controller->store();
 }
 
 // POST以外が送信された時は edit() を呼び出す処理
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    $member = $controller->edit();
+    $member = $controller->new();
     $errors = [];
 
     // バリデーションエラー時にセッションを取得する処理を追加
@@ -57,31 +57,13 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
                     <p>管理者権限　：　<input type="radio" name="role" value="<?php echo Member::ROLE_USER; ?>" checked>ユーザー
                         <input type="radio" name="role" value="<?php echo Member::ROLE_ADMIN; ?>">管理者
                     </p>
-                    <p><input type="submit" value="更新する"></p>
+                    <p><input type="submit" value="登録する"></p>
                 </form>
             </div>
             <div>
                 <?php foreach ($errors as $error): ?>
                     <p><?php echo $error; ?></p>
                 <?php endforeach ?>
-            </div>
-            <hr>
-            <div>
-                <div>
-                    <p>[社員情報]</p>
-                </div>
-                <div>
-                    <?php echo "姓　　　　　　：　　" . $member["master"]["last_name"]; ?>
-                </div>
-                <div>
-                    <?php echo "名　　　　　　：　　" . $member["master"]["first_name"]; ?>
-                </div>
-                <div>
-                    <?php echo "登録日　　　　：　　" . $member["master"]["created_at"]; ?>
-                </div>
-                <div>
-                    <?php echo "最終更新日　　：　　" . $member["master"]["updated_at"]; ?>
-                </div>
             </div>
         </section>
         <?php include(dirname(__FILE__) . "/../layout/sidemenu.php") ?>

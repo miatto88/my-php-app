@@ -24,25 +24,25 @@ class MemberValidation {
     public function check() {
         $data = $this->getData();
 
-        // if ($data["name"] == null) {
-        //     $this->setErrorMessages("name", "製品名を入力してください");
-        // }
+        if ($data["last_name"] == null) {
+            $this->setErrorMessages("last_name", "名前(姓)を入力してください");
+        }
 
-        // if (!is_numeric($data["price"])) {
-        //     $this->setErrorMessages("price", "価格は数字で入力してください");
-        // }
+        if ($data["first_name"] == null) {
+            $this->setErrorMessages("first_name", "名前(名)を入力してください");
+        }
 
-        // if ($data["price"] == null) {
-        //     $this->setErrorMessages("price", "価格を入力してください");
-        // }
-        
-        // if (!is_numeric($data["stock"])) {
-        //     $this->setErrorMessages("stock", "在庫数は数字で入力してください");
-        // }
+        if ($data["password"] == null) {
+            $this->setErrorMessages("password", "パスワードを入力してください");
+        }
 
-        // if ($data["stock"] == null) {
-        //     $this->setErrorMessages("stock", "在庫数を入力してください");
-        // }
+        if (strlen($data["password"]) < 4) {
+            $this->setErrorMessages("password_length", "パスワードは4文字以上を入力してください");
+        }
+
+        if (!preg_match("/^[a-zA-Z0-9]+$/", $data["password"])) {
+            $this->setErrorMessages("password_preg_match", "パスワードは半角英数で入力してください");
+        }
 
         if (empty($this->errors)) {
             return true;
