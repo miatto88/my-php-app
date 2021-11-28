@@ -192,6 +192,35 @@ class MemberController Extends BaseController {
         header("Location: ../member/member.php");
         return;
     }
+
+    public function downloadCsv($filedata) {
+        $today = date("YmdHi");
+        $filename = "members_" . $today . ".csv";
+
+        header('Content-Type: application/octet-stream');
+        header("Content-Disposition: attachment; filename={$filename}");
+        header("Content-Transfer-Encoding: binary");
+
+        $fp = fopen("php://output", "w");
+
+        $head = ["id", "name", "role", "登録日"];
+        fputcsv($fp, $head);
+
+        foreach ($filedata["members"] as $row) {
+            $data = [
+                $row["id"],
+                $row["last_name"] . " " . $row["first_name"],
+                $row["role"],
+                $row["created_at"]
+            ];
+
+            fputcsv($fp, $data);
+        }
+
+        fclose($fp);
+
+        return;
+    }
 }
 
 ?>
