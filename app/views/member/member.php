@@ -8,6 +8,7 @@ $controller = new MemberController;
 $data = $controller->index();
 
 $is_admin = $data["is_admin"];
+$is_guest = $data["is_guest"];
 
 ?>
 
@@ -34,6 +35,11 @@ $is_admin = $data["is_admin"];
         <section class="main">
             <div class="btns">
                 <a href="store.php" class="<?php if(!$is_admin): ?>not_admin<?php endif; ?>">社員登録</a>
+            </div>
+            <div class="btns">
+                <form action="download.php" method="get">
+                    <input type="submit" name="download" value="CSVダウンロード" <?php if($is_guest): ?>disabled<?php endif; ?>>
+                </form>
             </div>
             <span class="messages"></span>
             <hr>
