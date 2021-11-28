@@ -2,15 +2,31 @@
 require_once(dirname(__FILE__) . "/BaseController.php");
 require_once(dirname(__FILE__) . "/../models/Member.php");
 require_once(dirname(__FILE__) . "/../validations/Membervalidation.php");
+require_once(dirname(__FILE__) . "/../util/Role.php");
 
 class MemberController Extends BaseController {
-    public function index() { // 変更 非staticなメソッドに
+    public function index() {
         $members = Member::findAll();
+        $data = [];
 
-        return $members;
+        foreach ($members as $member) {
+            $data["members"][] = [
+                "id" => $member["id"],
+                "last_name" => $member["last_name"],
+                "first_name" => $member["first_name"],
+                "role" => $member["role"],
+                "created_at" => $member["created_at"],
+                "updated_at" =>$member["updated_at"]
+            ];
+        }
+
+        $data["is_admin"] = Role::isAdmin();
+        $data["is_guest"] = Role::isGuest();
+
+        return $data;
     }
 
-    public function detail() { // 変更 非staticなメソッドに
+    public function detail() {
         $member_id = $_GET["id"];
 
         if (!$member_id) {
@@ -63,7 +79,7 @@ class MemberController Extends BaseController {
         return $members;
     }
 
-    public function new() { // 変更 非staticなメソッドに
+    public function new() {
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             return $_GET;
         }
@@ -71,7 +87,15 @@ class MemberController Extends BaseController {
         return true;
     }
 
-    public function store() { // 変更 非staticなメソッドに
+    public function store() {
+        if (Role::isAdmin() === false) {
+            session_start();
+            $_SESSION["errors"]["database"] = "管理者のみ実行できる機能です";
+
+            header("Location: store.php");
+            return;
+        }
+
         $dbh = Member::dbconnect();
 
         $validation = new MemberValidation;
@@ -108,7 +132,7 @@ class MemberController Extends BaseController {
         return;
     }
 
-    public function edit() { // 変更 非staticなメソッドに
+    public function edit() {
         $member_id = $_GET["id"];
 
         if (!$member_id) {
@@ -131,7 +155,7 @@ class MemberController Extends BaseController {
         return $member;
     }
 
-    public function update() { // 変更 非staticなメソッドに
+    public function update() {
         $dbh = Member::dbconnect();
 
         $validation = new MemberValidation;

@@ -2,7 +2,6 @@
 require_once(dirname(__FILE__) . "/../../models/item.php");
 require_once(dirname(__FILE__) . "/../../controllers/ItemController.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
-// require_once(dirname(__FILE__) . "/../../models/member.php");
 
 $controller = new ItemController;
 

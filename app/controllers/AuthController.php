@@ -64,6 +64,7 @@ Class AuthController Extends BaseController {
         return $member;
     }
 
+    // 削除予定
     public static function isGuest() {
         if ($_SESSION["member"]["role"] === Member::ROLE_GUEST) { // ゲスト用のロールに定数を使用
             return true;
@@ -71,6 +72,7 @@ Class AuthController Extends BaseController {
         return false;
     }
 
+    // 削除予定
     public static function isAdmin() {
         if ($_SESSION["member"]["role"] === Member::ROLE_ADMIN) { // 管理者用のロールに定数を使用
             return true;

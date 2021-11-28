@@ -5,9 +5,10 @@ require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
 
 $controller = new MemberController;
 
-$is_admin = AuthController::isAdmin();
+$data = $controller->index();
 
-$members = $controller->index();
+$is_admin = $data["is_admin"];
+
 ?>
 
 <!DOCTYPE html>
@@ -36,13 +37,13 @@ $members = $controller->index();
             </div>
             <span class="messages"></span>
             <hr>
-            <?php foreach($members as $member): ?>
-            <div class="member_data" id=<?php echo "member_id_" . $member["id"] ?>>
+            <?php foreach($data["members"] as $data): ?>
+            <div class="member_data" id=<?php echo "member_id_" . $data["id"] ?>>
                 <div class="member_name">
-                    <a href="detail.php?id=<?php echo $member["id"] ?>" ><?php echo $member["last_name"] . " " . $member["first_name"]; ?></a>
+                    <a href="detail.php?id=<?php echo $data["id"] ?>" ><?php echo $data["last_name"] . " " . $data["first_name"]; ?></a>
                 </div>
                 <div class="member_role">
-                    <span>権限：<?php echo Member::showRole($member); ?></span>
+                    <span>権限：<?php echo Member::showRole($data); ?></span>
                 </div>
                 <hr>
             </div>
