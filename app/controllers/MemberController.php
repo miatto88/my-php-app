@@ -7,14 +7,13 @@ require_once(dirname(__FILE__) . "/../util/Role.php");
 class MemberController Extends BaseController {
     public function index() {
         $members = Member::findAll();
-        $data = [];
-        foreach ($members as $member) {
-            $data = [
-                "members" => $member,
-                "is_admin" => Role::isAdmin(),
-                "is_guest" => Role::isGuest()
-            ];
-        }
+        
+        $data = [
+            "members" => $members,
+            "is_admin" => Role::isAdmin(),
+            "is_guest" => Role::isGuest()
+        ];
+        
 
         return $data;
     }
