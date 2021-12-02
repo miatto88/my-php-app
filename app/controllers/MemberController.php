@@ -8,20 +8,13 @@ class MemberController Extends BaseController {
     public function index() {
         $members = Member::findAll();
         $data = [];
-
         foreach ($members as $member) {
-            $data["members"][] = [
-                "id" => $member["id"],
-                "last_name" => $member["last_name"],
-                "first_name" => $member["first_name"],
-                "role" => $member["role"],
-                "created_at" => $member["created_at"],
-                "updated_at" =>$member["updated_at"]
+            $data = [
+                "members" => $member,
+                "is_admin" => Role::isAdmin(),
+                "is_guest" => Role::isGuest()
             ];
         }
-
-        $data["is_admin"] = Role::isAdmin();
-        $data["is_guest"] = Role::isGuest();
 
         return $data;
     }
