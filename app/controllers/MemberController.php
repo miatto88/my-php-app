@@ -180,20 +180,24 @@ class MemberController Extends BaseController {
         return;
     }
 
-    public function downloadCsv($filedata) {
+    public function export() {
+        $members = Member::findAll();
+
+        return $members;
+    }
+
+    public function createCsv($data) {
         $today = date("YmdHi");
-        $filename = "members_" . $today . ".csv";
+        $file_name = "members_" . $today . ".csv";
 
-        header('Content-Type: application/octet-stream');
-        header("Content-Disposition: attachment; filename={$filename}");
-        header("Content-Transfer-Encoding: binary");
+        $dir = "/var/tmp/" . $file_name;
 
-        $fp = fopen("php://output", "w");
+        $fp = fopen($dir, "w");
 
         $head = ["id", "name", "role", "登録日"];
         fputcsv($fp, $head);
 
-        foreach ($filedata["members"] as $row) {
+        foreach ($data as $row) {
             $data = [
                 $row["id"],
                 $row["last_name"] . " " . $row["first_name"],
@@ -206,8 +210,48 @@ class MemberController Extends BaseController {
 
         fclose($fp);
 
+        return $file_name;
+    }
+
+    public function downloadCsv($file_name) {
+        $filepath = "/var/tmp/" . $file_name;
+
+        header('Content-Type: application/octet-stream');
+        header("Content-Disposition: attachment; filename={$file_name}");
+        header("Content-Transfer-Encoding: binary");
+
+        readfile($filepath);
         return;
     }
+
+    // public function downloadCsv($filedata) {
+    //     $today = date("YmdHi");
+    //     $filename = "members_" . $today . ".csv";
+
+    //     header('Content-Type: application/octet-stream');
+    //     header("Content-Disposition: attachment; filename={$filename}");
+    //     header("Content-Transfer-Encoding: binary");
+
+    //     $fp = fopen("php://output", "w");
+
+    //     $head = ["id", "name", "role", "登録日"];
+    //     fputcsv($fp, $head);
+
+    //     foreach ($filedata as $row) {
+    //         $data = [
+    //             $row["id"],
+    //             $row["last_name"] . " " . $row["first_name"],
+    //             $row["role"],
+    //             $row["created_at"]
+    //         ];
+
+    //         fputcsv($fp, $data);
+    //     }
+
+    //     fclose($fp);
+
+    //     return;
+    // }
 }
 
 ?>

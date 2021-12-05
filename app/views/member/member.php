@@ -36,10 +36,11 @@ $is_guest = $data["is_guest"];
             <div class="btns">
                 <a href="store.php" class="<?php if(!$is_admin): ?>not_admin<?php endif; ?>">社員登録</a>
             </div>
-            <div class="btns">
-                <form action="download.php" method="get">
-                    <input type="submit" name="download" value="CSVダウンロード" <?php if($is_guest): ?>disabled<?php endif; ?>>
-                </form>
+            <hr>
+            <div>
+                <button data-btn-type="ajax" <?php if($is_guest): ?>disabled<?php endif; ?>>CSV出力</button>
+                <button class="download" onclick="location.href='download.php'" disabled>ダウンロード</button>
+                <span class="file_name"></span>
             </div>
             <span class="messages"></span>
             <hr>
@@ -60,6 +61,6 @@ $is_guest = $data["is_guest"];
         <?php include(dirname(__FILE__) . "/../layout/sidemenu.php"); ?>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="../../js/api.js"></script>
+    <script type="text/javascript" src="../../js/createCsv.js"></script>
 </body>
 </html>
