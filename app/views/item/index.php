@@ -5,7 +5,7 @@ require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
 
 $controller = new ItemController;
 
-$is_guest = AuthController::isGuest();
+// $is_guest = AuthController::isGuest();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["item_name"])) {
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
                 </div>
             </div>
             <hr>
-            <?php foreach($items as $item): ?>
+            <?php foreach($items["items"] as $item): ?>
             <div class="item_data" id=<?php echo "item_id_" . $item["id"] ?>>
                 <div class="item_name">
                     <a href="detail.php?id=<?php echo $item["id"] ?>" ><?php echo $item["name"]; ?></a>

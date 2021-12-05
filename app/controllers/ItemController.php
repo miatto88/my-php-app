@@ -1,16 +1,19 @@
 <?php
 require_once(dirname(__FILE__) . "/BaseController.php");
 require_once(dirname(__FILE__) . "/../models/item.php");
+require_once(dirname(__FILE__) . "/../util/Role.php");
 require_once(dirname(__FILE__) . "/../validations/Itemvalidation.php");
 
 class ItemController Extends BaseController {
-    public function index() { // 変更 非staticなメソッドに
+    public function index() {
         $items = Item::findAll();
+        $is_admin = Role::isAdmin();
+        $is_guest = Role::isGuest();
 
-        return $items;
+        return compact("items", "is_admin", "is_guest");
     }
 
-    public function detail() { // 変更 非staticなメソッドに
+    public function detail() {
         $item_id = $_GET["id"];
 
         if (!$item_id) {
@@ -45,7 +48,10 @@ class ItemController Extends BaseController {
             return;
         }
 
-        return $items;
+        $is_admin = Role::isAdmin();
+        $is_guest = Role::isGuest();
+
+        return compact("items", "is_admin", "is_guest");
     }
 
     public function serchStock() {
@@ -63,7 +69,7 @@ class ItemController Extends BaseController {
         return $items;
     }
 
-    public function new() { // 変更 非staticなメソッドに
+    public function new() {
         if ($_SERVER["REQUEST_METHOD"] === "GET") {
             return $_GET;
         }
@@ -71,7 +77,7 @@ class ItemController Extends BaseController {
         return true;
     }
 
-    public function store() { // 変更 非staticなメソッドに
+    public function store() {
         $dbh = Item::dbconnect();
 
         $validation = new ItemValidation;
@@ -107,7 +113,7 @@ class ItemController Extends BaseController {
         return;
     }
 
-    public function edit() { // 変更 非staticなメソッドに
+    public function edit() {
         $item_id = $_GET["id"];
 
         if (!$item_id) {
@@ -130,7 +136,7 @@ class ItemController Extends BaseController {
         return $item;
     }
 
-    public function update() { // 変更 非staticなメソッドに
+    public function update() {
         $dbh = Item::dbconnect();
 
         $validation = new ItemValidation;
