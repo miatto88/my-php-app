@@ -5,6 +5,8 @@ class Member Extends BaseModel {
     const ROLE_USER = "0";
     const ROLE_ADMIN = "1";
     const ROLE_GUEST = "2";
+
+    const EXPORT_DIR = "/var/tmp/";
     
     public static function showRole($member) {
         if ($member["role"] === self::ROLE_USER) {

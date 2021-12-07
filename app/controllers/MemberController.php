@@ -5,6 +5,8 @@ require_once(dirname(__FILE__) . "/../validations/Membervalidation.php");
 require_once(dirname(__FILE__) . "/../util/Role.php");
 
 class MemberController Extends BaseController {
+    const EXPORT_DIR = "/var/tmp/";
+
     public function index() {
         $members = Member::findAll();
         $is_admin = Role::isAdmin();
@@ -190,7 +192,7 @@ class MemberController Extends BaseController {
         $today = date("YmdHi");
         $file_name = "members_" . $today . ".csv";
 
-        $dir = "/var/tmp/" . $file_name;
+        $filepath = EXPORT_DIR . $file_name;
 
         $fp = fopen($dir, "w");
 
@@ -214,7 +216,7 @@ class MemberController Extends BaseController {
     }
 
     public function downloadCsv($file_name) {
-        $filepath = "/var/tmp/" . $file_name;
+        $filepath = EXPORT_DIR . $file_name;
 
         header('Content-Type: application/octet-stream');
         header("Content-Disposition: attachment; filename={$file_name}");
