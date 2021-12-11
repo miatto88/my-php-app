@@ -194,9 +194,9 @@ class MemberController Extends BaseController {
         $phppath = "/usr/local/bin/php";
         $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
         
-        $file_name = exec("$phppath $filepath '{$encoded_data}' &");
+        exec("$phppath $filepath '{$encoded_data}' &", $file_name);
         
-        return $file_name;
+        return $file_name[0];
     }
 
     // public function createCsv($data) {
