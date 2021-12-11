@@ -189,34 +189,45 @@ class MemberController Extends BaseController {
     }
 
     public function createCsv($data) {
-        $today = date("YmdHi");
-        $file_name = "members_" . $today . ".csv";
+        $encoded_data = json_encode($data);
 
-        $filepath = EXPORT_DIR . $file_name;
-
-        $fp = fopen($dir, "w");
-
-        $head = ["id", "name", "role", "登録日"];
-        fputcsv($fp, $head);
-
-        foreach ($data as $row) {
-            $data = [
-                $row["id"],
-                $row["last_name"] . " " . $row["first_name"],
-                $row["role"],
-                $row["created_at"]
-            ];
-
-            fputcsv($fp, $data);
-        }
-
-        fclose($fp);
-
+        $phppath = "/usr/local/bin/php";
+        $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
+        
+        $file_name = exec("$phppath $filepath '{$encoded_data}' &");
+        
         return $file_name;
     }
 
+    // public function createCsv($data) {
+    //     $today = date("YmdHi");
+    //     $file_name = "members_" . $today . ".csv";
+
+    //     $filepath = EXPORT_DIR . $file_name;
+
+    //     $fp = fopen($dir, "w");
+
+    //     $head = ["id", "name", "role", "登録日"];
+    //     fputcsv($fp, $head);
+
+    //     foreach ($data as $row) {
+    //         $data = [
+    //             $row["id"],
+    //             $row["last_name"] . " " . $row["first_name"],
+    //             $row["role"],
+    //             $row["created_at"]
+    //         ];
+
+    //         fputcsv($fp, $data);
+    //     }
+
+    //     fclose($fp);
+
+    //     return $file_name;
+    // }
+
     public function downloadCsv($file_name) {
-        $filepath = EXPORT_DIR . $file_name;
+        $filepath = self::EXPORT_DIR . $file_name;
 
         header('Content-Type: application/octet-stream');
         header("Content-Disposition: attachment; filename={$file_name}");
