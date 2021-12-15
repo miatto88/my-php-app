@@ -191,10 +191,10 @@ class MemberController Extends BaseController {
     public function createCsv($data) {
         $encoded_data = json_encode($data);
 
-        $phppath = "/usr/local/bin/php";
         $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
+        $cmd = "/usr/local/bin/php $filepath '{$encoded_data}' &";
         
-        exec("$phppath $filepath '{$encoded_data}' &", $file_name);
+        exec($cmd, $file_name);
         
         return $file_name[0];
     }
