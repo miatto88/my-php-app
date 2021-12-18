@@ -46,7 +46,17 @@ $is_guest = $data["is_guest"];
             </div>
             <span class="messages"></span>
             <hr>
-            
+            <?php foreach($data["members"] as $data): ?>
+            <div class="member_data" id=<?php echo "member_id_" . $data["id"] ?>>
+                <div class="member_name">
+                    <a href="detail.php?id=<?php echo $data["id"] ?>" ><?php echo $data["last_name"] . " " . $data["first_name"]; ?></a>
+                </div>
+                <div class="member_role">
+                    <span>権限：<?php echo Member::showRole($data); ?></span>
+                </div>
+                <hr>
+            </div>
+            <?php endforeach; ?>
             <p>
         </p>
         </section>
