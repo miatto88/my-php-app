@@ -39,22 +39,14 @@ $is_guest = $data["is_guest"];
             <hr>
             <div>
                 <button data-btn-type="ajax" <?php if($is_guest): ?>disabled<?php endif; ?>>CSV出力</button>
-                <button class="download" onclick="location.href='download.php'" disabled>ダウンロード</button>
-                <span class="file_name"></span>
+                <div class="progress">
+                    <button class="download" onclick="location.href='download.php'" disabled>出力待機</button>
+                </div>
+                <div class="file_name"></div>
             </div>
             <span class="messages"></span>
             <hr>
-            <?php foreach($data["members"] as $data): ?>
-            <div class="member_data" id=<?php echo "member_id_" . $data["id"] ?>>
-                <div class="member_name">
-                    <a href="detail.php?id=<?php echo $data["id"] ?>" ><?php echo $data["last_name"] . " " . $data["first_name"]; ?></a>
-                </div>
-                <div class="member_role">
-                    <span>権限：<?php echo Member::showRole($data); ?></span>
-                </div>
-                <hr>
-            </div>
-            <?php endforeach; ?>
+            
             <p>
         </p>
         </section>

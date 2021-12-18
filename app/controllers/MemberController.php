@@ -189,13 +189,18 @@ class MemberController Extends BaseController {
     }
 
     public function createCsv($data) {
+        // if (file_exists(self::EXPORT_DIR . "lock.csv")) {
+        //     unlink(self::EXPORT_DIR . "lock.csv");
+        // }
+
         $encoded_data = json_encode($data);
 
         $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
         $cmd = "/usr/local/bin/php $filepath '{$encoded_data}' &";
+        // $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
+        // $cmd = "/usr/local/bin/php $filepath '{$encoded_data}' > /dev/null &";
         
         exec($cmd, $file_name);
-        
         return $file_name[0];
     }
 
@@ -235,6 +240,14 @@ class MemberController Extends BaseController {
 
         readfile($filepath);
         return;
+    }
+
+    public function checkProgress() {
+        $fp = fopen(self::EXPORT_DIR . "lock.csv", "r");
+        $progress = fgetcsv($fp);
+        fclose($fp);
+        
+        return $progress;
     }
 
     // public function downloadCsv($filedata) {

@@ -8,6 +8,15 @@ body {
     width: 95%;
 }
 
+button {
+    height: 27px;
+    cursor: pointer;
+}
+
+:disabled {
+    cursor: unset;
+}
+
 header {
     margin: 0px 20px 10px 20px;
     position: fixed;
@@ -198,13 +207,27 @@ a.not_admin {
     width: 100px;
 }
 
+.download {
+    display: inline-block;
+    width: 100px;
+    background-color: rgba(220, 220, 220, 0.2);
+}
+
+.progress {
+    display: inline-block;
+    width: 0px;
+    height: 22px;
+    background: -moz-linear-gradient(top, rgba(14, 255, 14, 0.9), rgba(250, 250, 250, 1));
+    background: -webkit-linear-gradient(top, rgba(14, 255, 14, 0.9), rgba(250, 250, 250, 1));
+    background: linear-gradient(to bottom, rgba(14, 255, 14, 0.9), rgba(250, 250, 250, 1));
+}
+
 .member_role {
     display: inline-block;
     width: 120px;
 }
 
 .button {
-    /* padding-left: 16px; */
     display: inline-block;
 }
 
