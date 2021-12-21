@@ -188,17 +188,9 @@ class MemberController Extends BaseController {
         return $members;
     }
 
-    public function createCsv($data) {
-        // if (file_exists(self::EXPORT_DIR . "lock.csv")) {
-        //     unlink(self::EXPORT_DIR . "lock.csv");
-        // }
-
-        $encoded_data = json_encode($data);
-
+    public function createCsv() {
         $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
-        $cmd = "/usr/local/bin/php $filepath '{$encoded_data}' &";
-        // $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
-        // $cmd = "/usr/local/bin/php $filepath '{$encoded_data}' > /dev/null &";
+        $cmd = "/usr/local/bin/php $filepath &";
         
         exec($cmd, $file_name);
         return $file_name[0];

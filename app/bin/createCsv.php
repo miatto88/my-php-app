@@ -6,8 +6,16 @@ const FINISH = 3;
 
 const EXPORT_DIR = "/var/tmp/";
 
-$encoded_data = $argv[1];
-$decoded_data = json_decode($encoded_data, true);
+try {
+    // docker時
+    $dsn = "mysql:host=my-php-app_mysql_1;dbname=common;charset=utf8";
+    $dbh = new PDO($dsn, "root", "miatto");
+} catch (PDOException $e) {
+    echo "DB接続エラー: " . $e->getMessage();
+}
+
+$members = $dbh->query("SELECT * FROM members");
+$members = $members->fetchAll();
 
 // if (!file_exists(EXPORT_DIR . "lock.csv")) {
 //     touch(EXPORT_DIR . "lock.csv");
@@ -17,8 +25,9 @@ $decoded_data = json_decode($encoded_data, true);
 //     unlink(EXPORT_DIR . "lock.csv");
 // }
 
+
 // ロックファイルの作成
-$total = count($decoded_data);
+$total = count($members);
 $count = 0;
 $progress = [START, $total, $count, time()];
 
@@ -29,6 +38,8 @@ fputcsv($lockFp, $progress);
 $today = date("YmdHi");
 $file_name = "members_" . $today . ".csv";
 
+// echo $file_name;
+
 $filepath = EXPORT_DIR . $file_name;
 
 $fp = fopen($filepath, "w");
@@ -36,7 +47,7 @@ $fp = fopen($filepath, "w");
 $head = ["id", "name", "role", "登録日"];
 fputcsv($fp, $head);
 
-foreach ($decoded_data as $row) {
+foreach ($members as $row) {
     $data = [
         $row["id"],
         $row["last_name"] . " " . $row["first_name"],

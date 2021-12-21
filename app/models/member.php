@@ -86,7 +86,7 @@ class Member Extends BaseModel {
     public static function findAll() {
         $dbh = self::dbconnect();
 
-        $members = $dbh->query("SELECT * FROM members");
+        $members = $dbh->query("SELECT * FROM members limit 0, 15");
         $members = $members->fetchAll();
 
         return $members;
