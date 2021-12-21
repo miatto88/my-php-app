@@ -7,7 +7,7 @@ require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
 $stock_in_controller = new StockInHistoryController;
 
 $item_controller = new ItemController;
-$items = $item_controller->index();
+$data = $item_controller->index();
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     $get = $stock_in_controller->new();
@@ -58,7 +58,7 @@ if (!empty($_GET["id"])) {
                 <span>製品名　：　</span>
                 <select onChange="top.location.href=value" name="name" id="">
                     <option value=""><?php echo $item["name"]; ?></option>
-                    <?php foreach ($items as $item): ?>
+                    <?php foreach ($data["items"] as $item): ?>
                     <option value="in_count.php?id=<?php echo $item["id"]; ?>"><?php echo $item["name"]; ?></option>
                     <?php endforeach; ?>
                 </select>
