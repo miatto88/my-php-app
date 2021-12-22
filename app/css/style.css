@@ -214,6 +214,7 @@ a.not_admin {
 }
 
 .progress {
+    /* transition: width 0.5s linear; */
     display: inline-block;
     width: 0px;
     height: 22px;
