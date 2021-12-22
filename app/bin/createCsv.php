@@ -57,6 +57,7 @@ foreach ($members as $row) {
     if (flock($lockFp, LOCK_EX)) {
         rewind($lockFp);
         fputcsv($lockFp, $progress);
+
         flock($lockFp, LOCK_UN);
     } else {
         echo "ファイルロックに失敗しました";
@@ -70,6 +71,7 @@ $progress = [FINISH, $total, $count, time()];
 if (flock($lockFp, LOCK_EX)) {
     rewind($lockFp);
     fputcsv($lockFp, $progress);
+    
     flock($lockFp, LOCK_UN);
 } else {
     echo "ファイルロックに失敗しました";
