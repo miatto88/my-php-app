@@ -191,37 +191,10 @@ class MemberController Extends BaseController {
     public function createCsv() {
         $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
         $cmd = "/usr/local/bin/php $filepath &";
-        
+
         exec($cmd, $file_name);
         return $file_name[0];
     }
-
-    // public function createCsv($data) {
-    //     $today = date("YmdHi");
-    //     $file_name = "members_" . $today . ".csv";
-
-    //     $filepath = EXPORT_DIR . $file_name;
-
-    //     $fp = fopen($dir, "w");
-
-    //     $head = ["id", "name", "role", "登録日"];
-    //     fputcsv($fp, $head);
-
-    //     foreach ($data as $row) {
-    //         $data = [
-    //             $row["id"],
-    //             $row["last_name"] . " " . $row["first_name"],
-    //             $row["role"],
-    //             $row["created_at"]
-    //         ];
-
-    //         fputcsv($fp, $data);
-    //     }
-
-    //     fclose($fp);
-
-    //     return $file_name;
-    // }
 
     public function downloadCsv($file_name) {
         $filepath = self::EXPORT_DIR . $file_name;
@@ -241,35 +214,6 @@ class MemberController Extends BaseController {
         
         return $progress;
     }
-
-    // public function downloadCsv($filedata) {
-    //     $today = date("YmdHi");
-    //     $filename = "members_" . $today . ".csv";
-
-    //     header('Content-Type: application/octet-stream');
-    //     header("Content-Disposition: attachment; filename={$filename}");
-    //     header("Content-Transfer-Encoding: binary");
-
-    //     $fp = fopen("php://output", "w");
-
-    //     $head = ["id", "name", "role", "登録日"];
-    //     fputcsv($fp, $head);
-
-    //     foreach ($filedata as $row) {
-    //         $data = [
-    //             $row["id"],
-    //             $row["last_name"] . " " . $row["first_name"],
-    //             $row["role"],
-    //             $row["created_at"]
-    //         ];
-
-    //         fputcsv($fp, $data);
-    //     }
-
-    //     fclose($fp);
-
-    //     return;
-    // }
 }
 
 ?>

@@ -7,7 +7,6 @@ const FINISH = 3;
 const EXPORT_DIR = "/var/tmp/";
 
 try {
-    // docker時
     $dsn = "mysql:host=my-php-app_mysql_1;dbname=common;charset=utf8";
     $dbh = new PDO($dsn, "root", "miatto");
 } catch (PDOException $e) {
@@ -17,28 +16,23 @@ try {
 $members = $dbh->query("SELECT * FROM members");
 $members = $members->fetchAll();
 
-// if (!file_exists(EXPORT_DIR . "lock.csv")) {
-//     touch(EXPORT_DIR . "lock.csv");
-// }
-
-// if (file_exists(EXPORT_DIR . "lock.csv")) {
-//     unlink(EXPORT_DIR . "lock.csv");
-// }
-
-
 // ロックファイルの作成
 $total = count($members);
 $count = 0;
 $progress = [START, $total, $count, time()];
 
 $lockFp = fopen(EXPORT_DIR . "lock.csv", "w+");
-fputcsv($lockFp, $progress);
+if (flock($lockFp, LOCK_EX)) {
+    fputcsv($lockFp, $progress);
+
+    flock($lockFp, LOCK_UN);
+} else {
+    echo "ファイルロックに失敗しました";
+}
 
 // ダウンロード用CSV作成
 $today = date("YmdHi");
 $file_name = "members_" . $today . ".csv";
-
-// echo $file_name;
 
 $filepath = EXPORT_DIR . $file_name;
 
@@ -60,16 +54,26 @@ foreach ($members as $row) {
     // ロックファイルへの経過書き込み
     $count++; 
     $progress = [WIP, $total, $count, time()];
-    rewind($lockFp);
-    fputcsv($lockFp, $progress);
+    if (flock($lockFp, LOCK_EX)) {
+        rewind($lockFp);
+        fputcsv($lockFp, $progress);
+        flock($lockFp, LOCK_UN);
+    } else {
+        echo "ファイルロックに失敗しました";
+    }
 }
 
 fclose($fp);
 
 // ロックファイルへの書き込み
 $progress = [FINISH, $total, $count, time()];
-rewind($lockFp);
-fputcsv($lockFp, $progress);
+if (flock($lockFp, LOCK_EX)) {
+    rewind($lockFp);
+    fputcsv($lockFp, $progress);
+    flock($lockFp, LOCK_UN);
+} else {
+    echo "ファイルロックに失敗しました";
+}
 
 fclose($lockFp);
 

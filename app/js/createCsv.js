@@ -36,7 +36,7 @@ $(function() {
                         $(".file_name").html(response);                        
                     }
                 })
-            }, 50);
+            }, 1000);
         })
 
         .fail(function(jqXHR, textStatus, errorThrown) {
