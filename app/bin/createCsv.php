@@ -16,6 +16,10 @@ try {
 $members = $dbh->query("SELECT * FROM members");
 $members = $members->fetchAll();
 
+// if (file_exists(EXPORT_DIR . "lock.csv")) {
+
+// }
+
 // ロックファイルの作成
 $total = count($members);
 $count = 0;
@@ -51,16 +55,21 @@ foreach ($members as $row) {
 
     fputcsv($fp, $data);
     
-    // ロックファイルへの経過書き込み
-    $count++; 
-    $progress = [WIP, $total, $count, time()];
-    if (flock($lockFp, LOCK_EX)) {
-        rewind($lockFp);
-        fputcsv($lockFp, $progress);
+    // ロックファイルへの経過書き込み 100件毎
+    $count++;
 
-        flock($lockFp, LOCK_UN);
-    } else {
-        echo "ファイルロックに失敗しました";
+    if ($count % 100 === 0) {
+        $progress = [WIP, $total, $count, time()];
+        if (flock($lockFp, LOCK_EX)) {
+            rewind($lockFp);
+            fputcsv($lockFp, $progress);
+    
+            flock($lockFp, LOCK_UN);
+        } else {
+            echo "ファイルロックに失敗しました";
+        }
+        
+        usleep(5000);
     }
 }
 
