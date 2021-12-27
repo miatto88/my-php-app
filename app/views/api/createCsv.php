@@ -7,7 +7,7 @@ $controller = new MemberController;
 
 $data = $controller->export();
 
-$file_name = $controller->createCsv();
+$controller->createCsv();
 
 $_SESSION["ajax"]["file_name"] = $file_name;
 

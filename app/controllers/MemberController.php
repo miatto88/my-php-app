@@ -190,10 +190,10 @@ class MemberController Extends BaseController {
 
     public function createCsv() {
         $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
-        $cmd = "/usr/local/bin/php $filepath &";
+        $cmd = "/usr/local/bin/php $filepath > /dev/null &";
 
-        exec($cmd, $file_name);
-        return $file_name[0];
+        exec($cmd);
+        return;
     }
 
     public function downloadCsv($file_name) {

@@ -16,10 +16,6 @@ try {
 $members = $dbh->query("SELECT * FROM members");
 $members = $members->fetchAll();
 
-// if (file_exists(EXPORT_DIR . "lock.csv")) {
-
-// }
-
 // ロックファイルの作成
 $total = count($members);
 $count = 0;
