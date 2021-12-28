@@ -7,9 +7,12 @@ $controller = new MemberController;
 
 $data = $controller->export();
 
-$controller->createCsv();
-
+// $process_id = uniqid();
+$today = date("YmdHi");
+$file_name = "members_" . $today . ".csv";
 $_SESSION["ajax"]["file_name"] = $file_name;
+
+$controller->createCsv($file_name);
 
 echo json_encode($file_name);
 exit();

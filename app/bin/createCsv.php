@@ -31,8 +31,7 @@ if (flock($lockFp, LOCK_EX)) {
 }
 
 // ダウンロード用CSV作成
-$today = date("YmdHi");
-$file_name = "members_" . $today . ".csv";
+$file_name = $argv[1]; // $file_name は引数で受ける
 
 $filepath = EXPORT_DIR . $file_name;
 
@@ -84,6 +83,7 @@ if (flock($lockFp, LOCK_EX)) {
 
 fclose($lockFp);
 
-echo $file_name;
+$format = "[%d][createCSV] complete. %d / %d";
+echo sprintf($format, date("YmdHis"), $count, $total);
 
 ?>
