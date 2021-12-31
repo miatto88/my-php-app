@@ -73,8 +73,8 @@ if (!empty($_GET["id"])) {
                     <p>出庫数　：　 <input type="number" name="quantity" value="<?php echo $get["quantity"] ?>"></p>
                     <p>出庫先　：　
                         <select name="customer_id">
-                            <option value=""><?php echo $customer["company"]; ?></option>
-                            <?php foreach ($customers as $customer): ?>
+                            <option value=""></option>
+                            <?php foreach ($customers["customers"] as $customer): ?>
                             <option value="<?php echo $customer["id"]; ?>"><?php echo $customer["company"]; ?></option>
                             <?php endforeach; ?>
                         </select>
