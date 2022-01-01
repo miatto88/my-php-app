@@ -10,7 +10,7 @@ class Customer Extends BaseModel {
         "address_1",
         "address_2",
         "city",
-        "state/province",
+        "state_province",
         "zip_code",
         "first_name",
         "last_name",
@@ -34,6 +34,78 @@ class Customer Extends BaseModel {
 
     public function getCompany() {
         return $this->data["company"];
+    }
+
+    public function setPhone($phone) {
+        $this->data["phone"] = $phone;
+    }
+
+    public function getPhone() {
+        return $this->data["phone"];
+    }
+
+    public function setFax($fax) {
+        $this->data["fax"] = $fax;
+    }
+
+    public function getFax() {
+        return $this->data["fax"];
+    }
+
+    public function setAddress1($address_1) {
+        $this->data["address_1"] = $address_1;
+    }
+
+    public function getAddress1() {
+        return $this->data["address_1"];
+    }
+
+    public function setAddress2($address2) {
+        $this->data["address_2"] = $address2;
+    }
+
+    public function getAddress2() {
+        return $this->data["address_2"];
+    }
+
+    public function setCity($city) {
+        $this->data["city"] = $city;
+    }
+
+    public function getCity() {
+        return $this->data["city"];
+    }
+
+    public function setStateProvince($state_province) {
+        $this->data["state_province"] = $state_province;
+    }
+
+    public function getStateProvince() {
+        return $this->data["state_province"];
+    }
+
+    public function setZipCode($zip_code) {
+        $this->data["zip_code"] = $zip_code;
+    }
+
+    public function getZipCode() {
+        return $this->data["zip_code"];
+    }
+
+    public function setLastName($last_name) {
+        $this->data["last_name"] = $last_name;
+    }
+
+    public function getLastName() {
+        return $this->data["last_name"];
+    }
+
+    public function setFirstName($first_name) {
+        $this->data["first_name"] = $first_name;
+    }
+
+    public function getFirstName() {
+        return $this->data["first_name"];
     }
 
     public static function findAll() {
@@ -62,58 +134,83 @@ class Customer Extends BaseModel {
         return true;
     }
 
-    // public function out_save() {
-    //     try {
-    //         $dbh = self::dbconnect();
+    public function save() {
+        try {
+            $dbh = self::dbconnect();
+
+            $dbh->beginTransaction(); // トランザクション 開始
     
-    //         $store = $dbh->prepare(
-    //             "INSERT INTO stock_out_histories SET customer_id=?, quantity=?, member_id=?, customer_id=?, created_at=?, updated_at=?");
-    //         $result = $store->execute([
-    //             $this->getCustomer_id(),
-    //             $this->getQuantity(),
-    //             $this->getMember_id(),
-    //             $this->getCustomer_id(),
-    //             date("Y-m-d H:i:s"),
-    //             date("Y-m-d H:i:s")
-    //         ]);
+            $store = $dbh->prepare(
+                "INSERT INTO customers SET company=?, phone=?, fax=?, zip_code=?, state_province=?, city=?, address_1=?, address_2=?, last_name=?, first_name=?, created_at=?, updated_at=?");
+            $result = $store->execute([
+                $this->getCompany(),
+                $this->getPhone(),
+                $this->getFax(),
+                $this->getZipCode(),
+                $this->getStateProvince(),
+                $this->getCity(),
+                $this->getAddress1(),
+                $this->getAddress2(),
+                $this->getLastName(),
+                $this->getFirstName(),
+                date("Y-m-d H:i:s"),
+                date("Y-m-d H:i:s")
+            ]);
 
-    //         return $result;
-    //     } catch (PDOException $e) {
-    //         echo "DB登録エラー: " . $e->getMessage();
-    //     }
-    // }
+            if ($result) {
+                $dbh->commit(); // トランザクション コミット
+            }
 
-    // public function update() {
-    //     try {
-    //         $dbh = self::dbconnect();
+            if (!$result) {
+                $dbh->rollBack(); // トランザクション ロールバック
+            }
+
+            return $result;
+        } catch (PDOException $e) {
+            echo "DB登録エラー: " . $e->getMessage();
+
+            $dbh->rollBack();
+        }
+    }
+
+    public function update() {
+        try {
+            $dbh = self::dbconnect();
     
-    //         $dbh->beginTransaction(); // トランザクション 開始
+            $dbh->beginTransaction(); // トランザクション 開始
 
-    //         $store = $dbh->prepare(
-    //             "UPDATE customers SET name=?, price=?, stock=?, updated_at=? WHERE id=?");
-    //         $result = $store->execute([
-    //             $this->getName(),
-    //             $this->getPrice(),
-    //             $this->getStock(),
-    //             date("Y-m-d H:i:s"),
-    //             $this->getId()
-    //         ]);
+            $store = $dbh->prepare(
+                "UPDATE customers SET company=?, phone=?, fax=?, zip_code=?, state_province=?, city=?, address_1=?, address_2=?, last_name=?, first_name=?, updated_at=? WHERE id=?");
+            $result = $store->execute([
+                $this->getCompany(),
+                $this->getPhone(),
+                $this->getFax(),
+                $this->getZipCode(),
+                $this->getStateProvince(),
+                $this->getCity(),
+                $this->getAddress1(),
+                $this->getAddress2(),
+                $this->getLastName(),
+                $this->getFirstName(),
+                date("Y-m-d H:i:s"),
+                $this->getId()
+            ]);
 
-    //         if ($result) {
-    //             $dbh->commit(); // トランザクション コミット
-    //         }
+            if ($result) {
+                $dbh->commit(); // トランザクション コミット
+            }
 
-    //         if (!$result) {
-    //             $dbh->rollBack(); // トランザクション ロールバック
-    //         }
+            if (!$result) {
+                $dbh->rollBack(); // トランザクション ロールバック
+            }
 
-    //         return $result;
-    //     } catch (PDOException $e) {
-    //         echo "DB更新エラー: " . $e->getMessage(); // トランザクション ロールバック
+            return $result;
+        } catch (PDOException $e) {
+            echo "DB更新エラー: " . $e->getMessage(); // トランザクション ロールバック
 
-    //         $dbh->rollBack();
-    //     }
-    // }
+            $dbh->rollBack();
+        }
+    }
 
     // public function delete($id) {
     //     try {

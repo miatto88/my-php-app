@@ -52,10 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             <div>
                 <form action="" method="POST">
                     <p>会社名　　　：　<input type="text" name="company" value="<?php echo $customer["input"]['company'] ?>"></p>
-                    <p>電話番号　　：　<input type="number" min="0" name="phone" value="<?php echo $customer["input"]['phone'] ?>"></p>
-                    <p>FAX番号　　：　<input type="number" min="0" name="fax" value="<?php echo $customer["input"]['fax'] ?>"></p>
-                    <p>郵便番号　　：　<input type="number" min="0" name="zip_code" value="<?php echo $customer["input"]['zip_code'] ?>"></p>
-                    <p>都道府県　　：　<input type="text" name="state/province" value="<?php echo $customer["input"]['state/province'] ?>"></p>
+                    <p>電話番号　　：　<input type="text" name="phone" value="<?php echo $customer["input"]['phone'] ?>"></p>
+                    <p>FAX番号　　：　<input type="text" name="fax" value="<?php echo $customer["input"]['fax'] ?>"></p>
+                    <p>郵便番号　　：　<input type="text" name="zip_code" value="<?php echo $customer["input"]['zip_code'] ?>"></p>
+                    <p>都道府県　　：　<input type="text" name="state_province" value="<?php echo $customer["input"]['state_province'] ?>"></p>
                     <p>市区　　　　：　<input type="text" name="city" value="<?php echo $customer["input"]['city'] ?>"></p>
                     <p>町・番地　　：　<input type="text" name="address_1" value="<?php echo $customer["input"]['address_1'] ?>"></p>
                     <p>建物名　　　：　<input type="text" name="address_2" value="<?php echo $customer["input"]['address_2'] ?>"></p>

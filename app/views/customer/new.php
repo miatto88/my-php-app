@@ -42,8 +42,20 @@ if (empty($get["fax"])) {
 if (empty($get["zip_code"])) {
     $get["zip_code"] = "";
 }
+if (empty($get["state/province"])) {
+    $get["state/province"] = "";
+}
+if (empty($get["city"])) {
+    $get["city"] = "";
+}
 if (empty($get["address_1"])) {
     $get["address_1"] = "";
+}
+if (empty($get["address_2"])) {
+    $get["address_2"] = "";
+}
+if (empty($get["first_name"])) {
+    $get["first_name"] = "";
 }
 if (empty($get["last_name"])) {
     $get["last_name"] = "";
@@ -76,10 +88,10 @@ if (empty($get["last_name"])) {
             <div>
                 <form action="" method="POST">
                     <p>会社名　　　：　<input type="text" name="company" value="<?php echo $get['company'] ?>"></p>
-                    <p>電話番号　　：　<input type="number" min="0" name="phone" value="<?php echo $get['phone'] ?>"></p>
-                    <p>FAX番号　　：　<input type="number" min="0" name="fax" value="<?php echo $get['fax'] ?>"></p>
-                    <p>郵便番号　　：　<input type="number" min="0" name="zip_code" value="<?php echo $get['zip_code'] ?>"></p>
-                    <p>都道府県　　：　<input type="text" name="state/province" value="<?php echo $get['state/province'] ?>"></p>
+                    <p>電話番号　　：　<input type="text" name="phone" value="<?php echo $get['phone'] ?>"></p>
+                    <p>FAX番号　　：　<input type="text" name="fax" value="<?php echo $get['fax'] ?>"></p>
+                    <p>郵便番号　　：　<input type="text" name="zip_code" value="<?php echo $get['zip_code'] ?>"></p>
+                    <p>都道府県　　：　<input type="text" name="state_province" value="<?php echo $get['state_province'] ?>"></p>
                     <p>市区　　　　：　<input type="text" name="city" value="<?php echo $get['city'] ?>"></p>
                     <p>町・番地　　：　<input type="text" name="address_1" value="<?php echo $get['address_1'] ?>"></p>
                     <p>建物名　　　：　<input type="text" name="address_2" value="<?php echo $get['address_2'] ?>"></p>
