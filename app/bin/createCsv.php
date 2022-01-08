@@ -84,6 +84,6 @@ if (flock($lockFp, LOCK_EX)) {
 fclose($lockFp);
 
 $format = "[%d][createCSV] complete. %d / %d";
-echo sprintf($format, date("YmdHis"), $count, $total);
+error_log(sprintf($format, date("YmdHis"), $count, $total));
 
 ?>
