@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
         <h1 class="login-title">在庫管理システム</h1>
     <!-- </header> -->
     <div class="login-wrapper">
-        <form class="login-form" action="" method="post">
+        <form class="login-form form-1" action="" method="post">
             <div class="form-group">
                 <input type="text" name="last_name" maxlength="50" placeholder="姓" class="form-control col-sm-5" value="<?php echo h($get["last_name"]) ?>">
                 <input type="text" name="first_name" maxlength="50" placeholder="名" class="form-control col-sm-5" value="<?php echo h($get["first_name"]) ?>">
