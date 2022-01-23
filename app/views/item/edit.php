@@ -1,8 +1,9 @@
 <?php
-require_once(dirname(__FILE__) . "/../../models/item.php");
+require_once(dirname(__FILE__) . "/../../models/Item.php");
 require_once(dirname(__FILE__) . "/../../controllers/ItemController.php");
 require_once(dirname(__FILE__) . "/../../validations/Itemvalidation.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 $controller = new ItemController;
 
@@ -42,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
+            <span><?php echo h("ログイン名： " . $_SESSION["member"]["name"]); ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
@@ -51,15 +52,15 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             <div>[製品編集]</div>
             <div>
                 <form action="" method="POST">
-                    <p>製品名：　<input type="text" name="name" value="<?php echo $item["input"]['name'] ?>"></p>
-                    <p>価格　：　<input type="number" min="0" name="price" value="<?php echo $item["input"]['price'] ?>"></p>
-                    <p>在庫　：　<input type="number" min="0" name="stock" value="<?php echo $item["input"]['stock'] ?>"></p>
+                    <p>製品名：　<input type="text" name="name" value="<?php echo h($item["input"]['name']) ?>"></p>
+                    <p>価格　：　<input type="number" min="0" name="price" value="<?php echo h($item["input"]['price']) ?>"></p>
+                    <p>在庫　：　<input type="number" min="0" name="stock" value="<?php echo h($item["input"]['stock']) ?>"></p>
                     <p><input type="submit" value="更新する"></p>
                 </form>
             </div>
             <div>
                 <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
+                    <p><?php echo h($error); ?></p>
                 <?php endforeach ?>
             </div>
             <hr>
@@ -68,19 +69,19 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
                     <p>[製品情報]</p>
                 </div>
                 <div>
-                    <?php echo "製品名　　　　：　　" . $item["master"]["name"]; ?>
+                    <?php echo h("製品名　　　　：　　" . $item["master"]["name"]); ?>
                 </div>
                 <div>
-                    <?php echo "価格　　　　　：　　" . $item["master"]["price"]; ?>
+                    <?php echo h("価格　　　　　：　　" . $item["master"]["price"]); ?>
                 </div>
                 <div>
-                    <?php echo "在庫　　　　　：　　" . $item["master"]["stock"]; ?>
+                    <?php echo h("在庫　　　　　：　　" . $item["master"]["stock"]); ?>
                 </div>
                 <div>
-                    <?php echo "登録日　　　　：　　" . $item["master"]["created_at"]; ?>
+                    <?php echo h("登録日　　　　：　　" . $item["master"]["created_at"]); ?>
                 </div>
                 <div>
-                    <?php echo "最終更新日　　：　　" . $item["master"]["updated_at"]; ?>
+                    <?php echo h("最終更新日　　：　　" . $item["master"]["updated_at"]); ?>
                 </div>
             </div>
         </section>

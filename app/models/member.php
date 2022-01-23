@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__) . "/BaseModel.php");
+require_once(dirname(__FILE__) . "/../util/Function.php");
 
 class Member Extends BaseModel {
     const ROLE_USER = "0";
@@ -83,10 +84,19 @@ class Member Extends BaseModel {
         return $this->data["token"];
     }
 
+    // public static function findAll() {
+    //     $dbh = self::dbconnect();
+
+    //     $members = $dbh->query("SELECT * FROM members");
+    //     $members = $members->fetchAll();
+
+    //     return $members;
+    // }
+
     public static function findAll() {
         $dbh = self::dbconnect();
 
-        $members = $dbh->query("SELECT * FROM members limit 0, 15");
+        $members = $dbh->query("SELECT * FROM members where NOT (id=1 or id=2)");
         $members = $members->fetchAll();
 
         return $members;
@@ -141,7 +151,7 @@ class Member Extends BaseModel {
 
             return $result;
         } catch (PDOException $e) {
-            echo "DB登録エラー: " . $e->getMessage();
+            echo h("DB登録エラー: " . $e->getMessage());
         }
     }
 
@@ -173,7 +183,7 @@ class Member Extends BaseModel {
 
             return $result;
         } catch (PDOException $e) {
-            echo "DB登録エラー: " . $e->getMessage();
+            echo h("DB登録エラー: " . $e->getMessage());
 
             $dbh->rollBack();
         }
@@ -206,38 +216,11 @@ class Member Extends BaseModel {
 
             return $result;
         } catch (PDOException $e) {
-            echo "DB更新エラー: " . $e->getMessage(); // トランザクション ロールバック
+            echo h("DB更新エラー: " . $e->getMessage()); // トランザクション ロールバック
 
             $dbh->rollBack();
         }
     }
-
-    // public function delete($id) {
-    //     try {
-    //         $dbh = SELF::dbconnect();
-
-    //         $dbh->beginTransaction(); // トランザクション 開始
-    
-    //         $stmt = $dbh->prepare(
-    //             "DELETE FROM members WHERE id=?"
-    //         );
-    //         $result = $stmt->execute([$id]);
-
-    //         if ($result) {
-    //             $dbh->commit(); // トランザクション コミット
-    //         }
-
-    //         if(!$result) {
-    //             $dbh->rollBack(); // トランザクション ロールバック
-    //         }
-    
-    //         return $result;
-    //     } catch (PDOException $e) {
-    //         echo "DB削除エラー: " . $e->getMessage(); // トランザクション ロールバック
-
-    //         $dbh->rollBack();
-    //     }
-    // }
 }
 
 ?>

@@ -33,8 +33,14 @@ $(function() {
                         clearInterval(timerId);
                         $(".download").html("ダウンロード");
                         $(".download").prop("disabled", false);
-                        $(".file_name").html(response);                        
+                        $(".file_name").html(response);
                     }
+                })
+
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                    console.log("jqXHR       : " + jqXHR.status); // HTTPステータス取得
+                    console.log("textStatus  : " + textStatus); // タイムアウト、パースエラー
+                    console.log("errorThrown : " + errorThrown.message); // 例外情報
                 })
             }, 500);
         })

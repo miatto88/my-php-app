@@ -3,6 +3,7 @@ require_once(dirname(__FILE__) . "/../../models/item.php");
 require_once(dirname(__FILE__) . "/../../controllers/ItemController.php");
 require_once(dirname(__FILE__) . "/../../validations/Itemvalidation.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pre_auth = new AuthController;
@@ -48,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"]  !== "POST") {
             </div>
             <p>
                 <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
+                    <p><?php echo h($error); ?></p>
                 <?php endforeach; ?>
             </p>
         </form>

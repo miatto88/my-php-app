@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__) . "/BaseModel.php");
+require_once(dirname(__FILE__) . "/../util/Function.php");
 
 class StockInHistory Extends BaseModel {
     private $data = [
@@ -87,68 +88,9 @@ class StockInHistory Extends BaseModel {
 
             return $result;
         } catch (PDOException $e) {
-            echo "DB登録エラー: " . $e->getMessage();
+            echo h("DB登録エラー: " . $e->getMessage());
         }
     }
-
-    // public function update() {
-    //     try {
-    //         $dbh = self::dbconnect();
-    
-    //         $dbh->beginTransaction(); // トランザクション 開始
-
-    //         $store = $dbh->prepare(
-    //             "UPDATE items SET name=?, price=?, stock=?, updated_at=? WHERE id=?");
-    //         $result = $store->execute([
-    //             $this->getName(),
-    //             $this->getPrice(),
-    //             $this->getStock(),
-    //             date("Y-m-d H:i:s"),
-    //             $this->getId()
-    //         ]);
-
-    //         if ($result) {
-    //             $dbh->commit(); // トランザクション コミット
-    //         }
-
-    //         if (!$result) {
-    //             $dbh->rollBack(); // トランザクション ロールバック
-    //         }
-
-    //         return $result;
-    //     } catch (PDOException $e) {
-    //         echo "DB更新エラー: " . $e->getMessage(); // トランザクション ロールバック
-
-    //         $dbh->rollBack();
-    //     }
-    // }
-
-    // public function delete($id) {
-    //     try {
-    //         $dbh = self::dbconnect();
-
-    //         $dbh->beginTransaction(); // トランザクション 開始
-    
-    //         $stmt = $dbh->prepare(
-    //             "DELETE FROM items WHERE id=?"
-    //         );
-    //         $result = $stmt->execute([$id]);
-
-    //         if ($result) {
-    //             $dbh->commit(); // トランザクション コミット
-    //         }
-
-    //         if(!$result) {
-    //             $dbh->rollBack(); // トランザクション ロールバック
-    //         }
-    
-    //         return $result;
-    //     } catch (PDOException $e) {
-    //         echo "DB削除エラー: " . $e->getMessage(); // トランザクション ロールバック
-
-    //         $dbh->rollBack();
-    //     }
-    // }
 }
 
 ?>

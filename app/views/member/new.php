@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . "/../../models/Member.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -40,20 +41,20 @@ if ($_SERVER["REQUEST_METHOD"]  !== "POST") {
     <div class="login-wrapper">
         <form class="login-form" action="" method="post">
             <div>
-                姓：<input type="text" name="last_name" value="<?php echo $get["last_name"] ?>">
+                姓：<input type="text" name="last_name" value="<?php echo h($get["last_name"]) ?>">
             </div>
             <div>
-                名：<input type="text" name="first_name" value="<?php echo $get["first_name"] ?>">
+                名：<input type="text" name="first_name" value="<?php echo h($get["first_name"]) ?>">
             </div>
             <div>
-                パスワード：<input type="password" name="password" size="10" value="<?php echo $get["password"] ?>">
+                パスワード：<input type="password" name="password" size="10" value="<?php echo h($get["password"]) ?>">
             </div>
             <div class="form-group">
                 <input class="btn btn-outline-primary my-1" type="submit" class="form-control" value="登録">
             </div>
             <p>
                 <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
+                    <p><?php echo h($error); ?></p>
                 <?php endforeach; ?>
             </p>
         </form>

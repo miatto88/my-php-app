@@ -3,6 +3,7 @@ require_once(dirname(__FILE__) . "/../../models/Member.php");
 require_once(dirname(__FILE__) . "/../../controllers/MemberController.php");
 require_once(dirname(__FILE__) . "/../../validations/Membervalidation.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 $controller = new MemberController;
 
@@ -42,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
+            <span><?php echo h("ログイン名： " . $_SESSION["member"]["name"]); ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
@@ -51,18 +52,18 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             <div>[社員登録]</div>
             <div>
                 <form action="" method="POST">
-                    <p>姓　　　　　：　<input type="text" name="last_name" value="<?php echo $member["input"]['last_name'] ?>"></p>
-                    <p>名　　　　　：　<input type="text" name="first_name" value="<?php echo $member["input"]['first_name'] ?>"></p>
-                    <p>パスワード　：　<input type="text" name="password" value="<?php echo $member["input"]['password'] ?>"></p>
-                    <p>管理者権限　：　<input type="radio" name="role" value="<?php echo Member::ROLE_USER; ?>" checked>ユーザー
-                        <input type="radio" name="role" value="<?php echo Member::ROLE_ADMIN; ?>">管理者
+                    <p>姓　　　　　：　<input type="text" name="last_name" value="<?php echo h($member["input"]['last_name']) ?>"></p>
+                    <p>名　　　　　：　<input type="text" name="first_name" value="<?php echo h($member["input"]['first_name']) ?>"></p>
+                    <p>パスワード　：　<input type="text" name="password" value="<?php echo h($member["input"]['password']) ?>"></p>
+                    <p>管理者権限　：　<input type="radio" name="role" value="<?php echo h(Member::ROLE_USER); ?>" checked>ユーザー
+                        <input type="radio" name="role" value="<?php echo h(Member::ROLE_ADMIN); ?>">管理者
                     </p>
                     <p><input type="submit" value="登録する"></p>
                 </form>
             </div>
             <div>
                 <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
+                    <p><?php echo h($error); ?></p>
                 <?php endforeach ?>
             </div>
         </section>

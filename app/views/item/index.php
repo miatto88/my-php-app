@@ -1,7 +1,8 @@
 <?php
-require_once(dirname(__FILE__) . "/../../models/item.php");
+require_once(dirname(__FILE__) . "/../../models/Item.php");
 require_once(dirname(__FILE__) . "/../../controllers/ItemController.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 $controller = new ItemController;
 
@@ -24,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     unset($_SESSION["serch"]);
 }
 
+$is_admin = $items["is_admin"];
+$is_guest = $items["is_guest"];
 
 ?>
 
@@ -42,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
+            <span><?php echo h("ログイン名： " . $_SESSION["member"]["name"]); ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
@@ -55,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             <hr>
             <div class="serch_form">
                 <label for="acd_menu">検索 ▽　</label>
-                <?php echo $serch ?>
+                <?php echo h($serch) ?>
                 <input type="checkbox" id="acd_menu" class="acd_menu">
                 <div class="acd_content">
                     <form class="serch_form" action="" method="post">
@@ -74,17 +77,17 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             </div>
             <hr>
             <?php foreach($items["items"] as $item): ?>
-            <div class="item_data" id=<?php echo "item_id_" . $item["id"] ?>>
+            <div class="item_data" id=<?php echo h("item_id_" . $item["id"]) ?>>
                 <div class="item_name">
-                    <a href="detail.php?id=<?php echo $item["id"] ?>" ><?php echo $item["name"]; ?></a>
+                    <a href="detail.php?id=<?php echo h($item["id"]) ?>" ><?php echo h($item["name"]); ?></a>
                 </div>
                 <div class="item_property">
-                    <span>在庫：<?php echo $item["stock"]; ?></span>
+                    <span>在庫：<?php echo h($item["stock"]); ?></span>
                 </div>
                 <div class="button">
-                    <a href="in_count.php?id=<?php echo $item["id"] ?>" class="<?php if($is_guest): ?>guest<?php endif; ?>">入庫</a>
-                    <a href="out_count.php?id=<?php echo $item["id"] ?>" class="<?php if($is_guest): ?>guest<?php endif; ?>">出庫</a>
-                    <button data-btn-type="ajax" value="<?php echo $item["id"] ?>" <?php if($is_guest): ?>disabled<?php endif; ?>>削除</button>
+                    <a href="in_count.php?id=<?php echo h($item["id"]) ?>" class="<?php if($is_guest): ?>guest<?php endif; ?>">入庫</a>
+                    <a href="out_count.php?id=<?php echo h($item["id"]) ?>" class="<?php if($is_guest): ?>guest<?php endif; ?>">出庫</a>
+                    <button data-btn-type="ajax" value="<?php echo h($item["id"]) ?>" <?php if($is_guest): ?>disabled<?php endif; ?>>削除</button>
                 </div>
                 <hr>
             </div>

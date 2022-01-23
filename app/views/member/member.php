@@ -2,6 +2,7 @@
 require_once(dirname(__FILE__) . "/../../models/Member.php");
 require_once(dirname(__FILE__) . "/../../controllers/MemberController.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 $controller = new MemberController;
 
@@ -27,7 +28,7 @@ $is_guest = $data["is_guest"];
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
+            <span><?php echo h("ログイン名： " . $_SESSION["member"]["name"]); ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
@@ -47,12 +48,12 @@ $is_guest = $data["is_guest"];
             <span class="messages"></span>
             <hr>
             <?php foreach($data["members"] as $data): ?>
-            <div class="member_data" id=<?php echo "member_id_" . $data["id"] ?>>
+            <div class="member_data" id=<?php echo h("member_id_" . $data["id"]) ?>>
                 <div class="member_name">
-                    <a href="detail.php?id=<?php echo $data["id"] ?>" ><?php echo $data["last_name"] . " " . $data["first_name"]; ?></a>
+                    <a href="detail.php?id=<?php echo h($data["id"]) ?>" ><?php echo h($data["last_name"] . " " . $data["first_name"]); ?></a>
                 </div>
                 <div class="member_role">
-                    <span>権限：<?php echo Member::showRole($data); ?></span>
+                    <span>権限：<?php echo h(Member::showRole($data)); ?></span>
                 </div>
                 <hr>
             </div>

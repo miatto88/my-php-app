@@ -2,6 +2,7 @@
 require_once(dirname(__FILE__) . "/../../models/Member.php");
 require_once(dirname(__FILE__) . "/../../controllers/MemberController.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 $controller = new MemberController;
 
@@ -25,31 +26,31 @@ $member = $controller->detail();
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
+            <span><?php echo h("ログイン名： " . $_SESSION["member"]["name"]); ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
     <div class="wrapper">
         <section class="main">
             <div class="btns">
-                <a href="edit.php?id=<?php echo $member["id"] ?>" class="<?php if(!$is_admin): ?>not_admin<?php endif; ?>">社員編集</a>
+                <a href="edit.php?id=<?php echo h($member["id"]) ?>" class="<?php if(!$is_admin): ?>not_admin<?php endif; ?>">社員編集</a>
             </div>
             <hr>
             <div class="detail">
                 <div>
-                    <?php echo "姓　　　　　　：　　" . $member["last_name"]; ?>
+                    <?php echo h("姓　　　　　　：　　" . $member["last_name"]); ?>
                 </div>
                 <div>
-                    <?php echo "姪　　　　　　：　　" . $member["first_name"]; ?>
+                    <?php echo h("姪　　　　　　：　　" . $member["first_name"]); ?>
                 </div>
                 <div>
-                    <?php echo "権限　　　　　：　　" . Member::showRole($member); ?>
+                    <?php echo h("権限　　　　　：　　" . Member::showRole($member)); ?>
                 </div>
                 <div>
-                    <?php echo "登録日　　　　：　　" . $member["created_at"]; ?>
+                    <?php echo h("登録日　　　　：　　" . $member["created_at"]); ?>
                 </div>
                 <div>
-                    <?php echo "最終更新日　　：　　" . $member["updated_at"]; ?>
+                    <?php echo h("最終更新日　　：　　" . $member["updated_at"]); ?>
                 </div>
             </div>
         </section>

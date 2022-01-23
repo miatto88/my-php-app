@@ -4,6 +4,7 @@ require_once(dirname(__FILE__) . "/../../controllers/StockOutHistoryController.p
 require_once(dirname(__FILE__) . "/../../controllers/ItemController.php");
 require_once(dirname(__FILE__) . "/../../controllers/CustomerController.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 $stock_out_controller = new StockOutHistoryController;
 
@@ -52,7 +53,7 @@ if (!empty($_GET["id"])) {
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
+            <span><?php echo h("ログイン名： " . $_SESSION["member"]["name"]); ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
@@ -62,25 +63,25 @@ if (!empty($_GET["id"])) {
             <p>
                 <span>製品名　：　</span>
                 <select onChange="top.location.href=value" name="name" id="">
-                    <option value=""><?php echo $item["name"]; ?></option>
+                    <option value=""><?php echo h($item["name"]); ?></option>
                     <?php foreach ($data["items"] as $item): ?>
-                    <option value="out_count.php?id=<?php echo $item["id"]; ?>"><?php echo $item["name"]; ?></option>
+                    <option value="out_count.php?id=<?php echo h($item["id"]); ?>"><?php echo h($item["name"]); ?></option>
                     <?php endforeach; ?>
                 </select>
             </p>
             <div>
                 <form action="" method="post">
-                    <p>出庫数　：　 <input type="number" name="quantity" value="<?php echo $get["quantity"] ?>"></p>
+                    <p>出庫数　：　 <input type="number" name="quantity" value="<?php echo h($get["quantity"]) ?>"></p>
                     <p>出庫先　：　
                         <select name="customer_id">
                             <option value=""></option>
                             <?php foreach ($customers["customers"] as $customer): ?>
-                            <option value="<?php echo $customer["id"]; ?>"><?php echo $customer["company"]; ?></option>
+                            <option value="<?php echo h($customer["id"]); ?>"><?php echo h($customer["company"]); ?></option>
                             <?php endforeach; ?>
                         </select>
                     </p>
-                    <p><input type="hidden" name="item_id" value="<?php echo $_GET["id"] ?>"></p>
-                    <p><input type="hidden" min="0" name="member_id" value="<?php echo $_SESSION["member"]["id"] ?>"></p>
+                    <p><input type="hidden" name="item_id" value="<?php echo h($_GET["id"]) ?>"></p>
+                    <p><input type="hidden" min="0" name="member_id" value="<?php echo h($_SESSION["member"]["id"]) ?>"></p>
                     <p><input type="hidden" name="created_at"></p>
                     <p><input type="hidden" name="updated_at"></p>
                     <p><input type="submit" value="出庫する"></p>
@@ -88,7 +89,7 @@ if (!empty($_GET["id"])) {
             </div>
             <div>
                 <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
+                    <p><?php echo h($error); ?></p>
                 <?php endforeach ?>
             </div>
         </section>

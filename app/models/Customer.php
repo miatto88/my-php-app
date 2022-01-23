@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__) . "/BaseModel.php");
+require_once(dirname(__FILE__) . "/../util/Function.php");
 
 class Customer Extends BaseModel {
     private $data = [
@@ -167,7 +168,7 @@ class Customer Extends BaseModel {
 
             return $result;
         } catch (PDOException $e) {
-            echo "DB登録エラー: " . $e->getMessage();
+            echo h("DB登録エラー: " . $e->getMessage());
 
             $dbh->rollBack();
         }
@@ -206,38 +207,11 @@ class Customer Extends BaseModel {
 
             return $result;
         } catch (PDOException $e) {
-            echo "DB更新エラー: " . $e->getMessage(); // トランザクション ロールバック
+            echo h("DB更新エラー: " . $e->getMessage()); // トランザクション ロールバック
 
             $dbh->rollBack();
         }
     }
-
-    // public function delete($id) {
-    //     try {
-    //         $dbh = self::dbconnect();
-
-    //         $dbh->beginTransaction(); // トランザクション 開始
-    
-    //         $stmt = $dbh->prepare(
-    //             "DELETE FROM customers WHERE id=?"
-    //         );
-    //         $result = $stmt->execute([$id]);
-
-    //         if ($result) {
-    //             $dbh->commit(); // トランザクション コミット
-    //         }
-
-    //         if(!$result) {
-    //             $dbh->rollBack(); // トランザクション ロールバック
-    //         }
-    
-    //         return $result;
-    //     } catch (PDOException $e) {
-    //         echo "DB削除エラー: " . $e->getMessage(); // トランザクション ロールバック
-
-    //         $dbh->rollBack();
-    //     }
-    // }
 }
 
 ?>

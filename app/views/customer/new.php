@@ -3,6 +3,7 @@ require_once(dirname(__FILE__) . "/../../models/Customer.php");
 require_once(dirname(__FILE__) . "/../../controllers/CustomerController.php");
 // require_once(dirname(__FILE__) . "/../../validations/Customervalidation.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 $controller = new CustomerController;
 
@@ -78,7 +79,7 @@ if (empty($get["last_name"])) {
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
+            <span><?php echo h("ログイン名： " . $_SESSION["member"]["name"]); ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
@@ -87,24 +88,24 @@ if (empty($get["last_name"])) {
             <div>[顧客登録]</div>
             <div>
                 <form action="" method="POST">
-                    <p>会社名　　　：　<input type="text" name="company" value="<?php echo $get['company'] ?>"></p>
-                    <p>電話番号　　：　<input type="text" name="phone" value="<?php echo $get['phone'] ?>"></p>
-                    <p>FAX番号　　：　<input type="text" name="fax" value="<?php echo $get['fax'] ?>"></p>
-                    <p>郵便番号　　：　<input type="text" name="zip_code" value="<?php echo $get['zip_code'] ?>"></p>
-                    <p>都道府県　　：　<input type="text" name="state_province" value="<?php echo $get['state_province'] ?>"></p>
-                    <p>市区　　　　：　<input type="text" name="city" value="<?php echo $get['city'] ?>"></p>
-                    <p>町・番地　　：　<input type="text" name="address_1" value="<?php echo $get['address_1'] ?>"></p>
-                    <p>建物名　　　：　<input type="text" name="address_2" value="<?php echo $get['address_2'] ?>"></p>
-                    <p>担当者（姓）：　<input type="text" name="last_name" value="<?php echo $get['last_name'] ?>"></p>
-                    <p>担当者（名）：　<input type="text" name="first_name" value="<?php echo $get['first_name'] ?>"></p>
-                    <p><input type="hidden" name="created_at" value="<?php echo date("Y-m-d H:i:s") ?>"></p>
-                    <p><input type="hidden" name="updated_at" value="<?php echo date("Y-m-d H:i:s") ?>"></p>
+                    <p>会社名　　　：　<input type="text" name="company" value="<?php echo h($get['company']) ?>"></p>
+                    <p>電話番号　　：　<input type="text" name="phone" value="<?php echo h($get['phone']) ?>"></p>
+                    <p>FAX番号　　：　<input type="text" name="fax" value="<?php echo h($get['fax']) ?>"></p>
+                    <p>郵便番号　　：　<input type="text" name="zip_code" value="<?php echo h($get['zip_code']) ?>"></p>
+                    <p>都道府県　　：　<input type="text" name="state_province" value="<?php echo h($get['state_province']) ?>"></p>
+                    <p>市区　　　　：　<input type="text" name="city" value="<?php echo h($get['city']) ?>"></p>
+                    <p>町・番地　　：　<input type="text" name="address_1" value="<?php echo h($get['address_1']) ?>"></p>
+                    <p>建物名　　　：　<input type="text" name="address_2" value="<?php echo h($get['address_2']) ?>"></p>
+                    <p>担当者（姓）：　<input type="text" name="last_name" value="<?php echo h($get['last_name']) ?>"></p>
+                    <p>担当者（名）：　<input type="text" name="first_name" value="<?php echo h($get['first_name']) ?>"></p>
+                    <p><input type="hidden" name="created_at" value="<?php echo h(date("Y-m-d H:i:s")) ?>"></p>
+                    <p><input type="hidden" name="updated_at" value="<?php echo h(date("Y-m-d H:i:s")) ?>"></p>
                     <p><input type="submit" value="登録する"></p>
                 </form>
             </div>
             <div>
                 <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
+                    <p><?php echo h($error); ?></p>
                 <?php endforeach ?>
             </div>
         </section>

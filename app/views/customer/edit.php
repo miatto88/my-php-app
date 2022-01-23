@@ -3,6 +3,7 @@ require_once(dirname(__FILE__) . "/../../models/Customer.php");
 require_once(dirname(__FILE__) . "/../../controllers/CustomerController.php");
 // require_once(dirname(__FILE__) . "/../../validations/Customervalidation.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 $controller = new CustomerController;
 
@@ -42,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
+            <span><?php echo h("ログイン名： " . $_SESSION["member"]["name"]); ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
@@ -51,22 +52,22 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             <div>[顧客編集]</div>
             <div>
                 <form action="" method="POST">
-                    <p>会社名　　　：　<input type="text" name="company" value="<?php echo $customer["input"]['company'] ?>"></p>
-                    <p>電話番号　　：　<input type="text" name="phone" value="<?php echo $customer["input"]['phone'] ?>"></p>
-                    <p>FAX番号　　：　<input type="text" name="fax" value="<?php echo $customer["input"]['fax'] ?>"></p>
-                    <p>郵便番号　　：　<input type="text" name="zip_code" value="<?php echo $customer["input"]['zip_code'] ?>"></p>
-                    <p>都道府県　　：　<input type="text" name="state_province" value="<?php echo $customer["input"]['state_province'] ?>"></p>
-                    <p>市区　　　　：　<input type="text" name="city" value="<?php echo $customer["input"]['city'] ?>"></p>
-                    <p>町・番地　　：　<input type="text" name="address_1" value="<?php echo $customer["input"]['address_1'] ?>"></p>
-                    <p>建物名　　　：　<input type="text" name="address_2" value="<?php echo $customer["input"]['address_2'] ?>"></p>
-                    <p>担当者（姓）：　<input type="text" name="last_name" value="<?php echo $customer["input"]['last_name'] ?>"></p>
-                    <p>担当者（名）：　<input type="text" name="first_name" value="<?php echo $customer["input"]['first_name'] ?>"></p>
+                    <p>会社名　　　：　<input type="text" name="company" value="<?php echo h($customer["input"]['company']) ?>"></p>
+                    <p>電話番号　　：　<input type="text" name="phone" value="<?php echo h($customer["input"]['phone']) ?>"></p>
+                    <p>FAX番号　　：　<input type="text" name="fax" value="<?php echo h($customer["input"]['fax']) ?>"></p>
+                    <p>郵便番号　　：　<input type="text" name="zip_code" value="<?php echo h($customer["input"]['zip_code']) ?>"></p>
+                    <p>都道府県　　：　<input type="text" name="state_province" value="<?php echo h($customer["input"]['state_province']) ?>"></p>
+                    <p>市区　　　　：　<input type="text" name="city" value="<?php echo h($customer["input"]['city']) ?>"></p>
+                    <p>町・番地　　：　<input type="text" name="address_1" value="<?php echo h($customer["input"]['address_1']) ?>"></p>
+                    <p>建物名　　　：　<input type="text" name="address_2" value="<?php echo h($customer["input"]['address_2']) ?>"></p>
+                    <p>担当者（姓）：　<input type="text" name="last_name" value="<?php echo h($customer["input"]['last_name']) ?>"></p>
+                    <p>担当者（名）：　<input type="text" name="first_name" value="<?php echo h($customer["input"]['first_name']) ?>"></p>
                     <p><input type="submit" value="更新する"></p>
                 </form>
             </div>
             <div>
                 <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
+                    <p><?php echo h($error); ?></p>
                 <?php endforeach ?>
             </div>
             <hr>
@@ -75,28 +76,28 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
                     <p>[顧客情報]</p>
                 </div>
                 <div>
-                    <?php echo "会社名　　　　　：　　" . $customer["master"]["company"]; ?>
+                    <?php echo h("会社名　　　　　：　　" . $customer["master"]["company"]); ?>
                 </div>
                 <div>
-                    <?php echo "電話番号　　　　：　　" . $customer["master"]["phone"]; ?>
+                    <?php echo h("電話番号　　　　：　　" . $customer["master"]["phone"]); ?>
                 </div>
                 <div>
-                    <?php echo "FAX番号　　　　：　　" . $customer["master"]["fax"]; ?>
+                    <?php echo h("FAX番号　　　　：　　" . $customer["master"]["fax"]); ?>
                 </div>
                 <div>
-                    <?php echo "郵便番号　　　　：　　" . $customer["master"]["zip_code"]; ?>
+                    <?php echo h("郵便番号　　　　：　　" . $customer["master"]["zip_code"]); ?>
                 </div>
                 <div>
-                    <?php echo "住所　　　　　　：　　" . $customer["master"]["state/province"] . $customer["master"]["city"] . $customer["master"]["address_1"] . $customer["master"]["address_2"]; ?>
+                    <?php echo h("住所　　　　　　：　　" . $customer["master"]["state/province"] . $customer["master"]["city"] . $customer["master"]["address_1"] . $customer["master"]["address_2"]); ?>
                 </div>
                 <div>
-                    <?php echo "相手先担当者　　：　　" . $customer["master"]["last_name"] . " " . $customer["master"]["first_name"]; ?>
+                    <?php echo h("相手先担当者　　：　　" . $customer["master"]["last_name"] . " " . $customer["master"]["first_name"]); ?>
                 </div>
                 <div>
-                    <?php echo "登録日　　　　　：　　" . $customer["master"]["created_at"]; ?>
+                    <?php echo h("登録日　　　　　：　　" . $customer["master"]["created_at"]); ?>
                 </div>
                 <div>
-                    <?php echo "最終更新日　　　：　　" . $customer["master"]["updated_at"]; ?>
+                    <?php echo h("最終更新日　　　：　　" . $customer["master"]["updated_at"]); ?>
                 </div>
             </div>
         </section>

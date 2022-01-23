@@ -4,6 +4,7 @@ require_once(dirname(__FILE__) . "/../models/auth.php");
 require_once(dirname(__FILE__) . "/../models/Member.php");
 require_once(dirname(__FILE__) . "/../validations/Mailvalidation.php");
 require_once(dirname(__FILE__) . "/../validations/Authvalidation.php");
+require_once(dirname(__FILE__) . "/../util/Function.php");
 
 Class AuthController Extends BaseController {
     public static function index() {
@@ -28,7 +29,7 @@ Class AuthController Extends BaseController {
         }
 
         $data = $validation->getData();
-        $member = Auth::findMember($data["last_name"], $data["first_name"], $data["password"]);
+        $member = Auth::findMember($data["last_name"], $data["first_name"], sha1($data["password"]));
         
         // $memberを取得できたらセッションに保存する処理
         if ($member) {
@@ -40,6 +41,12 @@ Class AuthController Extends BaseController {
             ];
 
             header("Location: ../item/index.php");
+            return;
+        } else {
+            session_start();
+            $_SESSION["errors"] = $validation->getErrorMessages();
+
+            header("Location: login.php?last_name=" . $_POST["last_name"] . "&first_name=" . $_POST["first_name"] . "&password=" . $_POST["password"]);
             return;
         }
         
@@ -137,7 +144,7 @@ Class AuthController Extends BaseController {
 
             $save = $pre_member->saveToken();
         } catch (PDOException $e) {
-            echo "DB登録エラー: " . $e->getMessage();
+            echo h("DB登録エラー: " . $e->getMessage());
         }
 
         if ($save !== true) {

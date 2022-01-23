@@ -104,7 +104,7 @@ class MemberController Extends BaseController {
         $member = new Member;
         $member->setLastName($data["last_name"]);
         $member->setFirstName($data["first_name"]);
-        $member->setPassword($data["password"]);
+        $member->setPassword(sha1($data["password"]));
         $member->setRole($data["role"]);
 
         $save = $member->save();
@@ -188,9 +188,18 @@ class MemberController Extends BaseController {
         return $members;
     }
 
+    // public function createCsv($file_name) {
+    //     $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
+    //     $cmd = "/usr/local/bin/php $filepath $file_name > /dev/null &";
+
+    //     exec($cmd);
+    //     return;
+    // }
+
     public function createCsv($file_name) {
         $filepath = dirname(__FILE__)  . "/../bin/createCsv.php";
-        $cmd = "/usr/local/bin/php $filepath $file_name > /dev/null &";
+        $cmd = "php $filepath $file_name > /dev/null &";
+        // $cmd = "/usr/local/bin/php $filepath $file_name > /dev/null &";
 
         exec($cmd);
         return;
@@ -208,9 +217,9 @@ class MemberController Extends BaseController {
     }
 
     public function checkProgress() {
-        $fp = fopen(self::EXPORT_DIR . "lock.csv", "r");
-        $progress = fgetcsv($fp);
-        fclose($fp);
+        $lockFp = fopen(self::EXPORT_DIR . "lock.csv", "r");
+        $progress = fgetcsv($lockFp);
+        fclose($lockFp);
         
         return $progress;
     }

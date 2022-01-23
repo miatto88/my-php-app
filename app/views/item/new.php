@@ -1,8 +1,9 @@
 <?php
-require_once(dirname(__FILE__) . "/../../models/item.php");
+require_once(dirname(__FILE__) . "/../../models/Item.php");
 require_once(dirname(__FILE__) . "/../../controllers/ItemController.php");
 require_once(dirname(__FILE__) . "/../../validations/Itemvalidation.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 $controller = new ItemController;
 
@@ -57,7 +58,7 @@ if (empty($get["stock"])) {
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
+            <span><?php echo h("ログイン名： " . $_SESSION["member"]["name"]); ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
@@ -66,17 +67,17 @@ if (empty($get["stock"])) {
             <div>[製品登録]</div>
             <div>
                 <form action="" method="POST">
-                    <p>製品名：　<input type="text" name="name" value="<?php echo $get['name'] ?>"></p>
-                    <p>価格　：　<input type="number" min="0" name="price" value="<?php echo $get['price'] ?>"></p>
-                    <p>在庫　：　<input type="number" min="0" name="stock" value="<?php echo $get['stock'] ?>"></p>
-                    <p><input type="hidden" name="created_at" value="<?php echo date("Y-m-d H:i:s") ?>"></p>
-                    <p><input type="hidden" name="updated_at" value="<?php echo date("Y-m-d H:i:s") ?>"></p>
+                    <p>製品名：　<input type="text" name="name" value="<?php echo h($get['name']) ?>"></p>
+                    <p>価格　：　<input type="number" min="0" name="price" value="<?php echo h($get['price']) ?>"></p>
+                    <p>在庫　：　<input type="number" min="0" name="stock" value="<?php echo h($get['stock']) ?>"></p>
+                    <p><input type="hidden" name="created_at" value="<?php echo h(date("Y-m-d H:i:s")) ?>"></p>
+                    <p><input type="hidden" name="updated_at" value="<?php echo h(date("Y-m-d H:i:s")) ?>"></p>
                     <p><input type="submit" value="登録する"></p>
                 </form>
             </div>
             <div>
                 <?php foreach ($errors as $error): ?>
-                    <p><?php echo $error; ?></p>
+                    <p><?php echo h($error); ?></p>
                 <?php endforeach ?>
             </div>
         </section>

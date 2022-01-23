@@ -1,6 +1,6 @@
 <?php
 require_once(dirname(__FILE__) . "/BaseController.php");
-require_once(dirname(__FILE__) . "/../models/item.php");
+require_once(dirname(__FILE__) . "/../models/Item.php");
 require_once(dirname(__FILE__) . "/../util/Role.php");
 require_once(dirname(__FILE__) . "/../validations/Itemvalidation.php");
 

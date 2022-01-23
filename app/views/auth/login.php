@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
 require_once(dirname(__FILE__) . "/../../validations/Authvalidation.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($_POST["first_name"] === "member" && $_POST["last_name"] === "guest" && $_POST["password"] === "guestmember") {
@@ -43,11 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     <div class="login-wrapper">
         <form class="login-form" action="" method="post">
             <div class="form-group">
-                <input type="text" name="last_name" maxlength="50" placeholder="姓" class="form-control col-sm-5" value="<?php echo $get["last_name"] ?>">
-                <input type="text" name="first_name" maxlength="50" placeholder="名" class="form-control col-sm-5" value="<?php echo $get["first_name"] ?>">
+                <input type="text" name="last_name" maxlength="50" placeholder="姓" class="form-control col-sm-5" value="<?php echo h($get["last_name"]) ?>">
+                <input type="text" name="first_name" maxlength="50" placeholder="名" class="form-control col-sm-5" value="<?php echo h($get["first_name"]) ?>">
             </div>
             <div class="form-group">
-                <input type="password" name="password" maxlength="100" placeholder="パスワード" class="form-control form-control" value="<?php echo $get["password"] ?>">
+                <input type="password" name="password" maxlength="100" placeholder="パスワード" class="form-control form-control" value="<?php echo h($get["password"]) ?>">
             </div>
             <div class="form-group">
                 <input class="btn btn-outline-primary my-1" type="submit" class="form-control" value="ログイン">
@@ -65,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
         </form>
         <p>
             <?php foreach ($errors as $error): ?>
-                <p><?php echo $error; ?></p>
+                <p><?php echo h($error); ?></p>
             <?php endforeach; ?>
         </p>
     </div>

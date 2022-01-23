@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__) . "/BaseModel.php");
+require_once(dirname(__FILE__) . "/../util/Function.php");
 
 class Item Extends BaseModel {
     private $data = [
@@ -107,7 +108,7 @@ class Item Extends BaseModel {
 
             return $result;
         } catch (PDOException $e) {
-            echo "DB登録エラー: " . $e->getMessage();
+            echo h("DB登録エラー: " . $e->getMessage());
         }
     }
 
@@ -153,7 +154,7 @@ class Item Extends BaseModel {
 
             return $result;
         } catch (PDOException $e) {
-            echo "DB更新エラー: " . $e->getMessage(); // トランザクション ロールバック
+            echo h("DB更新エラー: " . $e->getMessage()); // トランザクション ロールバック
 
             $dbh->rollBack();
         }
@@ -185,7 +186,7 @@ class Item Extends BaseModel {
 
             return $result;
         } catch (PDOException $e) {
-            echo "DB更新エラー: " . $e->getMessage(); // トランザクション ロールバック
+            echo h("DB更新エラー: " . $e->getMessage()); // トランザクション ロールバック
 
             $dbh->rollBack();
         }
@@ -212,7 +213,7 @@ class Item Extends BaseModel {
     
             return $result;
         } catch (PDOException $e) {
-            echo "DB削除エラー: " . $e->getMessage(); // トランザクション ロールバック
+            echo h("DB削除エラー: " . $e->getMessage()); // トランザクション ロールバック
 
             $dbh->rollBack();
         }

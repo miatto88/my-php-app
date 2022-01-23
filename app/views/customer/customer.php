@@ -2,6 +2,7 @@
 require_once(dirname(__FILE__) . "/../../models/Customer.php");
 require_once(dirname(__FILE__) . "/../../controllers/CustomerController.php");
 require_once(dirname(__FILE__) . "/../../controllers/AuthController.php");
+require_once(dirname(__FILE__) . "/../../util/Function.php");
 
 $controller = new CustomerController;
 
@@ -25,6 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     // unset($_SESSION["serch"]);
 }
 
+$is_admin = $data["is_admin"];
+$is_guest = $data["is_guest"];
 
 ?>
 
@@ -43,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     <header>
         <h1>在庫管理システム</h1>
         <div class="header-info">
-            <span><?php echo "ログイン名： " . $_SESSION["member"]["name"]; ?></span>
+            <span><?php echo h("ログイン名： " . $_SESSION["member"]["name"]); ?></span>
             <span><a href="../auth/logout.php">ログアウト</a></span>
         </div>
     </header>
@@ -54,34 +57,14 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
             </div>
             <span class="messages"></span>
             <hr>
-            <div class="serch_form">
-                <label for="acd_menu">検索 ▽　</label>
-                <?php echo $serch ?>
-                <input type="checkbox" id="acd_menu" class="acd_menu">
-                <div class="acd_content">
-                    <form class="serch_form" action="" method="post">
-                        <div class="serch_name">
-                            製品名　　　　　<input type="text" name="item_name">
-                            <input type="submit" value="製品名で検索">
-                        </div>
-                    </form>
-                    <form class="serch_form" action="" method="post">
-                        <div>
-                            在庫数（範囲）　<input type="number" class="serch_stock" name="min_stock"> 〜 <input type="number" class="serch_stock" name="max_stock">
-                            <input type="submit" value="在庫数で検索">
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <hr>
             <?php foreach($data["customers"] as $customer): ?>
-            <div class="customer_data" id=<?php echo "customer_id_" . $customer["id"] ?>>
+            <div class="customer_data" id=<?php echo h("customer_id_" . $customer["id"]) ?>>
                 <div class="customer_name">
-                    <a href="detail.php?id=<?php echo $customer["id"] ?>" ><?php echo $customer["company"]; ?></a>
+                    <a href="detail.php?id=<?php echo h($customer["id"]) ?>" ><?php echo h($customer["company"]); ?></a>
                 </div>
                 <div class="customer_contacts">
-                    <span>TEL：<?php echo $customer["phone"]; ?></span>
-                    <span>　FAX：<?php echo $customer["fax"]; ?></span>
+                    <span>TEL：<?php echo h($customer["phone"]); ?></span>
+                    <span>　FAX：<?php echo h($customer["fax"]); ?></span>
                 </div>
                 <hr>
             </div>
